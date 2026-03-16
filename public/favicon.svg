@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Suzani Shop favicon">
+  <defs>
+    <linearGradient id="bg" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff8ef"/>
+      <stop offset="1" stop-color="#ecd8bf"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="20" y1="16" x2="46" y2="46" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b78a52"/>
+      <stop offset="1" stop-color="#7a4a30"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="64" height="64" rx="18" fill="url(#bg)"/>
+  <rect x="11" y="11" width="42" height="42" rx="15" fill="#fffdf9" opacity=".8"/>
+
+  <g transform="translate(32 32) rotate(45)">
+    <rect x="-11.5" y="-11.5" width="23" height="23" rx="5.5" fill="none" stroke="url(#accent)" stroke-width="4.5"/>
+    <path d="M-2.4-18c0 4.2-3.4 7.6-7.6 7.6h-2.8v5.6" fill="none" stroke="#7a4a30" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.2"/>
+    <path d="M2.4 18c0-4.2 3.4-7.6 7.6-7.6h2.8v-5.6" fill="none" stroke="#b78a52" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.2"/>
+  </g>
+
+  <circle cx="48" cy="49" r="4" fill="#b78a52" opacity=".85"/>
+</svg>

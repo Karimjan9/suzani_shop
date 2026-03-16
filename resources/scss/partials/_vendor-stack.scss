@@ -1,0 +1,30 @@
+@use 'variables' as *;
+
+[x-cloak] {
+    display: none !important;
+}
+
+.swiper {
+    width: 100%;
+    overflow: hidden;
+}
+
+.swiper-pagination-bullet-active {
+    background: $suzani-clay;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: $suzani-clay;
+}
+
+.flowbite-ready-ring:focus {
+    outline: 0;
+    box-shadow: 0 0 0 4px rgba($suzani-clay, 0.12);
+}
+
+.daisy-suzani-surface {
+    background: linear-gradient(180deg, $suzani-soft 0%, #f6ecdf 100%);
+    border: 1px solid rgba($suzani-ink, 0.08);
+    border-radius: 1.25rem;
+}
