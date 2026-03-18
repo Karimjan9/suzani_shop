@@ -13,9 +13,6 @@
         <meta name="theme-color" content="#f5efe6">
         <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
 
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=outfit:400,500,600,700,800|playfair-display:600,700,800" rel="stylesheet" />
-
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @vite(['resources/css/app.css', 'resources/js/app.js'])
         @else
@@ -383,8 +380,15 @@
                         <span class="cart-badge" data-cart-count>0</span>
                     </a>
                     <a href="#contact">Aloqa</a>
-                    <a href="{{ url('/admin/login') }}" class="button button-secondary button-compact topbar-admin-link">
-                        Login
+                </div>
+
+                <div class="topbar-actions">
+                    <a href="{{ url('/admin/login') }}" class="topbar-admin-link">
+                        <span class="topbar-admin-copy">
+                            <span class="topbar-admin-overline">Admin zona</span>
+                            <span class="topbar-admin-title">Login</span>
+                        </span>
+                        <span class="topbar-admin-knot" aria-hidden="true"></span>
                     </a>
                 </div>
             </nav>
@@ -588,25 +592,47 @@
                                 ];
                             @endphp
                             <article class="product-card">
-                                <div class="product-showcase-gallery" data-gallery>
+                                <div
+                                    class="product-showcase-gallery"
+                                    data-gallery
+                                    data-gallery-tone="{{ $product['tone'] }}"
+                                    data-gallery-title="{{ $product['title'] }}"
+                                    data-gallery-price="{{ $product['formatted_price'] }}"
+                                    data-gallery-category="{{ $product['category_label'] }}"
+                                    data-gallery-material="{{ $product['material'] }}"
+                                    data-gallery-size="{{ $product['size'] }}"
+                                    data-gallery-description="{{ $product['short_description'] }}"
+                                >
                                     <div class="product-gallery-stage product-tone-{{ $product['tone'] }}">
                                         <span class="product-gallery-badge">Ko'rinish</span>
-                                        <strong data-gallery-active-label>{{ $product['images'][0] }}</strong>
-                                        <div class="product-gallery-controls">
-                                            <button type="button" class="product-gallery-nav" data-gallery-prev aria-label="Oldingi rasm">Oldingi</button>
-                                            <button type="button" class="product-gallery-nav" data-gallery-next aria-label="Keyingi rasm">Keyingi</button>
+                                        <div class="product-gallery-nav-wrap">
+                                            <button type="button" class="product-gallery-nav" data-gallery-prev aria-label="Oldingi rasm">&#8249;</button>
+                                            <button type="button" class="product-gallery-visual" data-gallery-open aria-label="Rasmni kattalashtirib ko'rish">
+                                                <span class="product-gallery-visual-art" aria-hidden="true">
+                                                    <span class="product-gallery-visual-pattern"></span>
+                                                </span>
+                                                <span class="product-gallery-visual-copy">
+                                                    <strong data-gallery-active-label>{{ $product['images'][0] }}</strong>
+                                                    <span class="product-gallery-visual-subtitle">{{ $product['title'] }}</span>
+                                                </span>
+                                            </button>
+                                            <button type="button" class="product-gallery-nav" data-gallery-next aria-label="Keyingi rasm">&#8250;</button>
+                                        </div>
+                                        <div class="product-gallery-meta">
+                                            <span class="product-gallery-hint">Kattalashtirib ko'rish</span>
+                                            <div class="product-gallery-counter" data-gallery-counter>1 / {{ min(count($product['images']), 3) }}</div>
                                         </div>
                                     </div>
-                                    <div class="product-gallery-accordion">
+                                    <div class="product-gallery-data" hidden>
                                         @foreach (array_slice($product['images'], 0, 3) as $image)
                                             <button
                                                 type="button"
-                                                class="product-gallery-panel product-tone-{{ $product['tone'] }}{{ $loop->first ? ' is-active' : '' }}"
-                                                data-gallery-panel
+                                                class="product-gallery-item{{ $loop->first ? ' is-active' : '' }}"
+                                                data-gallery-item
                                                 data-gallery-label="{{ $image }}"
                                                 aria-pressed="{{ $loop->first ? 'true' : 'false' }}"
                                             >
-                                                <span>{{ $image }}</span>
+                                                {{ $image }}
                                             </button>
                                         @endforeach
                                     </div>
@@ -620,7 +646,7 @@
                                         <button
                                             type="button"
                                             class="button button-primary button-compact"
-                                            data-add-to-cart="{{ e(json_encode($productPayload)) }}"
+                                            data-add-to-cart="{{ base64_encode(json_encode($productPayload, JSON_UNESCAPED_UNICODE)) }}"
                                         >
                                             Savatchaga qo'shish
                                         </button>
@@ -673,18 +699,25 @@
                     </div>
 
                     <div class="catalog-toolbar" data-products-toolbar>
-                        <div class="catalog-search-wrap">
-                            <label class="catalog-label" for="product-search">Qidiruv</label>
+                        <div class="catalog-toolbar-block catalog-search-wrap">
+                            <div class="catalog-block-head">
+                                <label class="catalog-label" for="product-search">Qidiruv</label>
+                                <p class="catalog-block-note">Mahsulot nomi, kategoriya yoki tavsif bo'yicha tez qidiring.</p>
+                            </div>
                             <input
                                 id="product-search"
                                 class="catalog-search"
                                 type="search"
-                                placeholder="Mahsulot nomi yoki kategoriya bo'yicha qidiring"
+                                placeholder="Masalan: suzani, yostiq, stol bezagi..."
                                 data-search-input
                             >
                         </div>
 
-                        <div class="catalog-controls">
+                        <div class="catalog-toolbar-block catalog-controls">
+                            <div class="catalog-block-head">
+                                <span class="catalog-label">Kolleksiya</span>
+                                <p class="catalog-block-note">Bir teg bilan kerakli toifaga o'ting.</p>
+                            </div>
                             <div class="catalog-filter-group" aria-label="Mahsulot filtrlari">
                                 @foreach ($productFilters as $filter)
                                     <button
@@ -696,21 +729,25 @@
                                     </button>
                                 @endforeach
                             </div>
+                        </div>
 
-                            <div class="catalog-sort-wrap">
+                        <div class="catalog-toolbar-block catalog-sort-wrap">
+                            <div class="catalog-block-head">
                                 <label class="catalog-label" for="product-sort">Sort</label>
-                                <select id="product-sort" class="catalog-sort" data-sort-select>
-                                    <option value="new">Yangi</option>
-                                    <option value="cheap">Arzon</option>
-                                    <option value="expensive">Qimmat</option>
-                                    <option value="popular">Mashhur</option>
-                                </select>
+                                <p class="catalog-block-note">Natijalarni sizga qulay tartibda ko'ring.</p>
                             </div>
+                            <select id="product-sort" class="catalog-sort" data-sort-select>
+                                <option value="new">Yangi</option>
+                                <option value="cheap">Arzon</option>
+                                <option value="expensive">Qimmat</option>
+                                <option value="popular">Mashhur</option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="catalog-meta" data-catalog-meta>
-                        <p><span data-results-count>{{ count($allProducts) }}</span> ta mahsulot topildi</p>
+                        <p class="catalog-result-pill"><span data-results-count>{{ count($allProducts) }}</span> ta mahsulot topildi</p>
+                        <p class="catalog-meta-note">Qidiruv va filterlar sahifa yangilanmasdan real vaqtda ishlaydi.</p>
                     </div>
 
                     <div class="catalog-grid" data-products-grid>
@@ -744,25 +781,47 @@
                                 data-new-rank="{{ $product['new_rank'] }}"
                                 data-search="{{ $product['title'] }} {{ $product['short_description'] }} {{ $product['full_description'] }} {{ $product['product_story'] }} {{ $product['material'] }} {{ $product['size'] }} {{ $product['color'] }} {{ $product['category_label'] }}"
                             >
-                                <div class="catalog-gallery product-showcase-gallery" data-gallery>
+                                <div
+                                    class="catalog-gallery product-showcase-gallery"
+                                    data-gallery
+                                    data-gallery-tone="{{ $product['tone'] }}"
+                                    data-gallery-title="{{ $product['title'] }}"
+                                    data-gallery-price="{{ $product['formatted_price'] }}"
+                                    data-gallery-category="{{ $product['category_label'] }}"
+                                    data-gallery-material="{{ $product['material'] }}"
+                                    data-gallery-size="{{ $product['size'] }}"
+                                    data-gallery-description="{{ $product['short_description'] }}"
+                                >
                                     <div class="product-gallery-stage product-tone-{{ $product['tone'] }}">
                                         <span class="product-gallery-badge">Galereya</span>
-                                        <strong data-gallery-active-label>{{ $product['images'][0] }}</strong>
-                                        <div class="product-gallery-controls">
-                                            <button type="button" class="product-gallery-nav" data-gallery-prev aria-label="Oldingi rasm">Oldingi</button>
-                                            <button type="button" class="product-gallery-nav" data-gallery-next aria-label="Keyingi rasm">Keyingi</button>
+                                        <div class="product-gallery-nav-wrap">
+                                            <button type="button" class="product-gallery-nav" data-gallery-prev aria-label="Oldingi rasm">&#8249;</button>
+                                            <button type="button" class="product-gallery-visual" data-gallery-open aria-label="Rasmni kattalashtirib ko'rish">
+                                                <span class="product-gallery-visual-art" aria-hidden="true">
+                                                    <span class="product-gallery-visual-pattern"></span>
+                                                </span>
+                                                <span class="product-gallery-visual-copy">
+                                                    <strong data-gallery-active-label>{{ $product['images'][0] }}</strong>
+                                                    <span class="product-gallery-visual-subtitle">{{ $product['title'] }}</span>
+                                                </span>
+                                            </button>
+                                            <button type="button" class="product-gallery-nav" data-gallery-next aria-label="Keyingi rasm">&#8250;</button>
+                                        </div>
+                                        <div class="product-gallery-meta">
+                                            <span class="product-gallery-hint">Kattalashtirib ko'rish</span>
+                                            <div class="product-gallery-counter" data-gallery-counter>1 / {{ count($product['images']) }}</div>
                                         </div>
                                     </div>
-                                    <div class="product-gallery-accordion">
+                                    <div class="product-gallery-data" hidden>
                                         @foreach ($product['images'] as $image)
                                             <button
                                                 type="button"
-                                                class="product-gallery-panel product-tone-{{ $product['tone'] }}{{ $loop->first ? ' is-active' : '' }}"
-                                                data-gallery-panel
+                                                class="product-gallery-item{{ $loop->first ? ' is-active' : '' }}"
+                                                data-gallery-item
                                                 data-gallery-label="{{ $image }}"
                                                 aria-pressed="{{ $loop->first ? 'true' : 'false' }}"
                                             >
-                                                <span>{{ $image }}</span>
+                                                {{ $image }}
                                             </button>
                                         @endforeach
                                     </div>
@@ -794,7 +853,7 @@
                                         <button
                                             type="button"
                                             class="button button-primary button-compact"
-                                            data-add-to-cart="{{ e(json_encode($productPayload)) }}"
+                                            data-add-to-cart="{{ base64_encode(json_encode($productPayload, JSON_UNESCAPED_UNICODE)) }}"
                                         >
                                             Savatchaga qo'shish
                                         </button>
@@ -1079,25 +1138,33 @@
                 </div>
             </section>
 
-            <section class="section admin-entry-section">
-                <div class="container">
-                    <div class="admin-entry-card">
-                        <div class="admin-entry-copy">
-                            <p class="section-label">Admin zona</p>
-                            <h2 class="section-title">Boshqaruv paneliga alohida kirish</h2>
-                            <p>
-                                Bu blok admin uchun ajratildi. Aloqa bo'limi kayfiyatiga aralashmasdan, panelga tez kirish
-                                uchun alohida joylashtirildi.
-                            </p>
-                        </div>
-
-                        <a href="{{ url('/admin/login') }}" class="button button-secondary admin-entry-button">
-                            Login
-                        </a>
-                    </div>
-                </div>
-            </section>
         </main>
+
+        <div class="gallery-lightbox is-hidden" data-gallery-modal aria-hidden="true">
+            <button type="button" class="gallery-lightbox-backdrop" data-gallery-close aria-label="Galereyani yopish"></button>
+            <div class="gallery-lightbox-dialog">
+                <button type="button" class="gallery-lightbox-close" data-gallery-close aria-label="Yopish">Yopish</button>
+                <button type="button" class="gallery-lightbox-arrow gallery-lightbox-arrow-left" data-gallery-modal-prev aria-label="Oldingi rasm">&#8249;</button>
+                <div class="gallery-lightbox-stage product-tone-rose" data-gallery-modal-stage>
+                    <span data-gallery-modal-title>Mahsulot galereyasi</span>
+                    <strong data-gallery-modal-label>Rasm</strong>
+                    <p data-gallery-modal-count>1 / 1</p>
+                </div>
+                <div class="gallery-lightbox-info">
+                    <div class="gallery-lightbox-info-head">
+                        <span data-gallery-modal-product-title>Mahsulot</span>
+                        <strong data-gallery-modal-price>0 so'm</strong>
+                    </div>
+                    <div class="gallery-lightbox-info-meta">
+                        <span data-gallery-modal-category>Kategoriya</span>
+                        <span data-gallery-modal-material>Material</span>
+                        <span data-gallery-modal-size>O'lcham</span>
+                    </div>
+                    <p data-gallery-modal-description>Mahsulot haqida qisqacha ma'lumot shu yerda chiqadi.</p>
+                </div>
+                <button type="button" class="gallery-lightbox-arrow gallery-lightbox-arrow-right" data-gallery-modal-next aria-label="Keyingi rasm">&#8250;</button>
+            </div>
+        </div>
 
         <footer class="site-footer">
             <div class="container footer-grid">

@@ -10,7 +10,6 @@ export default {
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.scss',
-        './vendor/filament/**/*.blade.php',
         './vendor/livewire/**/*.blade.php',
         './node_modules/flowbite/**/*.js',
     ],

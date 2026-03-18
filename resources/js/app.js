@@ -20,6 +20,22 @@ const escapeHtml = (value) => String(value ?? '')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 
+const parseProductPayload = (rawValue) => {
+    if (!rawValue) {
+        return null;
+    }
+
+    try {
+        return JSON.parse(rawValue);
+    } catch {
+        try {
+            return JSON.parse(window.atob(rawValue));
+        } catch {
+            return null;
+        }
+    }
+};
+
 const normalizeCartItem = (item) => ({
     id: String(item.id || ''),
     title: String(item.title || ''),
@@ -120,74 +136,199 @@ const initRevealEffects = () => {
 
 const initProductGalleries = () => {
     const galleries = Array.from(document.querySelectorAll('[data-gallery]'));
+    const modal = document.querySelector('[data-gallery-modal]');
+    const modalStage = modal?.querySelector('[data-gallery-modal-stage]');
+    const modalLabel = modal?.querySelector('[data-gallery-modal-label]');
+    const modalTitle = modal?.querySelector('[data-gallery-modal-title]');
+    const modalCount = modal?.querySelector('[data-gallery-modal-count]');
+    const modalProductTitle = modal?.querySelector('[data-gallery-modal-product-title]');
+    const modalPrice = modal?.querySelector('[data-gallery-modal-price]');
+    const modalCategory = modal?.querySelector('[data-gallery-modal-category]');
+    const modalMaterial = modal?.querySelector('[data-gallery-modal-material]');
+    const modalSize = modal?.querySelector('[data-gallery-modal-size]');
+    const modalDescription = modal?.querySelector('[data-gallery-modal-description]');
+    const modalPrev = modal?.querySelector('[data-gallery-modal-prev]');
+    const modalNext = modal?.querySelector('[data-gallery-modal-next]');
+    const modalCloseTargets = Array.from(document.querySelectorAll('[data-gallery-close]'));
+    const toneClasses = ['product-tone-rose', 'product-tone-gold', 'product-tone-teal', 'product-tone-ink', 'product-tone-clay', 'product-tone-sky'];
+    const modalState = {
+        labels: [],
+        index: 0,
+        tone: 'rose',
+        title: 'Mahsulot galereyasi',
+        meta: null,
+    };
 
-    galleries.forEach((gallery) => {
-        const panels = Array.from(gallery.querySelectorAll('[data-gallery-panel]'));
-        const label = gallery.querySelector('[data-gallery-active-label]');
-        const previousButton = gallery.querySelector('[data-gallery-prev]');
-        const nextButton = gallery.querySelector('[data-gallery-next]');
-
-        if (!panels.length || !label) {
+    const syncModal = () => {
+        if (!modalStage || !modalLabel || !modalTitle || !modalCount || !modalState.labels.length) {
             return;
         }
 
-        let activeIndex = Math.max(0, panels.findIndex((panel) => panel.classList.contains('is-active')));
-        let autoRotateId = null;
+        modalStage.classList.remove(...toneClasses);
+        modalStage.classList.add(`product-tone-${modalState.tone}`);
+        modalTitle.textContent = modalState.title;
+        modalLabel.textContent = modalState.labels[modalState.index] || 'Rasm';
+        modalCount.textContent = `${modalState.index + 1} / ${modalState.labels.length}`;
+
+        if (modalProductTitle) {
+            modalProductTitle.textContent = modalState.meta?.title || modalState.title;
+        }
+
+        if (modalPrice) {
+            modalPrice.textContent = modalState.meta?.price || '';
+        }
+
+        if (modalCategory) {
+            modalCategory.textContent = modalState.meta?.category || '';
+        }
+
+        if (modalMaterial) {
+            modalMaterial.textContent = modalState.meta?.material || '';
+        }
+
+        if (modalSize) {
+            modalSize.textContent = modalState.meta?.size || '';
+        }
+
+        if (modalDescription) {
+            modalDescription.textContent = modalState.meta?.description || '';
+        }
+    };
+
+    const closeModal = () => {
+        if (!modal) {
+            return;
+        }
+
+        modal.classList.add('is-hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('is-gallery-open');
+    };
+
+    const openModal = (labels, index, tone, title, meta = null) => {
+        if (!modal || !labels.length) {
+            return;
+        }
+
+        modalState.labels = labels;
+        modalState.index = index;
+        modalState.tone = tone;
+        modalState.title = title;
+        modalState.meta = meta;
+
+        syncModal();
+
+        modal.classList.remove('is-hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('is-gallery-open');
+    };
+
+    const stepModal = (direction) => {
+        if (!modalState.labels.length) {
+            return;
+        }
+
+        modalState.index = (modalState.index + direction + modalState.labels.length) % modalState.labels.length;
+        syncModal();
+    };
+
+    modalPrev?.addEventListener('click', () => stepModal(-1));
+    modalNext?.addEventListener('click', () => stepModal(1));
+    modalCloseTargets.forEach((target) => target.addEventListener('click', closeModal));
+    document.addEventListener('keydown', (event) => {
+        if (modal?.classList.contains('is-hidden')) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+
+        if (event.key === 'ArrowLeft') {
+            stepModal(-1);
+        }
+
+        if (event.key === 'ArrowRight') {
+            stepModal(1);
+        }
+    });
+
+    galleries.forEach((gallery) => {
+        const items = Array.from(gallery.querySelectorAll('[data-gallery-item]'));
+        const labels = Array.from(gallery.querySelectorAll('[data-gallery-active-label]'));
+        const counter = gallery.querySelector('[data-gallery-counter]');
+        const previousButton = gallery.querySelector('[data-gallery-prev]');
+        const nextButton = gallery.querySelector('[data-gallery-next]');
+        const openButton = gallery.querySelector('[data-gallery-open]');
+        const tone = gallery.dataset.galleryTone || 'rose';
+        const title = gallery.dataset.galleryTitle || 'Mahsulot galereyasi';
+        const meta = {
+            title,
+            price: gallery.dataset.galleryPrice || '',
+            category: gallery.dataset.galleryCategory || '',
+            material: gallery.dataset.galleryMaterial || '',
+            size: gallery.dataset.gallerySize || '',
+            description: gallery.dataset.galleryDescription || '',
+        };
+
+        if (!items.length || !labels.length) {
+            return;
+        }
+
+        let activeIndex = Math.max(0, items.findIndex((item) => item.classList.contains('is-active')));
 
         const setActive = (index) => {
-            activeIndex = (index + panels.length) % panels.length;
+            activeIndex = (index + items.length) % items.length;
 
-            panels.forEach((panel, panelIndex) => {
-                const isActive = panelIndex === activeIndex;
+            items.forEach((item, itemIndex) => {
+                const isActive = itemIndex === activeIndex;
 
-                panel.classList.toggle('is-active', isActive);
-                panel.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-                panel.tabIndex = isActive ? 0 : -1;
+                item.classList.toggle('is-active', isActive);
+                item.setAttribute('aria-pressed', isActive ? 'true' : 'false');
             });
 
-            label.textContent = panels[activeIndex].dataset.galleryLabel || panels[activeIndex].textContent.trim();
-        };
+            const activeLabel = items[activeIndex].dataset.galleryLabel || items[activeIndex].textContent.trim();
 
-        const stopAutoRotate = () => {
-            if (autoRotateId) {
-                window.clearInterval(autoRotateId);
-                autoRotateId = null;
+            labels.forEach((label) => {
+                label.textContent = activeLabel;
+            });
+
+            if (counter) {
+                counter.textContent = `${activeIndex + 1} / ${items.length}`;
+            }
+
+            if (openButton) {
+                openButton.setAttribute('aria-label', `${title}: ${activeLabel}`);
             }
         };
 
-        const startAutoRotate = () => {
-            if (panels.length < 2) {
-                return;
-            }
+        if (previousButton) {
+            previousButton.disabled = items.length <= 1;
+        }
 
-            stopAutoRotate();
-            autoRotateId = window.setInterval(() => {
-                setActive(activeIndex + 1);
-            }, 4200);
-        };
-
-        panels.forEach((panel, index) => {
-            panel.addEventListener('click', () => {
-                setActive(index);
-                startAutoRotate();
-            });
-        });
+        if (nextButton) {
+            nextButton.disabled = items.length <= 1;
+        }
 
         previousButton?.addEventListener('click', () => {
             setActive(activeIndex - 1);
-            startAutoRotate();
         });
 
         nextButton?.addEventListener('click', () => {
             setActive(activeIndex + 1);
-            startAutoRotate();
         });
 
-        gallery.addEventListener('mouseenter', stopAutoRotate);
-        gallery.addEventListener('mouseleave', startAutoRotate);
+        openButton?.addEventListener('click', () => {
+            openModal(
+                items.map((item) => item.dataset.galleryLabel || item.textContent.trim()),
+                activeIndex,
+                tone,
+                title,
+                meta,
+            );
+        });
 
         setActive(activeIndex);
-        startAutoRotate();
     });
 };
 
@@ -513,13 +654,13 @@ const initCartAndOrder = () => {
     addToCartButtons.forEach((button) => {
         button.addEventListener('click', () => {
             try {
-                const rawProduct = button.getAttribute('data-add-to-cart');
+                const product = parseProductPayload(button.getAttribute('data-add-to-cart'));
 
-                if (!rawProduct) {
+                if (!product) {
                     return;
                 }
 
-                addToCart(JSON.parse(rawProduct));
+                addToCart(product);
 
                 const originalLabel = button.textContent;
                 button.textContent = "Qo'shildi";

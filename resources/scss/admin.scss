@@ -1,0 +1,502 @@
+:root {
+    --admin-bg: #1a100d;
+    --admin-bg-soft: #2c1a14;
+    --admin-surface: rgba(58, 35, 27, 0.72);
+    --admin-border: rgba(255, 246, 235, 0.1);
+    --admin-cream: #fff7ed;
+    --admin-cream-muted: #dccfc1;
+    --admin-accent: #e8c07a;
+    --admin-accent-strong: #d98a4e;
+    --admin-ink: #2d1b15;
+    --admin-success: #285b4a;
+}
+
+body.admin-app,
+body.admin-auth-page {
+    background:
+        radial-gradient(circle at top left, rgba(225, 142, 79, 0.22), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(209, 180, 116, 0.18), transparent 28%),
+        linear-gradient(135deg, #110a08 0%, #1f120e 50%, #2b1711 100%);
+    font-family: "Outfit", sans-serif;
+}
+
+body.admin-auth-page {
+    background:
+        radial-gradient(circle at 12% 18%, rgba(196, 114, 61, 0.24), transparent 22%),
+        radial-gradient(circle at 82% 20%, rgba(214, 187, 132, 0.12), transparent 20%),
+        radial-gradient(circle at 76% 78%, rgba(196, 114, 61, 0.12), transparent 18%),
+        linear-gradient(125deg, #120b09 0%, #21130f 46%, #2e1b15 100%);
+}
+
+.admin-backdrop {
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: linear-gradient(180deg, rgba(255, 255, 255, 0.75), transparent 100%);
+    pointer-events: none;
+}
+
+.admin-auth-shell {
+    background:
+        linear-gradient(140deg, rgba(37, 20, 14, 0.94), rgba(30, 17, 13, 0.84)),
+        radial-gradient(circle at top right, rgba(232, 192, 122, 0.16), transparent 35%);
+}
+
+.admin-auth-stage {
+    background:
+        radial-gradient(circle at top left, rgba(232, 192, 122, 0.12), transparent 30%),
+        linear-gradient(150deg, rgba(44, 25, 19, 0.96), rgba(25, 15, 12, 0.96));
+}
+
+.admin-auth-stage-pattern {
+    position: absolute;
+    inset: 1.2rem;
+    border: 1px solid rgba(240, 221, 193, 0.08);
+    border-radius: 1.6rem;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.9), transparent 92%);
+    pointer-events: none;
+}
+
+.admin-auth-panel {
+    background:
+        linear-gradient(180deg, rgba(244, 232, 218, 0.9), rgba(238, 225, 210, 0.92)),
+        radial-gradient(circle at top right, rgba(217, 138, 78, 0.14), transparent 28%);
+}
+
+.admin-auth-panel-inner {
+    position: relative;
+}
+
+.admin-auth-panel-inner::before {
+    content: "";
+    position: absolute;
+    inset: 1rem;
+    border: 1px solid rgba(146, 111, 89, 0.08);
+    border-radius: 1.3rem;
+    pointer-events: none;
+}
+
+.admin-auth-orb {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(24px);
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.admin-auth-orb-left {
+    left: -5rem;
+    top: 6rem;
+    width: 15rem;
+    height: 15rem;
+    background: radial-gradient(circle, rgba(206, 123, 76, 0.26), transparent 68%);
+}
+
+.admin-auth-orb-right {
+    right: -4rem;
+    bottom: 5rem;
+    width: 16rem;
+    height: 16rem;
+    background: radial-gradient(circle, rgba(223, 196, 144, 0.18), transparent 72%);
+}
+
+.admin-showcase-card,
+.admin-surface {
+    border: 1px solid var(--admin-border);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+        var(--admin-surface);
+    border-radius: 1.75rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.admin-showcase-card {
+    padding: 1.25rem;
+}
+
+.admin-auth-metric {
+    border: 1px solid rgba(255, 241, 223, 0.09);
+    border-radius: 1.5rem;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.03);
+    padding: 1.2rem;
+    backdrop-filter: blur(12px);
+}
+
+.admin-auth-metric-label {
+    color: rgba(243, 225, 199, 0.6);
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+}
+
+.admin-auth-metric-copy {
+    color: rgba(237, 227, 217, 0.8);
+    font-size: 0.92rem;
+    line-height: 1.75;
+    margin-top: 0.8rem;
+}
+
+.admin-auth-quote {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+}
+
+.admin-auth-quote-line {
+    width: 1px;
+    min-height: 5.2rem;
+    background: linear-gradient(180deg, rgba(232, 192, 122, 0), rgba(232, 192, 122, 0.55), rgba(232, 192, 122, 0));
+}
+
+.admin-auth-seal {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.75rem;
+    height: 4.75rem;
+    border-radius: 999px;
+    border: 1px solid rgba(171, 125, 96, 0.24);
+    background: radial-gradient(circle at center, rgba(217, 138, 78, 0.16), rgba(255, 255, 255, 0.8));
+    flex-shrink: 0;
+}
+
+.admin-auth-seal::before,
+.admin-auth-seal::after,
+.admin-auth-seal span {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    border-radius: 999px;
+}
+
+.admin-auth-seal::before {
+    width: 3.4rem;
+    height: 3.4rem;
+    border: 1px dashed rgba(146, 102, 75, 0.36);
+}
+
+.admin-auth-seal::after {
+    width: 1.2rem;
+    height: 1.2rem;
+    background: linear-gradient(135deg, #c5643f, #e8c07a);
+}
+
+.admin-auth-mini {
+    border: 1px solid rgba(170, 129, 104, 0.16);
+    border-radius: 1.15rem;
+    background: rgba(255, 255, 255, 0.52);
+    padding: 0.95rem 1rem;
+}
+
+.admin-auth-mini-label {
+    color: #8c624f;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+}
+
+.admin-auth-mini-copy {
+    color: #402922;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-top: 0.45rem;
+}
+
+.admin-auth-field-label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: #6f5042;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+}
+
+.admin-auth-input-shell {
+    position: relative;
+}
+
+.admin-auth-input {
+    min-height: 4rem;
+    border-radius: 1.45rem;
+    border-color: rgba(138, 102, 82, 0.18);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(252, 245, 239, 0.96));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 12px 28px rgba(109, 70, 48, 0.08);
+    padding-left: 1.25rem;
+}
+
+.admin-auth-toggle {
+    position: absolute;
+    inset: 0.45rem 0.55rem 0.45rem auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 4.25rem;
+    border: 1px solid rgba(146, 111, 89, 0.18);
+    border-radius: 1rem;
+    background: rgba(255, 250, 244, 0.92);
+    color: #8d6450;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.admin-auth-toggle:hover {
+    background: #fffdf9;
+    border-color: rgba(217, 138, 78, 0.3);
+    color: #6d4738;
+}
+
+.admin-auth-submit {
+    min-height: 3.6rem;
+    font-size: 0.96rem;
+    letter-spacing: 0.08em;
+}
+
+.admin-showcase-label {
+    color: rgba(255, 238, 209, 0.7);
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+}
+
+.admin-showcase-value {
+    color: var(--admin-cream);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 2rem;
+    line-height: 1;
+    margin-top: 1rem;
+}
+
+.admin-showcase-copy {
+    color: rgba(240, 232, 224, 0.78);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-top: 0.75rem;
+}
+
+.admin-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border: 1px solid transparent;
+    border-radius: 1.25rem;
+    color: rgba(235, 225, 216, 0.78);
+    padding: 0.95rem 1rem;
+    transition: all 180ms ease;
+}
+
+.admin-nav-link:hover,
+.admin-nav-link.is-active {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(232, 192, 122, 0.15);
+    color: var(--admin-cream);
+}
+
+.admin-label {
+    display: inline-block;
+    margin-bottom: 0.7rem;
+    color: rgba(241, 229, 219, 0.9);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+}
+
+.admin-auth-page .admin-label {
+    color: #755443;
+}
+
+.admin-input,
+.admin-select,
+.admin-textarea {
+    width: 100%;
+    appearance: none;
+    border: 1px solid rgba(143, 112, 95, 0.22);
+    border-radius: 1.25rem;
+    background: rgba(255, 250, 244, 0.92);
+    color: var(--admin-ink);
+    padding: 0.95rem 1rem;
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.admin-textarea {
+    min-height: 8rem;
+    resize: vertical;
+}
+
+.admin-input:focus,
+.admin-select:focus,
+.admin-textarea:focus {
+    border-color: rgba(217, 138, 78, 0.52);
+    box-shadow: 0 0 0 4px rgba(232, 192, 122, 0.18);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+.admin-auth-input:focus {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        0 16px 34px rgba(203, 142, 87, 0.14),
+        0 0 0 4px rgba(232, 192, 122, 0.14);
+}
+
+.admin-app .admin-input,
+.admin-app .admin-select,
+.admin-app .admin-textarea {
+    background: rgba(255, 251, 246, 0.98);
+}
+
+.admin-checkbox {
+    appearance: none;
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 0.35rem;
+    border: 1px solid rgba(143, 112, 95, 0.45);
+    background: #fff7ed;
+    position: relative;
+}
+
+.admin-checkbox:checked {
+    background: linear-gradient(135deg, var(--admin-accent-strong), var(--admin-accent));
+    border-color: transparent;
+}
+
+.admin-checkbox:checked::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 0.32rem;
+    height: 0.65rem;
+    border-right: 2px solid #2c1a14;
+    border-bottom: 2px solid #2c1a14;
+    transform: rotate(45deg);
+    top: -0.08rem;
+}
+
+.admin-button {
+    align-items: center;
+    background: linear-gradient(135deg, #bf5a37, #d98a4e);
+    border: 0;
+    border-radius: 999px;
+    color: #fff7ed;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 0.9rem;
+    font-weight: 600;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding: 0.9rem 1.6rem;
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.admin-button:hover {
+    box-shadow: 0 20px 40px rgba(217, 138, 78, 0.28);
+    filter: brightness(1.02);
+    transform: translateY(-1px);
+}
+
+.admin-table {
+    width: 100%;
+}
+
+.admin-table thead th {
+    color: rgba(242, 226, 211, 0.62);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.admin-table tbody td {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    color: rgba(250, 241, 232, 0.9);
+    padding: 1.15rem 1.5rem;
+    vertical-align: top;
+}
+
+.admin-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    border: 1px solid rgba(232, 192, 122, 0.18);
+    background: rgba(232, 192, 122, 0.12);
+    color: #f7dfb2;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    padding: 0.45rem 0.8rem;
+    text-transform: uppercase;
+}
+
+.admin-badge.is-success {
+    background: rgba(86, 161, 122, 0.12);
+    border-color: rgba(86, 161, 122, 0.18);
+    color: #b9efd0;
+}
+
+.admin-badge.is-muted {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: rgba(238, 230, 220, 0.76);
+}
+
+.admin-error {
+    color: #f6b9a9;
+    font-size: 0.8rem;
+    margin-top: 0.6rem;
+}
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+@media (max-width: 1023px) {
+    .admin-sidebar {
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    .admin-auth-shell {
+        border-radius: 1.6rem;
+    }
+
+    .admin-auth-stage-pattern {
+        inset: 0.8rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .admin-auth-panel-inner::before {
+        inset: 0.8rem;
+    }
+
+    .admin-auth-quote {
+        gap: 1rem;
+    }
+
+    .admin-auth-quote-line {
+        min-height: 4.3rem;
+    }
+}
