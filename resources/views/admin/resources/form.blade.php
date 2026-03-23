@@ -1,5 +1,11 @@
 @extends('admin.layouts.app')
 
+@php
+    $pageMap = $resource['page_map'] ?? [];
+    $editorTip = $resource['editor_tip'] ?? null;
+    $formColumns = (int) ($resource['form_columns'] ?? 2);
+@endphp
+
 @section('content')
     <section class="space-y-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
@@ -9,10 +15,45 @@
             </p>
         </div>
 
+        @if ($editorTip || filled($pageMap))
+            <article class="admin-surface p-6">
+                <div class="admin-guide-head">
+                    <div>
+                        <p class="admin-label">Qayerda Ko'rinadi</p>
+                        <h2 class="font-serif text-3xl text-amber-50">Shu o'zgarish qayerga ta'sir qiladi?</h2>
+                    </div>
+                    @if ($editorTip)
+                        <p class="admin-guide-copy">{{ $editorTip }}</p>
+                    @endif
+                </div>
+
+                @if (filled($pageMap))
+                    <div class="admin-page-map-grid">
+                        @foreach ($pageMap as $mapItem)
+                            <a
+                                href="{{ $mapItem['path'] ?? '#' }}"
+                                class="admin-page-map-card {{ ($mapItem['state'] ?? 'draft') === 'live' ? 'is-live' : 'is-draft' }}"
+                            >
+                                <span class="admin-page-map-pill">
+                                    {{ ($mapItem['state'] ?? 'draft') === 'live' ? 'Live bo‘lim' : 'Draft bo‘lim' }}
+                                </span>
+                                <strong>{{ $mapItem['title'] }}</strong>
+                                <p>{{ $mapItem['description'] }}</p>
+                                @if (!empty($mapItem['path']))
+                                    <span class="admin-page-map-link">Asosiy sahifada ko'rish</span>
+                                @endif
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            </article>
+        @endif
+
         <form
             method="POST"
             action="{{ $record ? route('admin.resources.update', [$resource['key'], $record->getKey()]) : route('admin.resources.store', $resource['key']) }}"
             class="space-y-6"
+            enctype="multipart/form-data"
         >
             @csrf
             @if ($record)
@@ -28,14 +69,21 @@
                         @endif
                     </div>
 
-                    <div class="grid gap-5 md:grid-cols-2">
+                <div class="{{ $formColumns === 1 ? 'grid gap-5' : 'grid gap-5 md:grid-cols-2' }}">
                         @foreach ($section['fields'] as $field)
                             @php
                                 $name = $field['name'];
                                 $type = $field['type'] ?? 'text';
                                 $options = \App\Admin\Support\AdminResourceRegistry::options($field);
-                                $value = old($name, $formData[$name] ?? null);
-                                $spanClass = ($field['column_span'] ?? 1) === 2 ? 'md:col-span-2' : '';
+                                $storedValue = $formData[$name] ?? null;
+                                $value = in_array($type, ['image', 'images'], true) ? $storedValue : old($name, $storedValue);
+                                $spanClass = $formColumns === 1
+                                    ? ''
+                                    : (($field['column_span'] ?? 1) === 2 ? 'md:col-span-2' : '');
+                                $currentImages = $type === 'images'
+                                    ? collect(\Illuminate\Support\Arr::wrap($storedValue))->filter()->values()->all()
+                                    : [];
+                                $currentImage = $type === 'image' ? \App\Support\UploadedMedia::url($storedValue) : null;
                             @endphp
 
                             @if ($type === 'hidden')
@@ -83,6 +131,68 @@
                                         <input id="{{ $name }}" name="{{ $name }}" type="checkbox" value="1" class="admin-checkbox" @checked((bool) $value)>
                                         <span>{{ $field['label'] }}</span>
                                     </label>
+                                @elseif ($type === 'image')
+                                    <div class="admin-upload-shell">
+                                        <input
+                                            id="{{ $name }}"
+                                            name="{{ $name }}"
+                                            type="file"
+                                            accept="image/*"
+                                            class="admin-file-input"
+                                        >
+
+                                        @if ($currentImage)
+                                            <div class="admin-upload-grid">
+                                                <article class="admin-upload-card">
+                                                    <img src="{{ $currentImage }}" alt="{{ $field['label'] }}" class="admin-upload-image">
+                                                    <div class="admin-upload-meta">
+                                                        <strong>Hozirgi rasm</strong>
+                                                        <span>{{ basename((string) $storedValue) }}</span>
+                                                    </div>
+                                                </article>
+                                            </div>
+
+                                            <label class="admin-upload-clear">
+                                                <input name="clear_{{ $name }}" type="checkbox" value="1" class="admin-checkbox">
+                                                <span>Joriy rasmni olib tashlash</span>
+                                            </label>
+                                        @endif
+                                    </div>
+                                @elseif ($type === 'images')
+                                    <div class="admin-upload-shell">
+                                        <input
+                                            id="{{ $name }}"
+                                            name="{{ $name }}[]"
+                                            type="file"
+                                            accept="image/*"
+                                            multiple
+                                            class="admin-file-input"
+                                        >
+
+                                        @if ($currentImages !== [])
+                                            <div class="admin-upload-grid">
+                                                @foreach ($currentImages as $imagePath)
+                                                    @php
+                                                        $imageUrl = \App\Support\UploadedMedia::url($imagePath);
+                                                    @endphp
+                                                    @if ($imageUrl)
+                                                        <article class="admin-upload-card">
+                                                            <img src="{{ $imageUrl }}" alt="{{ $field['label'].' '.$loop->iteration }}" class="admin-upload-image">
+                                                            <div class="admin-upload-meta">
+                                                                <strong>Rasm {{ $loop->iteration }}</strong>
+                                                                <span>{{ basename((string) $imagePath) }}</span>
+                                                            </div>
+                                                        </article>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+
+                                            <label class="admin-upload-clear">
+                                                <input name="clear_{{ $name }}" type="checkbox" value="1" class="admin-checkbox">
+                                                <span>Joriy galereyani olib tashlash</span>
+                                            </label>
+                                        @endif
+                                    </div>
                                 @elseif ($type === 'datetime-local')
                                     <input id="{{ $name }}" name="{{ $name }}" type="datetime-local" value="{{ $value }}" class="admin-input">
                                 @endif
@@ -94,6 +204,10 @@
                                 @error($name)
                                     <p class="admin-error">{{ $message }}</p>
                                 @enderror
+
+                                @foreach ($errors->get($name.'.*') as $messages)
+                                    <p class="admin-error">{{ $messages[0] }}</p>
+                                @endforeach
                             </div>
                         @endforeach
                     </div>

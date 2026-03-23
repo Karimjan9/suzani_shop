@@ -11,6 +11,54 @@ import 'swiper/css/pagination';
 window.Alpine = Alpine;
 Alpine.start();
 
+const initAdminTheme = () => {
+    const storageKey = 'suzani-shop-theme';
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const palette = {
+        atelier: '#1f120e',
+        nocturne: '#171c28',
+    };
+
+    const normalizeTheme = (value) => value === 'nocturne' ? 'nocturne' : 'atelier';
+
+    const applyTheme = (value) => {
+        const theme = normalizeTheme(value);
+
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = 'dark';
+
+        if (metaTheme) {
+            metaTheme.setAttribute('content', palette[theme] || palette.atelier);
+        }
+
+        document.querySelectorAll('[data-admin-theme-toggle]').forEach((toggle) => {
+            toggle.setAttribute('data-active-theme', theme);
+            toggle.setAttribute('aria-pressed', theme === 'nocturne' ? 'true' : 'false');
+        });
+    };
+
+    applyTheme(document.documentElement.getAttribute('data-theme'));
+
+    document.querySelectorAll('[data-admin-theme-toggle]').forEach((toggle) => {
+        if (toggle.dataset.themeReady === 'true') {
+            return;
+        }
+
+        toggle.dataset.themeReady = 'true';
+
+        toggle.addEventListener('click', () => {
+            const currentTheme = normalizeTheme(document.documentElement.getAttribute('data-theme'));
+            const nextTheme = currentTheme === 'nocturne' ? 'atelier' : 'nocturne';
+
+            applyTheme(nextTheme);
+
+            try {
+                window.localStorage.setItem(storageKey, nextTheme);
+            } catch {}
+        });
+    });
+};
+
 const initAdminSwipers = () => {
     document.querySelectorAll('[data-admin-swiper]').forEach((element) => {
         if (element.dataset.swiperReady === 'true') {
@@ -40,6 +88,7 @@ const initAdminSwipers = () => {
 };
 
 const bootAdminUi = () => {
+    initAdminTheme();
     initDropdowns();
     initAdminSwipers();
 };

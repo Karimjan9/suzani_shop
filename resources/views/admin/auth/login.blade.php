@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="uz" data-theme="suzani">
+<html lang="uz" data-theme="atelier">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Login | Suzani Shop</title>
+    <meta name="theme-color" content="#1f120e">
     <link rel="icon" type="image/png" href="{{ asset('images/logo/image.png') }}">
+    <script>
+        (() => {
+            const storageKey = 'suzani-shop-theme';
+            let theme = 'atelier';
+
+            try {
+                if (window.localStorage.getItem(storageKey) === 'nocturne') {
+                    theme = 'nocturne';
+                }
+            } catch {}
+
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.style.colorScheme = 'dark';
+        })();
+    </script>
     @vite(['resources/js/admin.js'])
 </head>
 <body class="admin-auth-page min-h-screen text-stone-100">
@@ -20,7 +36,7 @@
 
                 <div class="relative z-10 flex h-full flex-col justify-between">
                     <div class="flex flex-wrap items-center gap-4">
-                        <div class="inline-flex items-center gap-3 rounded-full border border-amber-200/20 bg-white/5 px-4 py-2 backdrop-blur-sm">
+                        <div class="admin-auth-brand-pill inline-flex items-center gap-3 rounded-full border border-amber-200/20 bg-white/5 px-4 py-2 backdrop-blur-sm">
                             <span class="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-amber-200/20 bg-amber-200/10 p-1 shadow-[0_10px_24px_rgba(0,0,0,0.2)]">
                                 <img
                                     src="{{ asset('images/logo/image.png') }}"
@@ -34,9 +50,21 @@
                             </div>
                         </div>
 
-                        <div class="rounded-full border border-emerald-200/15 bg-emerald-300/10 px-4 py-2 text-[11px] uppercase tracking-[0.32em] text-emerald-100/80">
+                        <div class="admin-auth-access-pill rounded-full border border-emerald-200/15 bg-emerald-300/10 px-4 py-2 text-[11px] uppercase tracking-[0.32em] text-emerald-100/80">
                             Admin access
                         </div>
+
+                        <button
+                            type="button"
+                            class="admin-theme-toggle admin-theme-toggle-compact"
+                            data-admin-theme-toggle
+                            data-active-theme="atelier"
+                            aria-label="Admin rang rejimini almashtirish"
+                            aria-pressed="false"
+                        >
+                            <span class="admin-theme-toggle-label admin-theme-toggle-label-light">Atelier</span>
+                            <span class="admin-theme-toggle-label admin-theme-toggle-label-dark">Nocturne</span>
+                        </button>
                     </div>
 
                     <div class="mt-10 max-w-xl">
@@ -76,7 +104,7 @@
             </section>
 
             <section class="admin-auth-panel p-5 sm:p-8 lg:p-10" x-data="{ showPassword: false }">
-                <div class="admin-auth-panel-inner mx-auto flex min-h-full w-full max-w-md flex-col justify-center rounded-[1.75rem] border border-[#e4d4c4] bg-[rgba(255,251,246,0.92)] p-6 shadow-[0_24px_70px_rgba(77,48,34,0.18)] sm:p-8">
+                <div class="admin-auth-panel-inner admin-auth-panel-surface mx-auto flex min-h-full w-full max-w-md flex-col justify-center rounded-[1.75rem] border border-[#e4d4c4] bg-[rgba(255,251,246,0.92)] p-6 shadow-[0_24px_70px_rgba(77,48,34,0.18)] sm:p-8">
                     <div class="flex items-start justify-between gap-4">
                         <div>
                             <p class="text-xs uppercase tracking-[0.34em] text-[#8e6654]">Suzani shop</p>
@@ -88,7 +116,7 @@
                         </div>
                     </div>
 
-                    <form method="POST" action="{{ route('admin.login.attempt') }}" class="mt-8 space-y-5">
+                    <form method="POST" action="{{ route('login.attempt') }}" class="mt-8 space-y-5">
                         @csrf
 
                         <div class="admin-auth-field">
@@ -145,6 +173,10 @@
                         <button type="submit" class="admin-button admin-auth-submit w-full">
                             Kirish
                         </button>
+
+                        <a href="/" class="admin-auth-home-link w-full">
+                            Asosiy sahifaga o'tish
+                        </a>
                     </form>
 
                 </div>

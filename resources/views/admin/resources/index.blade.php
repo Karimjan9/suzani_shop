@@ -2,10 +2,46 @@
 
 @php
     $searchValue = request('search');
+    $pageMap = $resource['page_map'] ?? [];
+    $editorTip = $resource['editor_tip'] ?? null;
 @endphp
 
 @section('content')
     <section class="space-y-6">
+        @if ($editorTip || filled($pageMap))
+            <article class="admin-surface p-6">
+                <div class="admin-guide-head">
+                    <div>
+                        <p class="admin-label">Qayerda Ko'rinadi</p>
+                        <h2 class="font-serif text-3xl text-amber-50">Bu bo'lim nimani boshqaradi?</h2>
+                    </div>
+                    @if ($editorTip)
+                        <p class="admin-guide-copy">{{ $editorTip }}</p>
+                    @endif
+                </div>
+
+                @if (filled($pageMap))
+                    <div class="admin-page-map-grid">
+                        @foreach ($pageMap as $mapItem)
+                            <a
+                                href="{{ $mapItem['path'] ?? '#' }}"
+                                class="admin-page-map-card {{ ($mapItem['state'] ?? 'draft') === 'live' ? 'is-live' : 'is-draft' }}"
+                            >
+                                <span class="admin-page-map-pill">
+                                    {{ ($mapItem['state'] ?? 'draft') === 'live' ? 'Live bo‘lim' : 'Draft bo‘lim' }}
+                                </span>
+                                <strong>{{ $mapItem['title'] }}</strong>
+                                <p>{{ $mapItem['description'] }}</p>
+                                @if (!empty($mapItem['path']))
+                                    <span class="admin-page-map-link">Asosiy sahifada ko'rish</span>
+                                @endif
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            </article>
+        @endif
+
         <article class="admin-surface p-6">
             <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
                 <form method="GET" class="grid flex-1 gap-3 md:grid-cols-2 xl:grid-cols-5">
@@ -15,7 +51,9 @@
                     </label>
 
                     @foreach ($resource['filters'] as $filter)
-                        @php($options = \App\Admin\Support\AdminResourceRegistry::options($filter))
+                        @php
+                            $options = \App\Admin\Support\AdminResourceRegistry::options($filter);
+                        @endphp
                         <label>
                             <span class="admin-label">{{ $filter['label'] }}</span>
                             @if (($filter['type'] ?? 'text') === 'select')

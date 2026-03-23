@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class OrderController extends Controller
 {
@@ -15,7 +16,7 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'customer_name' => ['required', 'string', 'max:120'],
-            'phone' => ['required', 'string', 'max:30'],
+            'phone' => ['required', 'string', 'max:30', 'regex:/^(?:\+?998[\s\-()]*)?\d{2}[\s\-()]*\d{3}[\s\-()]*\d{2}[\s\-()]*\d{2}$/'],
             'telegram' => ['nullable', 'string', 'max:120'],
             'instagram' => ['nullable', 'string', 'max:120'],
             'address' => ['nullable', 'string', 'max:255'],
@@ -37,6 +38,8 @@ class OrderController extends Controller
             'items.*.price' => ['required', 'integer', 'min:0', 'max:1000000000'],
             'items.*.quantity' => ['required', 'integer', 'min:1', 'max:99'],
         ]);
+
+        $validated['phone'] = $this->normalizeUzbekPhone($validated['phone']);
 
         $totals = collect($validated['items'])->reduce(
             function (array $carry, array $item): array {
@@ -114,5 +117,28 @@ class OrderController extends Controller
         } while (Order::query()->where('order_number', $orderNumber)->exists());
 
         return $orderNumber;
+    }
+
+    protected function normalizeUzbekPhone(string $phone): string
+    {
+        $digits = preg_replace('/\D+/', '', $phone) ?? '';
+
+        if (strlen($digits) === 9) {
+            $digits = '998'.$digits;
+        }
+
+        if (! str_starts_with($digits, '998') || strlen($digits) !== 12) {
+            throw ValidationException::withMessages([
+                'phone' => 'Telefon raqamini 91 310 32 98 ko‘rinishida kiriting.',
+            ]);
+        }
+
+        return sprintf(
+            '+998 %s %s %s %s',
+            substr($digits, 3, 2),
+            substr($digits, 5, 3),
+            substr($digits, 8, 2),
+            substr($digits, 10, 2),
+        );
     }
 }

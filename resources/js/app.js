@@ -50,6 +50,7 @@ const normalizeCartItem = (item) => ({
     color: String(item.color || ''),
     availability: String(item.availability || ''),
     lead_time: String(item.lead_time || ''),
+    image_src: String(item.image_src || ''),
     image_label: String(item.image_label || item.images?.[0] || 'Mahsulot'),
     images: Array.isArray(item.images) ? item.images.filter(Boolean).map(String) : [],
 });
@@ -141,6 +142,7 @@ const initProductGalleries = () => {
     const modalLabel = modal?.querySelector('[data-gallery-modal-label]');
     const modalTitle = modal?.querySelector('[data-gallery-modal-title]');
     const modalCount = modal?.querySelector('[data-gallery-modal-count]');
+    const modalImage = modal?.querySelector('[data-gallery-modal-image]');
     const modalProductTitle = modal?.querySelector('[data-gallery-modal-product-title]');
     const modalPrice = modal?.querySelector('[data-gallery-modal-price]');
     const modalCategory = modal?.querySelector('[data-gallery-modal-category]');
@@ -152,47 +154,50 @@ const initProductGalleries = () => {
     const modalCloseTargets = Array.from(document.querySelectorAll('[data-gallery-close]'));
     const toneClasses = ['product-tone-rose', 'product-tone-gold', 'product-tone-teal', 'product-tone-ink', 'product-tone-clay', 'product-tone-sky'];
     const modalState = {
-        labels: [],
+        items: [],
         index: 0,
         tone: 'rose',
         title: 'Mahsulot galereyasi',
         meta: null,
     };
 
-    const syncModal = () => {
-        if (!modalStage || !modalLabel || !modalTitle || !modalCount || !modalState.labels.length) {
+    const syncMetaValue = (element, value) => {
+        if (!element) {
             return;
         }
+
+        const nextValue = String(value || '').trim();
+        element.textContent = nextValue;
+        element.hidden = nextValue === '';
+    };
+
+    const syncModal = () => {
+        if (!modalStage || !modalLabel || !modalTitle || !modalCount || !modalState.items.length) {
+            return;
+        }
+
+        const activeItem = modalState.items[modalState.index] || {};
 
         modalStage.classList.remove(...toneClasses);
         modalStage.classList.add(`product-tone-${modalState.tone}`);
         modalTitle.textContent = modalState.title;
-        modalLabel.textContent = modalState.labels[modalState.index] || 'Rasm';
-        modalCount.textContent = `${modalState.index + 1} / ${modalState.labels.length}`;
+        modalLabel.textContent = activeItem.label || 'Rasm';
+        modalCount.textContent = `${modalState.index + 1} / ${modalState.items.length}`;
+
+        if (modalImage) {
+            modalImage.src = activeItem.src || '';
+            modalImage.alt = activeItem.alt || activeItem.label || modalState.title;
+        }
 
         if (modalProductTitle) {
             modalProductTitle.textContent = modalState.meta?.title || modalState.title;
         }
 
-        if (modalPrice) {
-            modalPrice.textContent = modalState.meta?.price || '';
-        }
-
-        if (modalCategory) {
-            modalCategory.textContent = modalState.meta?.category || '';
-        }
-
-        if (modalMaterial) {
-            modalMaterial.textContent = modalState.meta?.material || '';
-        }
-
-        if (modalSize) {
-            modalSize.textContent = modalState.meta?.size || '';
-        }
-
-        if (modalDescription) {
-            modalDescription.textContent = modalState.meta?.description || '';
-        }
+        syncMetaValue(modalPrice, modalState.meta?.price);
+        syncMetaValue(modalCategory, modalState.meta?.category);
+        syncMetaValue(modalMaterial, modalState.meta?.material);
+        syncMetaValue(modalSize, modalState.meta?.size);
+        syncMetaValue(modalDescription, modalState.meta?.description);
     };
 
     const closeModal = () => {
@@ -203,14 +208,19 @@ const initProductGalleries = () => {
         modal.classList.add('is-hidden');
         modal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('is-gallery-open');
+
+        if (modalImage) {
+            modalImage.src = '';
+            modalImage.alt = '';
+        }
     };
 
-    const openModal = (labels, index, tone, title, meta = null) => {
-        if (!modal || !labels.length) {
+    const openModal = (items, index, tone, title, meta = null) => {
+        if (!modal || !items.length) {
             return;
         }
 
-        modalState.labels = labels;
+        modalState.items = items;
         modalState.index = index;
         modalState.tone = tone;
         modalState.title = title;
@@ -224,11 +234,11 @@ const initProductGalleries = () => {
     };
 
     const stepModal = (direction) => {
-        if (!modalState.labels.length) {
+        if (!modalState.items.length) {
             return;
         }
 
-        modalState.index = (modalState.index + direction + modalState.labels.length) % modalState.labels.length;
+        modalState.index = (modalState.index + direction + modalState.items.length) % modalState.items.length;
         syncModal();
     };
 
@@ -256,6 +266,7 @@ const initProductGalleries = () => {
     galleries.forEach((gallery) => {
         const items = Array.from(gallery.querySelectorAll('[data-gallery-item]'));
         const labels = Array.from(gallery.querySelectorAll('[data-gallery-active-label]'));
+        const activeImages = Array.from(gallery.querySelectorAll('[data-gallery-active-image]'));
         const counter = gallery.querySelector('[data-gallery-counter]');
         const previousButton = gallery.querySelector('[data-gallery-prev]');
         const nextButton = gallery.querySelector('[data-gallery-next]');
@@ -287,10 +298,18 @@ const initProductGalleries = () => {
                 item.setAttribute('aria-pressed', isActive ? 'true' : 'false');
             });
 
-            const activeLabel = items[activeIndex].dataset.galleryLabel || items[activeIndex].textContent.trim();
+            const activeItem = items[activeIndex];
+            const activeLabel = activeItem.dataset.galleryLabel || activeItem.textContent.trim();
+            const activeSrc = activeItem.dataset.gallerySrc || '';
+            const activeAlt = activeItem.dataset.galleryAlt || activeLabel;
 
             labels.forEach((label) => {
                 label.textContent = activeLabel;
+            });
+
+            activeImages.forEach((image) => {
+                image.src = activeSrc;
+                image.alt = activeAlt;
             });
 
             if (counter) {
@@ -320,7 +339,11 @@ const initProductGalleries = () => {
 
         openButton?.addEventListener('click', () => {
             openModal(
-                items.map((item) => item.dataset.galleryLabel || item.textContent.trim()),
+                items.map((item) => ({
+                    label: item.dataset.galleryLabel || item.textContent.trim(),
+                    src: item.dataset.gallerySrc || '',
+                    alt: item.dataset.galleryAlt || item.dataset.galleryLabel || item.textContent.trim(),
+                })),
                 activeIndex,
                 tone,
                 title,
@@ -594,7 +617,11 @@ const initCartAndOrder = () => {
         if (cartItems) {
             cartItems.innerHTML = cart.map((item) => `
                 <article class="cart-item" data-cart-item-id="${escapeHtml(item.id)}">
-                    <div class="cart-item-visual">${escapeHtml(item.image_label)}</div>
+                    <div class="cart-item-visual">
+                        ${item.image_src
+                            ? `<img src="${escapeHtml(item.image_src)}" alt="${escapeHtml(item.title)}">`
+                            : escapeHtml(item.image_label)}
+                    </div>
                     <div class="cart-item-body">
                         <div class="cart-item-head">
                             <h4>${escapeHtml(item.title)}</h4>
@@ -760,6 +787,7 @@ const initCartAndOrder = () => {
                             color: item.color,
                             availability: item.availability,
                             lead_time: item.lead_time,
+                            image_src: item.image_src,
                             image_label: item.image_label,
                             images: item.images,
                         })),

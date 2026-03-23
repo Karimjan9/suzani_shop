@@ -10,6 +10,7 @@ class PortfolioItem extends Model
         'title',
         'slug',
         'project_type',
+        'highlight_value',
         'excerpt',
         'description',
         'cover_image',

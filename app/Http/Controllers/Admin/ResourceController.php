@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Admin\Support\AdminResourceRegistry;
+use App\Support\UploadedMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ResourceController extends Controller
@@ -167,6 +170,10 @@ class ResourceController extends Controller
                 $value = is_array($value) ? implode(PHP_EOL, $value) : $value;
             }
 
+            if ($field['type'] === 'images') {
+                $value = Arr::wrap($value);
+            }
+
             if ($field['type'] === 'datetime-local' && filled($value)) {
                 $value = Carbon::parse($value)->format('Y-m-d\TH:i');
             }
@@ -199,6 +206,10 @@ class ResourceController extends Controller
             }
 
             $rules[$name] = $fieldRules;
+
+            if (($field['type'] ?? 'text') === 'images') {
+                $rules[$name.'.*'] = $field['file_rules'] ?? ['image', 'max:5120'];
+            }
         }
 
         $data = $request->validate($rules);
@@ -212,6 +223,8 @@ class ResourceController extends Controller
 
             $data[$name] = match ($field['type']) {
                 'checkbox' => $request->boolean($name),
+                'image' => $this->storeUploadedImage($request, $record, $name),
+                'images' => $this->storeUploadedImages($request, $record, $name),
                 'json' => blank($data[$name] ?? null) ? [] : json_decode($data[$name], true, 512, JSON_THROW_ON_ERROR),
                 'array_lines' => collect(preg_split('/\r\n|\r|\n/', (string) ($data[$name] ?? '')))
                     ->map(fn (string $item): string => trim($item))
@@ -281,5 +294,91 @@ class ResourceController extends Controller
         $reflection = new \ReflectionFunction(\Closure::fromCallable($callback));
 
         return $callback(...array_slice($arguments, 0, $reflection->getNumberOfParameters()));
+    }
+
+    private function storeUploadedImage(Request $request, ?Model $record, string $name): ?string
+    {
+        $currentValue = $this->currentFieldValue($record, $name);
+
+        if ($request->hasFile($name)) {
+            $newPath = $this->storeImageFile($request->file($name), $name);
+            $this->deleteManagedMedia($currentValue);
+
+            return $newPath;
+        }
+
+        if ($request->boolean($this->clearFieldName($name))) {
+            $this->deleteManagedMedia($currentValue);
+
+            return null;
+        }
+
+        return $currentValue;
+    }
+
+    private function storeUploadedImages(Request $request, ?Model $record, string $name): array
+    {
+        $existing = collect(Arr::wrap($record?->{$name}))
+            ->filter(fn (mixed $path): bool => filled($path))
+            ->values()
+            ->all();
+
+        if ($request->hasFile($name)) {
+            foreach ($existing as $path) {
+                $this->deleteManagedMedia($path);
+            }
+
+            return collect(Arr::wrap($request->file($name)))
+                ->filter(fn (mixed $file): bool => $file instanceof UploadedFile)
+                ->map(fn (UploadedFile $file): string => $this->storeImageFile($file, $name))
+                ->values()
+                ->all();
+        }
+
+        if ($request->boolean($this->clearFieldName($name))) {
+            foreach ($existing as $path) {
+                $this->deleteManagedMedia($path);
+            }
+
+            return [];
+        }
+
+        return $existing;
+    }
+
+    private function storeImageFile(UploadedFile $file, string $name): string
+    {
+        return $file->store('admin-uploads/'.$name, 'public');
+    }
+
+    private function deleteManagedMedia(mixed $path): void
+    {
+        if (! is_string($path) || ! UploadedMedia::isManaged($path)) {
+            return;
+        }
+
+        Storage::disk('public')->delete($path);
+    }
+
+    private function clearFieldName(string $name): string
+    {
+        return 'clear_'.$name;
+    }
+
+    private function currentFieldValue(?Model $record, string $name): mixed
+    {
+        if (! $record) {
+            return null;
+        }
+
+        $attributeValue = $record->getAttribute($name);
+
+        if ($attributeValue !== null) {
+            return $attributeValue;
+        }
+
+        $meta = Arr::wrap($record->getAttribute('meta'));
+
+        return $meta[$name] ?? null;
     }
 }
