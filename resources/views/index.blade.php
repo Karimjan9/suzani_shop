@@ -193,6 +193,18 @@
                 border-top-color: rgba(240, 223, 210, 0.08);
             }
 
+            html[data-theme='nocturne'] .contact-map-link {
+                border-color: rgba(240, 223, 210, 0.1);
+                background: rgba(53, 40, 37, 0.9);
+                color: #fff2e6;
+            }
+
+            html[data-theme='nocturne'] .contact-map-link:hover {
+                border-color: rgba(201, 141, 95, 0.22);
+                background: rgba(67, 50, 46, 0.94);
+                box-shadow: 0 14px 28px rgba(8, 5, 5, 0.22);
+            }
+
             html[data-theme='nocturne'] .topbar,
             html[data-theme='nocturne'] .theme-toggle,
             html[data-theme='nocturne'] .topbar-admin-link,
@@ -299,6 +311,67 @@
                     linear-gradient(135deg, #3b1815 0%, #503128 48%, #1f4946 100%);
             }
 
+            html[data-theme='nocturne'] .hero-art::before {
+                background:
+                    radial-gradient(circle at 18% 22%, rgba(201, 141, 95, 0.3), transparent 34%),
+                    radial-gradient(circle at 80% 20%, rgba(88, 137, 126, 0.18), transparent 24%),
+                    radial-gradient(circle at 72% 78%, rgba(217, 173, 106, 0.16), transparent 26%);
+                opacity: 0.72;
+            }
+
+            html[data-theme='nocturne'] .hero-art::after,
+            html[data-theme='nocturne'] .hero-visual-stage {
+                border-color: rgba(240, 223, 210, 0.1);
+                background:
+                    radial-gradient(circle at top left, rgba(201, 141, 95, 0.12), transparent 28%),
+                    linear-gradient(135deg, rgba(49, 37, 34, 0.92) 0%, rgba(31, 24, 23, 0.9) 100%);
+                box-shadow:
+                    0 28px 70px rgba(8, 5, 5, 0.28),
+                    inset 0 1px 0 rgba(255, 243, 234, 0.06);
+            }
+
+            html[data-theme='nocturne'] .hero-visual-main,
+            html[data-theme='nocturne'] .hero-visual-detail {
+                border-color: rgba(240, 223, 210, 0.12);
+                box-shadow:
+                    0 24px 58px rgba(8, 5, 5, 0.24),
+                    inset 0 1px 0 rgba(255, 243, 234, 0.08);
+            }
+
+            html[data-theme='nocturne'] .hero-visual-stage::before,
+            html[data-theme='nocturne'] .hero-visual-main::after,
+            html[data-theme='nocturne'] .hero-visual-detail::after {
+                border-color: rgba(240, 223, 210, 0.08);
+                box-shadow: inset 0 0 0 1px rgba(255, 243, 234, 0.05);
+            }
+
+            html[data-theme='nocturne'] .hero-visual-label,
+            html[data-theme='nocturne'] .hero-visual-caption,
+            html[data-theme='nocturne'] .hero-visual-detail strong {
+                border-color: rgba(240, 223, 210, 0.12);
+                background:
+                    linear-gradient(135deg, rgba(58, 43, 40, 0.94) 0%, rgba(37, 29, 27, 0.9) 100%),
+                    repeating-linear-gradient(90deg, transparent 0 18px, rgba(240, 223, 210, 0.04) 18px 19px),
+                    repeating-linear-gradient(180deg, transparent 0 18px, rgba(240, 223, 210, 0.04) 18px 19px);
+                box-shadow:
+                    0 18px 34px rgba(8, 5, 5, 0.2),
+                    inset 0 1px 0 rgba(255, 243, 234, 0.07),
+                    inset 0 0 0 1px rgba(240, 223, 210, 0.05);
+            }
+
+            html[data-theme='nocturne'] .hero-visual-label strong,
+            html[data-theme='nocturne'] .hero-visual-caption,
+            html[data-theme='nocturne'] .hero-visual-detail strong {
+                color: #fff2e6;
+            }
+
+            html[data-theme='nocturne'] .hero-visual-label span,
+            html[data-theme='nocturne'] .hero-visual-detail span {
+                border-color: rgba(255, 243, 234, 0.12);
+                background: rgba(201, 141, 95, 0.88);
+                box-shadow: 0 12px 24px rgba(8, 5, 5, 0.18);
+            }
+
             html[data-theme='nocturne'] .catalog-toolbar {
                 background:
                     radial-gradient(circle at top left, rgba(201, 141, 95, 0.16), transparent 34%),
@@ -373,19 +446,146 @@
                 color: #fff2e6;
             }
 
+            html[data-theme='nocturne'] .cart-section-copy,
+            html[data-theme='nocturne'] .cart-head-note,
+            html[data-theme='nocturne'] .cart-section-highlight,
+            html[data-theme='nocturne'] .cart-note-points span {
+                border-color: rgba(240, 223, 210, 0.1);
+                background:
+                    radial-gradient(circle at top right, rgba(201, 141, 95, 0.16), transparent 24%),
+                    rgba(49, 37, 34, 0.84);
+                box-shadow:
+                    0 24px 56px rgba(8, 5, 5, 0.18),
+                    inset 0 1px 0 rgba(255, 243, 234, 0.04);
+            }
+
+            html[data-theme='nocturne'] .cart-section-copy::before,
+            html[data-theme='nocturne'] .cart-head-note::before {
+                border-color: rgba(240, 223, 210, 0.08);
+                box-shadow: inset 0 0 0 1px rgba(255, 243, 234, 0.04);
+            }
+
+            html[data-theme='nocturne'] .cart-section-chip,
+            html[data-theme='nocturne'] .cart-note-chip {
+                border-color: rgba(240, 223, 210, 0.08);
+                background: rgba(53, 40, 37, 0.9);
+                color: #fff2e6;
+            }
+
+            html[data-theme='nocturne'] .cart-section-text,
+            html[data-theme='nocturne'] .cart-section-highlight span,
+            html[data-theme='nocturne'] .cart-head-note p {
+                color: var(--muted);
+            }
+
+            html[data-theme='nocturne'] .cart-section-highlight strong,
+            html[data-theme='nocturne'] .cart-head-note strong,
+            html[data-theme='nocturne'] .cart-note-points span {
+                color: #fff2e6;
+            }
+
+            html[data-theme='nocturne'] .cart-note-points span::before {
+                box-shadow: 0 0 0 4px rgba(201, 141, 95, 0.16);
+            }
+
+            html[data-theme='nocturne'] .cart-card,
+            html[data-theme='nocturne'] .footer-shell,
+            html[data-theme='nocturne'] .footer-topbar {
+                border-color: rgba(240, 223, 210, 0.1);
+                background:
+                    radial-gradient(circle at top right, rgba(201, 141, 95, 0.16), transparent 24%),
+                    radial-gradient(circle at bottom left, rgba(79, 150, 143, 0.1), transparent 22%),
+                    rgba(49, 37, 34, 0.86);
+                box-shadow:
+                    0 24px 56px rgba(8, 5, 5, 0.22),
+                    inset 0 1px 0 rgba(255, 243, 234, 0.04);
+            }
+
+            html[data-theme='nocturne'] .footer-panel,
+            html[data-theme='nocturne'] .order-form-card .form-note-muted,
+            html[data-theme='nocturne'] .footer-link-list a,
+            html[data-theme='nocturne'] .footer-link-list span,
+            html[data-theme='nocturne'] .footer-contact-item,
+            html[data-theme='nocturne'] .footer-badge,
+            html[data-theme='nocturne'] .footer-meta span {
+                border-color: rgba(240, 223, 210, 0.08);
+                background: rgba(38, 29, 27, 0.78);
+                box-shadow:
+                    0 18px 34px rgba(8, 5, 5, 0.12),
+                    inset 0 1px 0 rgba(255, 243, 234, 0.03);
+            }
+
+            html[data-theme='nocturne'] .cart-card::before,
+            html[data-theme='nocturne'] .footer-shell::before,
+            html[data-theme='nocturne'] .footer-panel::before,
+            html[data-theme='nocturne'] .footer-topbar::before {
+                border-color: rgba(240, 223, 210, 0.08);
+                box-shadow: inset 0 0 0 1px rgba(255, 243, 234, 0.04);
+            }
+
+            html[data-theme='nocturne'] .order-form-card-head {
+                border-bottom-color: rgba(240, 223, 210, 0.08);
+            }
+
+            html[data-theme='nocturne'] .footer-topbar-copy h2,
+            html[data-theme='nocturne'] .footer-panel h3 {
+                color: #fff2e6;
+            }
+
             html[data-theme='nocturne'] .site-footer {
                 background:
                     linear-gradient(180deg, rgba(39, 29, 27, 0.96), rgba(29, 23, 22, 0.98));
             }
 
             html[data-theme='nocturne'] .footer-meta {
-                border-top-color: rgba(240, 223, 210, 0.1);
+                border-color: rgba(240, 223, 210, 0.1);
             }
 
             html[data-theme='nocturne'] .footer-link-list a:hover,
             html[data-theme='nocturne'] .topbar-links a:hover,
             html[data-theme='nocturne'] .text-link:hover {
                 color: #ffd7b1;
+            }
+
+            html[data-theme='nocturne'] .section-action-link {
+                border-color: rgba(240, 223, 210, 0.12);
+                background: linear-gradient(135deg, rgba(58, 43, 40, 0.94) 0%, rgba(37, 29, 27, 0.92) 100%);
+                color: #fff2e6;
+                box-shadow:
+                    0 18px 34px rgba(8, 5, 5, 0.18),
+                    inset 0 1px 0 rgba(255, 243, 234, 0.05);
+            }
+
+            html[data-theme='nocturne'] .section-action-link::before {
+                background: linear-gradient(90deg, transparent 0%, rgba(255, 242, 230, 0.06) 18%, rgba(255, 242, 230, 0.36) 50%, rgba(255, 242, 230, 0.06) 82%, transparent 100%);
+            }
+
+            html[data-theme='nocturne'] .section-action-link::after {
+                background: rgba(201, 141, 95, 0.14);
+                color: #ffd7b1;
+                box-shadow: inset 0 0 0 1px rgba(240, 223, 210, 0.06);
+            }
+
+            html[data-theme='nocturne'] .section-action-link:hover,
+            html[data-theme='nocturne'] .section-action-link:focus-visible {
+                color: #ffd7b1;
+                border-color: rgba(201, 141, 95, 0.28);
+                box-shadow:
+                    0 24px 40px rgba(8, 5, 5, 0.26),
+                    0 0 0 4px rgba(201, 141, 95, 0.12),
+                    inset 0 1px 0 rgba(255, 243, 234, 0.06);
+            }
+
+            html[data-theme='nocturne'] .section-action-link:hover::after,
+            html[data-theme='nocturne'] .section-action-link:focus-visible::after {
+                background: linear-gradient(135deg, rgba(201, 141, 95, 0.24) 0%, rgba(217, 173, 106, 0.42) 100%);
+                color: #fff8f1;
+                box-shadow: 0 12px 24px rgba(8, 5, 5, 0.22);
+            }
+
+            html[data-theme='nocturne'] .footer-link-list a:hover {
+                border-color: rgba(201, 141, 95, 0.2);
+                background: rgba(53, 40, 37, 0.92);
             }
 
             @media (max-width: 720px) {
@@ -576,7 +776,7 @@
                 ],
             ];
 
-            $homeImage = static fn (string $path): string => asset('images/home/'.$path);
+            $homeImage = static fn (string $path): string => '/images/home/'.ltrim($path, '/');
 
             $aboutGallery = [
                 [
@@ -784,6 +984,7 @@
                     'tone' => 'rose',
                     'filter' => 'suzani',
                     'copy' => 'Katta devor kompozitsiyasi va premium interyerlar uchun qo\'lda tikilgan markaziy ishlar.',
+                    'image' => $homeImage('items/photo_2026-03-18_16-32-50.jpg'),
                 ],
                 [
                     'name' => 'Stol bezaklari',
@@ -791,6 +992,7 @@
                     'tone' => 'gold',
                     'filter' => 'table',
                     'copy' => 'Bayram dasturxoni va kundalik stol styling uchun nafis runner hamda bezaklar.',
+                    'image' => $homeImage('items/photo_2026-03-18_16-32-34.jpg'),
                 ],
                 [
                     'name' => 'Yostiq va tekstil',
@@ -798,6 +1000,7 @@
                     'tone' => 'teal',
                     'filter' => 'textile',
                     'copy' => 'Yumshoq tekstura, sokin rang va kashta aksenti bilan interyerga iliqlik beradigan kolleksiya.',
+                    'image' => $homeImage('items/photo_2026-03-18_16-31-39.jpg'),
                 ],
                 [
                     'name' => 'Sovg\'a to\'plamlari',
@@ -805,6 +1008,7 @@
                     'tone' => 'ink',
                     'filter' => 'gift',
                     'copy' => 'To\'y, mehmondorchilik va maxsus kunlar uchun tayyorlangan sovg\'abop premium setlar.',
+                    'image' => $homeImage('items/photo_2026-03-18_16-31-52.jpg'),
                 ],
             ];
 
@@ -946,6 +1150,7 @@
                             'tone' => $tones[$index % count($tones)],
                             'filter' => $first['category'],
                             'copy' => $first['category_description'],
+                            'image' => $first['gallery'][0]['src'] ?? null,
                         ];
                     })
                     ->all();
@@ -1035,9 +1240,9 @@
                 'hero_material_badge' => 'Material',
                 'hero_material_title' => 'Ustaxona jarayoni va tabiiy mato',
             ], \Illuminate\Support\Arr::wrap($heroBanner?->meta));
-            $heroMainImage = $mediaUrl($heroBanner?->image) ?? asset('images/home/hero/hero-main.jpg');
-            $heroDetailImage = $mediaUrl($heroMeta['hero_detail_image'] ?? null) ?? asset('images/home/hero/hero-detail.jpg');
-            $heroMaterialImage = $mediaUrl($heroMeta['hero_material_image'] ?? null) ?? asset('images/home/hero/hero-material.jpg');
+            $heroMainImage = $mediaUrl($heroBanner?->image) ?? $homeImage('hero/hero-main.jpg');
+            $heroDetailImage = $mediaUrl($heroMeta['hero_detail_image'] ?? null) ?? $homeImage('hero/hero-detail.jpg');
+            $heroMaterialImage = $mediaUrl($heroMeta['hero_material_image'] ?? null) ?? $homeImage('hero/hero-material.jpg');
 
             $contactBlock = \App\Models\ContentBlock::query()
                 ->where('type', \App\Models\ContentBlock::TYPE_CONTACT)
@@ -1118,13 +1323,190 @@
             $contactMapLongitude = (float) ($contactMeta['map_longitude'] ?? 69.240562);
             $contactMapZoom = max(8, min(18, (int) ($contactMeta['map_zoom'] ?? 13)));
             $contactMapCoordinates = number_format($contactMapLatitude, 5, '.', '').', '.number_format($contactMapLongitude, 5, '.', '');
-            $contactMapHint = 'Offline ko\'rinish. Yetib borish uchun manzil va koordinatadan foydalaning.';
+            $contactMapQuery = number_format($contactMapLatitude, 6, '.', '').','.number_format($contactMapLongitude, 6, '.', '');
+            $contactMapEmbedUrl = 'https://www.google.com/maps?q='.rawurlencode($contactMapQuery).'&z='.$contactMapZoom.'&output=embed';
+            $contactMapLink = 'https://www.google.com/maps/search/?api=1&query='.rawurlencode($contactMapQuery);
+            $contactMapHint = 'Google Maps orqali joylashuvni ko\'ring va marshrutni to\'g\'ridan-to\'g\'ri oching.';
+        @endphp
+
+        @php
+            $heroEyebrow = $heroEyebrow ?? 'Hunarmand ustaxonasidan';
+            $heroTitle = $heroTitle ?? 'Qo\'lda yasalgan noyob buyumlar';
+            $heroText = $heroText ?? 'Suzani Shop interyer uchun nafis, sokin va qadrli buyumlar yaratadi. Har bir mahsulotda qo\'l mehnati, iliq ranglar va sifatli materiallar orqali uyga hissiyot olib kiradigan ruh bor.';
+            $heroPrimaryLink = $heroPrimaryLink ?? '#catalog';
+            $heroPrimaryLabel = $heroPrimaryLabel ?? 'Kolleksiyani ko\'rish';
+            $heroPromises = $heroPromises ?? [
+                [
+                    'title' => 'Buyurtma asosida',
+                    'text' => 'Har bir buyum interyer, rang va istakka moslab tayyorlanadi.',
+                ],
+                [
+                    'title' => 'Sifatli material',
+                    'text' => 'Tabiiy mato, puxta ishlov va uzoq xizmat qiladigan detallarga e\'tibor beriladi.',
+                ],
+                [
+                    'title' => 'Butun O\'zbekiston bo\'ylab yuborish',
+                    'text' => 'Toshkentdan viloyatlarga ehtiyotkor qadoq va ishonchli yetkazib berish bilan jo\'natiladi.',
+                ],
+            ];
+            $heroMeta = $heroMeta ?? [
+                'hero_main_badge' => 'Asosiy kolleksiya',
+                'hero_main_title' => 'Anor Suzani',
+                'hero_main_caption' => 'Katta format, mayin ranglar va qo\'lda ishlangan nafis naqshlar.',
+                'hero_detail_title' => 'Kashta teksturasi',
+                'hero_detail_badge' => 'Detail',
+                'hero_material_title' => 'Ustaxona jarayoni va tabiiy mato',
+                'hero_material_badge' => 'Material',
+            ];
+            $heroMainImage = $heroMainImage ?? $homeImage('hero/hero-main.jpg');
+            $heroDetailImage = $heroDetailImage ?? $homeImage('hero/hero-detail.jpg');
+            $heroMaterialImage = $heroMaterialImage ?? $homeImage('hero/hero-material.jpg');
+            $mediaUrl = $mediaUrl ?? static fn (?string $path): ?string => filled($path) ? asset(ltrim($path, '/')) : null;
+
+            $aboutGallery = $aboutGallery ?? [
+                [
+                    'src' => $homeImage('about/photo_2026-03-18_16-32-23.jpg'),
+                    'label' => 'Ustaxona muhiti',
+                    'alt' => 'Suzani Shop ustaxonasi',
+                ],
+            ];
+            $craftStats = $craftStats ?? [
+                ['label' => 'Tajriba', 'value' => '12 yil'],
+                ['label' => 'Qo\'lda yaratilgan ishlar', 'value' => '800+'],
+                ['label' => 'Ustaxona jamoasi', 'value' => '6 nafar usta'],
+            ];
+            $craftHighlights = $craftHighlights ?? [
+                [
+                    'title' => 'Hunarmand tarixi',
+                    'text' => 'Ustamiz oilaviy kashtachilik an\'anasida ulg\'aygan va yillar davomida o\'ziga xos uslub shakllantirgan.',
+                ],
+                [
+                    'title' => 'Tajriba',
+                    'text' => 'Naqsh, rang va mato uyg\'unligi interyer ehtiyojiga qarab puxta tanlanadi.',
+                ],
+                [
+                    'title' => 'Ustaxona',
+                    'text' => 'Har bir buyum kesish, tikish, kashta va yakuniy tekshiruv bosqichidan o\'tadi.',
+                ],
+            ];
+            $craftProcess = $craftProcess ?? [
+                ['step' => '01', 'title' => 'Naqsh tanlash', 'text' => 'Har mahsulot uchun mos kompozitsiya va rang palitrasi tanlanadi.'],
+                ['step' => '02', 'title' => 'Mato tayyorlash', 'text' => 'Asosiy mato va iplar sifat bo\'yicha ajratiladi.'],
+                ['step' => '03', 'title' => 'Qo\'lda kashta', 'text' => 'Asosiy bezaklar mayda detaligacha nazorat bilan ishlanadi.'],
+                ['step' => '04', 'title' => 'Yakuniy bezak', 'text' => 'Mahsulot tekshiriladi va ehtiyotkor qadoqlanadi.'],
+            ];
+            $whyChoose = $whyChoose ?? [
+                'Har bir ish qo\'lda bajariladi va ommaviy nusxa emas.',
+                'Material va ranglar interyerga moslab tanlanishi mumkin.',
+                'Buyurtma jarayoni to\'g\'ridan-to\'g\'ri usta bilan olib boriladi.',
+                'Jo\'natishdan oldin yakuniy sifat tekshiruvi qilinadi.',
+            ];
+            $portfolioItems = $portfolioItems ?? [
+                [
+                    'title' => 'Anor medalyon devor paneli',
+                    'type' => 'Premium interyer',
+                    'text' => 'Katta interyer uchun tayyorlangan markaziy suzani kompozitsiyasi.',
+                    'tone' => 'clay',
+                    'highlight' => '260 x 190 sm',
+                    'image' => '/images/home/items/photo_2026-03-18_16-32-50.jpg',
+                ],
+            ];
+            $allProducts = $allProducts ?? [
+                [
+                    'id' => 'anor-suzani',
+                    'title' => 'Anor Suzani',
+                    'price' => 1250000,
+                    'formatted_price' => '1 250 000 so\'m',
+                    'tag' => 'Qo\'lda tikilgan',
+                    'short_description' => 'Uy ichiga iliqlik olib kiradigan premium suzani.',
+                    'full_description' => 'Markaziy gul naqshi va qo\'lda bajarilgan mayda tikuvlar bilan ajralib turadi.',
+                    'product_story' => 'Anor Suzani an\'anaviy naqsh va zamonaviy interyer ehtiyojlarini birlashtirish uchun yaratilgan.',
+                    'material' => 'Tabiiy paxta va ipak ip',
+                    'size' => '220 x 160 sm',
+                    'color' => 'Anor qizil, oltin va fil suyagi',
+                    'availability' => 'Buyurtma asosida mavjud',
+                    'lead_time' => '5-7 ish kuni',
+                    'category' => 'suzani',
+                    'category_label' => 'Devor uchun suzani',
+                    'category_description' => 'Katta devor kompozitsiyasi va premium interyerlar uchun qo\'lda tikilgan ishlar.',
+                    'popularity' => 98,
+                    'new_rank' => 8,
+                    'tone' => 'rose',
+                    'gallery' => $aboutGallery,
+                    'images' => array_map(static fn (array $image): string => $image['label'], $aboutGallery),
+                    'is_featured' => true,
+                ],
+            ];
+            $topProducts = $topProducts ?? array_slice($allProducts, 0, 3);
+            $productFilters = $productFilters ?? [
+                ['value' => 'all', 'label' => 'Barchasi'],
+                ['value' => 'suzani', 'label' => 'Suzani'],
+            ];
+            $categories = $categories ?? [
+                [
+                    'name' => 'Devor uchun suzani',
+                    'count' => count($allProducts).' mahsulot',
+                    'tone' => 'rose',
+                    'filter' => 'suzani',
+                    'copy' => 'Qo\'lda tikilgan markaziy ishlar va interyer aksentlari.',
+                    'image' => $homeImage('items/photo_2026-03-18_16-32-50.jpg'),
+                ],
+            ];
+            $steps = $steps ?? [
+                ['number' => '01', 'title' => 'Mahsulotni tanlang', 'text' => 'Sizga yoqqan mahsulotni katalogdan tanlaysiz.'],
+                ['number' => '02', 'title' => 'Buyurtma qoldiring', 'text' => 'Telefon, Telegram yoki sayt formasi orqali bog\'lanasiz.'],
+                ['number' => '03', 'title' => 'Tayyorlash va qadoqlash', 'text' => 'Mahsulot tekshiriladi va jo\'natishga tayyorlanadi.'],
+                ['number' => '04', 'title' => 'Yetkazib berish', 'text' => 'Buyurtma ishonchli tarzda yuboriladi.'],
+            ];
+            $testimonials = $testimonials ?? [
+                [
+                    'name' => 'Dilnoza M.',
+                    'role' => 'Toshkent',
+                    'quote' => 'Mahsulot rasmdagidan ham chiroyli ekan.',
+                ],
+            ];
+            $contactMeta = $contactMeta ?? [
+                'phone_label' => 'Telefon',
+                'phone_value' => '+998 90 123 45 67',
+                'telegram_label' => 'Telegram',
+                'telegram_value' => '@suzanishop',
+                'instagram_label' => 'Instagram',
+                'instagram_value' => '@suzanishop',
+                'address_label' => 'Manzil',
+                'address_value' => 'Toshkent shahri, hunarmandlar ko\'chasi',
+                'hours_label' => 'Ish vaqti',
+                'hours_value' => 'Dushanba - Shanba, 09:00 - 19:00',
+                'map_label' => 'Xarita',
+                'map_title' => 'Ustaxona joylashuvi',
+                'form_label' => 'Forma',
+                'form_title' => 'Tezkor so\'rov yuboring',
+                'form_name_label' => 'Ismingiz',
+                'form_name_placeholder' => 'Ismingizni kiriting',
+                'form_phone_label' => 'Telefon',
+                'form_phone_placeholder' => '91 310 32 98',
+                'form_social_label' => 'Instagram yoki Telegram',
+                'form_social_placeholder' => '@username yoki profil havolasi',
+                'form_message_label' => 'Xabar',
+                'form_message_placeholder' => 'Qanday mahsulot kerakligini yozing',
+                'form_success_note' => 'So\'rovingiz qabul qilindi. Tez orada siz bilan bog\'lanamiz.',
+            ];
+            $contactPhone = $contactPhone ?? ($contactMeta['phone_value'] ?? '+998 90 123 45 67');
+            $contactPhoneHref = $contactPhoneHref ?? ('tel:'.preg_replace('/[^+\d]/', '', (string) $contactPhone));
+            $contactTelegramUrl = $contactTelegramUrl ?? 'https://t.me/suzanishop';
+            $contactInstagramUrl = $contactInstagramUrl ?? 'https://instagram.com/suzanishop';
+            $contactSectionLabel = $contactSectionLabel ?? 'Aloqa';
+            $contactSectionTitle = $contactSectionTitle ?? 'Buyurtma yoki hamkorlik uchun biz bilan bog\'laning';
+            $contactSectionCopy = $contactSectionCopy ?? 'Instagram, Telegram yoki telefon orqali murojaat qiling.';
+            $contactMapCoordinates = $contactMapCoordinates ?? '41.31108, 69.24056';
+            $contactMapEmbedUrl = $contactMapEmbedUrl ?? 'https://www.google.com/maps?q=41.311081,69.240562&z=13&output=embed';
+            $contactMapLink = $contactMapLink ?? 'https://www.google.com/maps/search/?api=1&query=41.311081,69.240562';
+            $contactMapHint = $contactMapHint ?? 'Google Maps orqali joylashuvni ko\'ring va marshrutni to\'g\'ridan-to\'g\'ri oching.';
         @endphp
 
         <header class="hero-section">
             <div class="hero-noise"></div>
             <nav class="topbar container" data-site-header>
-                <a href="/" class="brand-mark">
+                <a href="{{ url('/') }}" class="brand-mark">
                     <span class="brand-knot"></span>
                     <span>Suzani Shop</span>
                 </a>
@@ -1196,7 +1578,13 @@
                 <div class="hero-art">
                     <div class="hero-visual-stage">
                         <div class="hero-visual-main">
-                            <img src="{{ $heroMainImage }}" alt="{{ $heroMeta['hero_main_title'] }}" class="hero-visual-image hero-visual-image-main">
+                            <img
+                                src="{{ $heroMainImage }}"
+                                alt="{{ $heroMeta['hero_main_title'] }}"
+                                class="hero-visual-image hero-visual-image-main"
+                                fetchpriority="high"
+                                decoding="async"
+                            >
                             <div class="hero-visual-label">
                                 <span>{{ $heroMeta['hero_main_badge'] }}</span>
                                 <strong>{{ $heroMeta['hero_main_title'] }}</strong>
@@ -1208,13 +1596,25 @@
 
                         <div class="hero-visual-stack">
                             <div class="hero-visual-detail hero-visual-detail-top">
-                                <img src="{{ $heroDetailImage }}" alt="{{ $heroMeta['hero_detail_title'] }}" class="hero-visual-image hero-visual-image-detail">
+                                <img
+                                    src="{{ $heroDetailImage }}"
+                                    alt="{{ $heroMeta['hero_detail_title'] }}"
+                                    class="hero-visual-image hero-visual-image-detail"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
                                 <span>{{ $heroMeta['hero_detail_badge'] }}</span>
                                 <strong>{{ $heroMeta['hero_detail_title'] }}</strong>
                             </div>
 
                             <div class="hero-visual-detail hero-visual-detail-bottom">
-                                <img src="{{ $heroMaterialImage }}" alt="{{ $heroMeta['hero_material_title'] }}" class="hero-visual-image hero-visual-image-material">
+                                <img
+                                    src="{{ $heroMaterialImage }}"
+                                    alt="{{ $heroMeta['hero_material_title'] }}"
+                                    class="hero-visual-image hero-visual-image-material"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
                                 <span>{{ $heroMeta['hero_material_badge'] }}</span>
                                 <strong>{{ $heroMeta['hero_material_title'] }}</strong>
                             </div>
@@ -1293,6 +1693,8 @@
                                                     alt="{{ $aboutGallery[0]['alt'] }}"
                                                     class="product-gallery-image"
                                                     data-gallery-active-image
+                                                    loading="lazy"
+                                                    decoding="async"
                                                 >
                                             </span>
                                             <span class="product-gallery-visual-copy">
@@ -1386,7 +1788,7 @@
                             <p class="section-label">Portfolio / Galereya</p>
                             <h2 class="section-title">Real ishlar ishonch beradi, shu sabab bajarilgan loyihalarni ochiq ko'rsatamiz</h2>
                         </div>
-                        <a href="#contact" class="text-link">Shunga o'xshash buyurtma berish</a>
+                        <a href="#contact" class="text-link section-action-link">Shunga o'xshash buyurtma berish</a>
                     </div>
 
                     <div class="portfolio-intro">
@@ -1409,6 +1811,7 @@
                                             alt="{{ $item['title'] }}"
                                             class="portfolio-visual-image"
                                             loading="lazy"
+                                            decoding="async"
                                         >
                                     @endif
                                     <div class="portfolio-visual-copy">
@@ -1433,7 +1836,7 @@
                             <p class="section-label">Top mahsulotlar</p>
                             <h2 class="section-title">Eng ko'p tanlanayotgan mahsulotlar</h2>
                         </div>
-                        <a href="#contact" class="text-link">Buyurtma berish</a>
+                        <a href="#contact" class="text-link section-action-link">Buyurtma berish</a>
                     </div>
 
                     <div class="product-grid">
@@ -1456,6 +1859,19 @@
                                     'image_src' => $product['gallery'][0]['src'] ?? null,
                                     'image_label' => $product['images'][0] ?? null,
                                     'images' => $product['images'],
+                                ];
+                                $detailPayload = [
+                                    'title' => $product['title'],
+                                    'category' => $product['category_label'],
+                                    'price' => $product['formatted_price'],
+                                    'description' => $product['full_description'] ?: $product['short_description'],
+                                    'story' => $product['product_story'] ?? '',
+                                    'material' => $product['material'],
+                                    'size' => $product['size'],
+                                    'color' => $product['color'],
+                                    'availability' => $product['availability'],
+                                    'image' => $product['gallery'][0]['src'] ?? null,
+                                    'tone' => $product['tone'],
                                 ];
                             @endphp
                             <article class="product-card">
@@ -1481,6 +1897,9 @@
                                                         alt="{{ $product['gallery'][0]['alt'] ?? $product['title'] }}"
                                                         class="product-gallery-image"
                                                         data-gallery-active-image
+                                                        loading="eager"
+                                                        fetchpriority="high"
+                                                        decoding="async"
                                                     >
                                                 </span>
                                                 <span class="product-gallery-visual-copy">
@@ -1558,13 +1977,18 @@
                         @foreach ($categories as $category)
                             <button
                                 type="button"
-                                class="category-card category-{{ $category['tone'] }}"
+                                class="category-card category-{{ $category['tone'] }}{{ filled($category['image'] ?? null) ? ' has-image' : '' }}"
                                 data-category-card
                                 data-filter-target="{{ $category['filter'] }}"
                                 data-title="{{ $category['name'] }}"
                                 data-count="{{ $category['count'] }}"
                                 data-copy="{{ $category['copy'] }}"
                             >
+                                @if (filled($category['image'] ?? null))
+                                    <span class="category-card-media" aria-hidden="true">
+                                        <img src="{{ $category['image'] }}" alt="" loading="lazy" decoding="async">
+                                    </span>
+                                @endif
                                 <span>{{ $category['count'] }}</span>
                                 <h3>{{ $category['name'] }}</h3>
                                 <strong>Shu kolleksiyani ochish</strong>
@@ -1678,6 +2102,8 @@
                                                         alt="{{ $product['gallery'][0]['alt'] ?? $product['title'] }}"
                                                         class="product-gallery-image"
                                                         data-gallery-active-image
+                                                        loading="lazy"
+                                                        decoding="async"
                                                     >
                                                 </span>
                                                 <span class="product-gallery-visual-copy">
@@ -1721,14 +2147,14 @@
                                     <li><span>Mavjudligi</span><strong>{{ $product['availability'] }}</strong></li>
                                     <li><span>Tayyorlash</span><strong>{{ $product['lead_time'] }}</strong></li>
                                 </ul>
-                                <details class="product-details">
-                                    <summary>To'liq tavsifni ko'rish</summary>
-                                    <p>{{ $product['full_description'] }}</p>
-                                    <div class="product-story-block">
-                                        <span>Mahsulot tarixi</span>
-                                        <p>{{ $product['product_story'] }}</p>
-                                    </div>
-                                </details>
+                                <button
+                                    type="button"
+                                    class="product-detail-trigger"
+                                    data-product-detail-open
+                                    data-product-detail-payload="{{ base64_encode(json_encode($detailPayload, JSON_UNESCAPED_UNICODE)) }}"
+                                >
+                                    Batafsil ko'rish
+                                </button>
                                 <div class="catalog-card-foot">
                                     <strong>{{ $product['formatted_price'] }}</strong>
                                     <div class="product-actions">
@@ -1754,96 +2180,131 @@
 
             <section id="cart" class="section section-soft">
                 <div class="container">
-                    <div class="section-head">
-                        <div>
-                            <p class="section-label">Savatcha va buyurtma</p>
-                            <h2 class="section-title">Bir nechta mahsulotni qo'shib, bitta umumiy buyurtma yuboring</h2>
+                    <div class="cart-shell">
+                        <div class="section-head cart-section-head">
+                            <div class="cart-section-copy">
+                                <div class="cart-section-kicker">
+                                    <p class="section-label">Savatcha va buyurtma</p>
+                                    <span class="cart-section-chip">Bir joyda va qulay</span>
+                                </div>
+                                <h2 class="section-title">Bir nechta mahsulotni qo'shib, bitta umumiy buyurtma yuboring</h2>
+                                <p class="cart-section-text">
+                                    Katalogdan tanlagan mahsulotlaringiz shu yerda tartibli jamlanadi. Savatcha va aloqa formasi bir joyda
+                                    bo'lgani uchun buyurtmani ortiqcha bosqichsiz yakunlaysiz.
+                                </p>
+                                <div class="cart-section-highlights">
+                                    <div class="cart-section-highlight">
+                                        <strong>Bir joyda</strong>
+                                        <span>Savatcha, summa va aloqa ma'lumotlari bitta blokda jamlanadi.</span>
+                                    </div>
+                                    <div class="cart-section-highlight">
+                                        <strong>Tez buyurtma</strong>
+                                        <span>Mahsulot qo'shib, darhol umumiy buyurtmaga o'tishingiz mumkin.</span>
+                                    </div>
+                                    <div class="cart-section-highlight">
+                                        <strong>Admin tasdig'i</strong>
+                                        <span>Buyurtma yuborilgach, telefon yoki Telegram orqali bog'laniladi.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cart-head-note">
+                                <span class="cart-note-chip">Qulay jarayon</span>
+                                <strong>Buyurtma aniq va tartibli rasmiylashadi</strong>
+                                <p>Buyurtma kelgach, admin uni ko'radi va siz bilan telefon yoki Telegram orqali aloqaga chiqadi.</p>
+                                <div class="cart-note-points">
+                                    <span>Savatcha tayyorlanadi</span>
+                                    <span>Ma'lumot yuboriladi</span>
+                                    <span>Admin tasdiqlaydi</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="cart-head-note">
-                            <strong>Qulay jarayon</strong>
-                            <p>Buyurtma kelgach, admin uni ko'radi va siz bilan telefon yoki Telegram orqali aloqaga chiqadi.</p>
+
+                        <div class="cart-layout">
+                            <article class="cart-card">
+                                <div class="cart-card-head">
+                                    <div>
+                                        <p class="section-label">Savatcha</p>
+                                        <h3>Tanlangan mahsulotlar</h3>
+                                    </div>
+                                    <a href="#catalog" class="text-link">Yana mahsulot qo'shish</a>
+                                </div>
+
+                                <p class="cart-empty" data-cart-empty>
+                                    Hozircha savatcha bo'sh. Katalogdan mahsulot qo'shsangiz, ular shu yerda jamlanadi.
+                                </p>
+
+                                <div class="cart-items" data-cart-items></div>
+
+                                <div class="cart-summary">
+                                    <div>
+                                        <span>Jami soni</span>
+                                        <strong data-cart-total-qty>0 ta</strong>
+                                    </div>
+                                    <div>
+                                        <span>Umumiy summa</span>
+                                        <strong data-cart-total-price>0 so'm</strong>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <form
+                                class="cart-card order-form-card"
+                                action="{{ route('orders.store') }}"
+                                method="POST"
+                                data-order-form
+                            >
+                                @csrf
+                                <div class="cart-card-head order-form-card-head">
+                                    <div>
+                                        <p class="section-label">Umumiy buyurtma</p>
+                                        <h3>Admin bilan bog'lanish uchun ma'lumot qoldiring</h3>
+                                        <p class="order-form-intro">
+                                            Mahsulotlar, rang va yetkazib berish tafsilotlarini yozing. Admin siz bilan bog'lanib, buyurtmani tez va
+                                            aniq tasdiqlaydi.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="contact-form-grid">
+                                    <label class="contact-field">
+                                        <span>Ismingiz</span>
+                                        <input type="text" name="customer_name" placeholder="Ismingizni kiriting" required>
+                                    </label>
+                                    <label class="contact-field">
+                                        <span>Telefon</span>
+                                        <input type="tel" name="phone" placeholder="91 310 32 98" required>
+                                    </label>
+                                    <label class="contact-field">
+                                        <span>Telegram</span>
+                                        <input type="text" name="telegram" placeholder="@username">
+                                    </label>
+                                    <label class="contact-field">
+                                        <span>Instagram</span>
+                                        <input type="text" name="instagram" placeholder="@profil">
+                                    </label>
+                                    <label class="contact-field contact-field-full">
+                                        <span>Manzil</span>
+                                        <input type="text" name="address" placeholder="Shahar yoki yetkazib berish manzili">
+                                    </label>
+                                    <label class="contact-field contact-field-full">
+                                        <span>Izoh</span>
+                                        <textarea name="notes" rows="5" placeholder="Rang, o'lcham yoki qo'shimcha istaklaringizni yozing"></textarea>
+                                    </label>
+                                </div>
+
+                                <div class="order-form-actions">
+                                    <button type="submit" class="button button-primary" data-order-submit disabled>
+                                        Umumiy buyurtma berish
+                                    </button>
+
+                                    <p class="form-note form-note-muted">
+                                        Buyurtma yuborilgach, admin mahsulotlar bo'yicha siz bilan aloqaga chiqadi va tafsilotlarni tasdiqlaydi.
+                                    </p>
+                                    <p class="form-note form-note-error is-hidden" data-order-error></p>
+                                    <p class="form-note form-note-success is-hidden" data-order-success></p>
+                                </div>
+                            </form>
                         </div>
-                    </div>
-
-                    <div class="cart-layout">
-                        <article class="cart-card">
-                            <div class="cart-card-head">
-                                <div>
-                                    <p class="section-label">Savatcha</p>
-                                    <h3>Tanlangan mahsulotlar</h3>
-                                </div>
-                                <a href="#catalog" class="text-link">Yana mahsulot qo'shish</a>
-                            </div>
-
-                            <p class="cart-empty" data-cart-empty>
-                                Hozircha savatcha bo'sh. Katalogdan mahsulot qo'shsangiz, ular shu yerda jamlanadi.
-                            </p>
-
-                            <div class="cart-items" data-cart-items></div>
-
-                            <div class="cart-summary">
-                                <div>
-                                    <span>Jami soni</span>
-                                    <strong data-cart-total-qty>0 ta</strong>
-                                </div>
-                                <div>
-                                    <span>Umumiy summa</span>
-                                    <strong data-cart-total-price>0 so'm</strong>
-                                </div>
-                            </div>
-                        </article>
-
-                        <form
-                            class="cart-card order-form-card"
-                            action="{{ route('orders.store') }}"
-                            method="POST"
-                            data-order-form
-                        >
-                            @csrf
-                            <div class="cart-card-head">
-                                <div>
-                                    <p class="section-label">Umumiy buyurtma</p>
-                                    <h3>Admin bilan bog'lanish uchun ma'lumot qoldiring</h3>
-                                </div>
-                            </div>
-
-                            <div class="contact-form-grid">
-                                <label class="contact-field">
-                                    <span>Ismingiz</span>
-                                    <input type="text" name="customer_name" placeholder="Ismingizni kiriting" required>
-                                </label>
-                                <label class="contact-field">
-                                    <span>Telefon</span>
-                                    <input type="tel" name="phone" placeholder="91 310 32 98" required>
-                                </label>
-                                <label class="contact-field">
-                                    <span>Telegram</span>
-                                    <input type="text" name="telegram" placeholder="@username">
-                                </label>
-                                <label class="contact-field">
-                                    <span>Instagram</span>
-                                    <input type="text" name="instagram" placeholder="@profil">
-                                </label>
-                                <label class="contact-field contact-field-full">
-                                    <span>Manzil</span>
-                                    <input type="text" name="address" placeholder="Shahar yoki yetkazib berish manzili">
-                                </label>
-                                <label class="contact-field contact-field-full">
-                                    <span>Izoh</span>
-                                    <textarea name="notes" rows="5" placeholder="Rang, o'lcham yoki qo'shimcha istaklaringizni yozing"></textarea>
-                                </label>
-                            </div>
-
-                            <button type="submit" class="button button-primary" data-order-submit disabled>
-                                Umumiy buyurtma berish
-                            </button>
-
-                            <p class="form-note form-note-muted">
-                                Buyurtma yuborilgach, admin mahsulotlar bo'yicha siz bilan aloqaga chiqadi va tafsilotlarni tasdiqlaydi.
-                            </p>
-                            <p class="form-note form-note-error is-hidden" data-order-error></p>
-                            <p class="form-note form-note-success is-hidden" data-order-success></p>
-                        </form>
                     </div>
                 </div>
             </section>
@@ -1988,16 +2449,27 @@
                                 </div>
                             </div>
                             <div class="contact-map-frame">
-                                <div class="contact-map-surface" role="img" aria-label="{{ $contactMeta['map_title'] }}">
+                                <div class="contact-map-surface" aria-label="{{ $contactMeta['map_title'] }}">
+                                    <iframe
+                                        src="{{ $contactMapEmbedUrl }}"
+                                        title="{{ $contactMeta['map_title'] }}"
+                                        class="contact-map-embed"
+                                        loading="lazy"
+                                        allowfullscreen
+                                        referrerpolicy="no-referrer-when-downgrade"
+                                    ></iframe>
                                     <span class="contact-map-pin" aria-hidden="true"></span>
                                     <div class="contact-map-details">
-                                        <span class="contact-map-chip">Offline map</span>
+                                        <span class="contact-map-chip">Google Maps</span>
                                         <strong>{{ $contactMeta['address_value'] }}</strong>
                                         <p>{{ $contactMapHint }}</p>
                                         <div class="contact-map-meta">
                                             <span>Koordinata</span>
                                             <span>{{ $contactMapCoordinates }}</span>
                                         </div>
+                                        <a href="{{ $contactMapLink }}" target="_blank" rel="noreferrer" class="contact-map-link">
+                                            Katta xaritada ochish
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -2041,14 +2513,14 @@
 
         </main>
 
-            <div class="gallery-lightbox is-hidden" data-gallery-modal aria-hidden="true">
+        <div class="gallery-lightbox is-hidden" data-gallery-modal aria-hidden="true">
             <button type="button" class="gallery-lightbox-backdrop" data-gallery-close aria-label="Galereyani yopish"></button>
             <div class="gallery-lightbox-dialog">
                 <button type="button" class="gallery-lightbox-close" data-gallery-close aria-label="Yopish">Yopish</button>
                 <button type="button" class="gallery-lightbox-arrow gallery-lightbox-arrow-left" data-gallery-modal-prev aria-label="Oldingi rasm">&#8249;</button>
                 <div class="gallery-lightbox-stage product-tone-rose" data-gallery-modal-stage>
                     <div class="gallery-lightbox-stage-media">
-                        <img src="" alt="" class="gallery-lightbox-image" data-gallery-modal-image>
+                        <img src="" alt="" class="gallery-lightbox-image" data-gallery-modal-image="" decoding="async">
                     </div>
                     <div class="gallery-lightbox-stage-copy">
                         <span data-gallery-modal-title>Mahsulot galereyasi</span>
@@ -2072,53 +2544,570 @@
             </div>
         </div>
 
-        <footer class="site-footer">
-            <div class="container footer-grid">
-                <div class="footer-brand">
-                    <a href="/" class="brand-mark">
-                        <span class="brand-knot"></span>
-                        <span>Suzani Shop</span>
-                    </a>
-                    <p>
-                        Qo'lda ishlangan suzani, tekstil va sovg'abop buyumlar orqali interyerga iliqlik, milliy ruh va
-                        premium kayfiyat olib kiramiz.
-                    </p>
-                </div>
-
-                <div class="footer-links">
-                    <h3>Sahifa</h3>
-                    <div class="footer-link-list">
-                        <a href="#about">Hunarmand haqida</a>
-                        <a href="#products">Mashhur mahsulotlar</a>
-                        <a href="#portfolio">Portfolio</a>
-                        <a href="#contact">Aloqa</a>
+        <div class="product-detail-modal is-hidden" data-product-detail-modal aria-hidden="true">
+            <button type="button" class="product-detail-modal-backdrop" data-product-detail-close aria-label="Tavsif oynasini yopish"></button>
+            <div class="product-detail-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="product-detail-modal-title">
+                <button type="button" class="product-detail-modal-close" data-product-detail-close aria-label="Yopish">Yopish</button>
+                <div class="product-detail-modal-shell">
+                    <div class="product-detail-modal-head">
+                        <div class="product-detail-modal-preview product-tone-rose" data-product-detail-stage>
+                            <img src="" alt="" class="product-detail-modal-image" data-product-detail-image decoding="async">
+                        </div>
+                        <div class="product-detail-modal-copy">
+                            <span data-product-detail-category>Kategoriya</span>
+                            <strong id="product-detail-modal-title" data-product-detail-title>Mahsulot</strong>
+                            <p class="product-detail-modal-price" data-product-detail-price>0 so'm</p>
+                        </div>
                     </div>
-                </div>
-
-                <div class="footer-links">
-                    <h3>Aloqa</h3>
-                    <div class="footer-link-list">
-                        @if ($contactPhoneHref)
-                            <a href="{{ $contactPhoneHref }}">{{ $contactPhone }}</a>
-                        @endif
-                        @if ($contactTelegramUrl)
-                            <a href="{{ $contactTelegramUrl }}" target="_blank" rel="noreferrer">{{ $contactMeta['telegram_value'] }}</a>
-                        @endif
-                        @if ($contactInstagramUrl)
-                            <a href="{{ $contactInstagramUrl }}" target="_blank" rel="noreferrer">{{ $contactMeta['instagram_value'] }}</a>
-                        @endif
-                        <span>{{ $contactMeta['address_value'] }}</span>
+                    <div class="product-detail-modal-meta">
+                        <div class="product-detail-modal-meta-item">
+                            <span>Material</span>
+                            <strong data-product-detail-material>Kelishiladi</strong>
+                        </div>
+                        <div class="product-detail-modal-meta-item">
+                            <span>O'lcham</span>
+                            <strong data-product-detail-size>Kelishiladi</strong>
+                        </div>
+                        <div class="product-detail-modal-meta-item">
+                            <span>Rang</span>
+                            <strong data-product-detail-color>Kelishiladi</strong>
+                        </div>
+                        <div class="product-detail-modal-meta-item">
+                            <span>Mavjudligi</span>
+                            <strong data-product-detail-availability>Kelishiladi</strong>
+                        </div>
+                    </div>
+                    <div class="product-detail-modal-body">
+                        <div class="product-detail-modal-section">
+                            <span>To'liq tavsif</span>
+                            <p data-product-detail-description>Mahsulot tavsifi shu yerda chiqadi.</p>
+                        </div>
+                        <div class="product-detail-modal-section" data-product-detail-story-section>
+                            <span>Mahsulot tarixi</span>
+                            <p data-product-detail-story>Mahsulot tarixi shu yerda chiqadi.</p>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="container footer-meta">
+        @if (false)
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-shell">
+                    <div class="footer-topbar">
+                        <div class="footer-topbar-copy">
+                            <p class="section-label">Bog'lanish va buyurtma</p>
+                            <h2>Suzani, tekstil va individual buyurtmalar uchun doimo aloqadamiz</h2>
+                            <p>
+                                Telegramda yozing, qo'ng'iroq qiling yoki sayt orqali buyurtma qoldiring. Har bir buyurtma rang,
+                                o'lcham va interyerga mos tarzda aniqlashtiriladi.
+                            </p>
+                        </div>
+                        <div class="footer-topbar-actions">
+                            <a href="#cart" class="button button-primary button-compact">Buyurtma berish</a>
+                            @if ($contactTelegramUrl)
+                                <a href="{{ $contactTelegramUrl }}" target="_blank" rel="noreferrer" class="button button-secondary button-compact">
+                                    Telegramga yozish
+                                </a>
+                            @elseif ($contactPhoneHref)
+                                <a href="{{ $contactPhoneHref }}" class="button button-secondary button-compact">Qo'ng'iroq qilish</a>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="footer-grid">
+                        <div class="footer-brand footer-panel">
+                            <a href="{{ url('/') }}" class="brand-mark">
+                                <span class="brand-knot"></span>
+                                <span>Suzani Shop</span>
+                            </a>
+                            <p>
+                                Qo'lda ishlangan suzani, tekstil va sovg'abop buyumlar orqali interyerga iliqlik, milliy ruh va
+                                premium kayfiyat olib kiramiz.
+                            </p>
+                            <div class="footer-badges">
+                                <span class="footer-badge">Qo'lda ishlangan</span>
+                                <span class="footer-badge">Custom buyurtma</span>
+                                <span class="footer-badge">Premium qadoq</span>
+                                <span class="footer-badge">Yetkazib berish</span>
+                            </div>
+                        </div>
+
+                    <div class="footer-links footer-panel">
+                        <h3>Sahifa</h3>
+                        <div class="footer-link-list">
+                            <a href="#about">Hunarmand haqida</a>
+                            <a href="#products">Mashhur mahsulotlar</a>
+                            <a href="#catalog">Katalog</a>
+                            <a href="#portfolio">Portfolio</a>
+                            <a href="#contact">Aloqa</a>
+                        </div>
+                    </div>
+
+                    <nav class="footer-links footer-panel" aria-labelledby="footer-order-nav">
+                        <h3 id="footer-order-nav">Buyurtma</h3>
+                        <div class="footer-link-list">
+                            <a href="#cart">Umumiy buyurtma</a>
+                            <a href="#catalog">Mahsulot tanlash</a>
+                            <a href="#portfolio">Individual loyiha</a>
+                            <a href="#contact">Hamkorlik va aloqa</a>
+                        </div>
+                    </nav>
+
+                    <div class="footer-panel footer-contact-panel">
+                        <h3>Aloqa</h3>
+                        <div class="footer-contact-list">
+                            @if ($contactPhone)
+                                <div class="footer-contact-item">
+                                    <span>{{ $contactMeta['phone_label'] }}</span>
+                                    @if ($contactPhoneHref)
+                                        <a href="{{ $contactPhoneHref }}">{{ $contactPhone }}</a>
+                                    @else
+                                        <p>{{ $contactPhone }}</p>
+                                    @endif
+                                </div>
+                            @endif
+
+                            @if (! empty($contactMeta['telegram_value']))
+                                <div class="footer-contact-item">
+                                    <span>{{ $contactMeta['telegram_label'] }}</span>
+                                    @if ($contactTelegramUrl)
+                                        <a href="{{ $contactTelegramUrl }}" target="_blank" rel="noreferrer">{{ $contactMeta['telegram_value'] }}</a>
+                                    @else
+                                        <p>{{ $contactMeta['telegram_value'] }}</p>
+                                    @endif
+                                </div>
+                            @endif
+
+                            @if (! empty($contactMeta['instagram_value']))
+                                <div class="footer-contact-item">
+                                    <span>{{ $contactMeta['instagram_label'] }}</span>
+                                    @if ($contactInstagramUrl)
+                                        <a href="{{ $contactInstagramUrl }}" target="_blank" rel="noreferrer">{{ $contactMeta['instagram_value'] }}</a>
+                                    @else
+                                        <p>{{ $contactMeta['instagram_value'] }}</p>
+                                    @endif
+                                </div>
+                            @endif
+
+                            @if (! empty($contactMeta['hours_value']))
+                                <div class="footer-contact-item">
+                                    <span>{{ $contactMeta['hours_label'] }}</span>
+                                    <p>{{ $contactMeta['hours_value'] }}</p>
+                                </div>
+                            @endif
+
+                            @if (! empty($contactMeta['address_value']))
+                                <div class="footer-contact-item">
+                                    <span>{{ $contactMeta['address_label'] }}</span>
+                                    <p>{{ $contactMeta['address_value'] }}</p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="footer-meta">
                 <span>© {{ now()->year }} Suzani Shop. Barcha huquqlar himoyalangan.</span>
-                <span>Minimalistik premium dizayn, qo'l mehnati ruhi bilan.</span>
+                        <span>&copy; {{ now()->year }} Suzani Shop. Barcha huquqlar himoyalangan.</span>
+                        <span>Yetkazib berish va individual buyurtmalar bo'yicha admin tezkor aloqaga chiqadi.</span>
+                        <span>Minimalistik premium dizayn, qo'l mehnati ruhi bilan.</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        @endif
+
+        <footer class="site-footer footer-canvas">
+            <div class="container footer-canvas-container">
+                <div class="footer-banner">
+                    <div class="footer-banner-copy">
+                        <span class="footer-kicker">Hunarmand va online bozor</span>
+                        <h2>Qo'lda ishlangan buyumlarni iliq, premium va ishonchli usulda buyurtma qiling</h2>
+                        <p>
+                            Suzani Shop landing page qulayligi, ustaxona ruhi va online bozor tezligini bitta joyga jamlaydi.
+                            Telegram, telefon yoki katalog orqali o'zingizga mos buyurtmani tez boshlashingiz mumkin.
+                        </p>
+                        <div class="footer-banner-points">
+                            <span>Qo'lda ishlangan kolleksiyalar</span>
+                            <span>Individual buyurtma va custom o'lcham</span>
+                            <span>Telegram, telefon va xarita orqali tezkor aloqa</span>
+                        </div>
+                    </div>
+
+                    <div class="footer-banner-side">
+                        <div class="footer-banner-stats">
+                            <div class="footer-banner-stat">
+                                <strong>12 yil</strong>
+                                <span>Amaliy tajriba</span>
+                            </div>
+                            <div class="footer-banner-stat">
+                                <strong>800+</strong>
+                                <span>Qo'lda yaratilgan ish</span>
+                            </div>
+                        </div>
+
+                        <div class="footer-banner-actions">
+                            <a href="#cart" class="footer-action-button footer-action-button-primary">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M7 18h10l2-8H6.5L5.8 7.4A1.7 1.7 0 0 0 4.2 6H3" />
+                                    <circle cx="9" cy="20" r="1.2" />
+                                    <circle cx="17" cy="20" r="1.2" />
+                                </svg>
+                                <span>Buyurtma berish</span>
+                            </a>
+                            @if ($contactTelegramUrl)
+                                <a href="{{ $contactTelegramUrl }}" target="_blank" rel="noreferrer" class="footer-action-button footer-action-button-secondary">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M21 4 3.8 10.6c-.9.4-.9 1.7.1 2l4.5 1.4 1.7 5c.3 1 1.7 1.1 2.2.2L21 4Z" />
+                                        <path d="m8.4 14 9.9-7.6" />
+                                    </svg>
+                                    <span>Telegramga yozish</span>
+                                </a>
+                            @elseif ($contactPhoneHref)
+                                <a href="{{ $contactPhoneHref }}" class="footer-action-button footer-action-button-secondary">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M6.6 4.8h2.8l1.4 4-1.8 1.5a15 15 0 0 0 4.6 4.6l1.5-1.8 4 1.4v2.8c0 .7-.5 1.3-1.2 1.4a14.8 14.8 0 0 1-13.4-13.4c.1-.7.7-1.2 1.4-1.2Z" />
+                                    </svg>
+                                    <span>Qo'ng'iroq qilish</span>
+                                </a>
+                            @endif
+                            <a href="#catalog" class="footer-action-button footer-action-button-ghost">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M4.5 6.5h15" />
+                                    <path d="M4.5 12h15" />
+                                    <path d="M4.5 17.5h15" />
+                                </svg>
+                                <span>Katalogni ko'rish</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-surface">
+                    <div class="footer-grid-immersive">
+                        <div class="footer-brand-card">
+                            <span class="footer-card-kicker">Suzani Shop</span>
+                            <a href="{{ url('/') }}" class="footer-brand-mark">
+                                <span class="footer-brand-mark-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="m12 3 3.7 3.7L12 10.4 8.3 6.7 12 3Z" />
+                                        <path d="m6.2 8.8 3.6 3.6-3.6 3.6-3.6-3.6 3.6-3.6Z" />
+                                        <path d="m17.8 8.8 3.6 3.6-3.6 3.6-3.6-3.6 3.6-3.6Z" />
+                                        <path d="m12 14.4 3.7 3.7L12 21.8l-3.7-3.7 3.7-3.7Z" />
+                                    </svg>
+                                </span>
+                                <span class="footer-brand-mark-copy">
+                                    <strong>Suzani Shop</strong>
+                                    <small>Hunarmand ruhi bilan yaratilgan online bozor</small>
+                                </span>
+                            </a>
+                            <p>
+                                Qo'lda ishlangan suzani, tekstil va sovg'abop buyumlarni zamonaviy ko'rinishda namoyish qilib,
+                                xaridor uchun iliq taassurot va qulay buyurtma yo'lini birlashtiramiz.
+                            </p>
+                            <div class="footer-pill-row">
+                                <span class="footer-pill">Qo'lda ishlangan</span>
+                                <span class="footer-pill">Premium ko'rinish</span>
+                                <span class="footer-pill">Custom buyurtma</span>
+                                <span class="footer-pill">Yetkazib berish</span>
+                            </div>
+
+                            @if ($contactPhoneHref || $contactTelegramUrl || $contactInstagramUrl || $contactMapLink)
+                                <div class="footer-social-row">
+                                    @if ($contactPhoneHref)
+                                        <a href="{{ $contactPhoneHref }}" class="footer-social-link" aria-label="Telefon orqali bog'lanish">
+                                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M6.6 4.8h2.8l1.4 4-1.8 1.5a15 15 0 0 0 4.6 4.6l1.5-1.8 4 1.4v2.8c0 .7-.5 1.3-1.2 1.4a14.8 14.8 0 0 1-13.4-13.4c.1-.7.7-1.2 1.4-1.2Z" />
+                                            </svg>
+                                            <span class="sr-only">Telefon</span>
+                                        </a>
+                                    @endif
+
+                                    @if ($contactTelegramUrl)
+                                        <a href="{{ $contactTelegramUrl }}" target="_blank" rel="noreferrer" class="footer-social-link" aria-label="Telegram orqali bog'lanish">
+                                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M21 4 3.8 10.6c-.9.4-.9 1.7.1 2l4.5 1.4 1.7 5c.3 1 1.7 1.1 2.2.2L21 4Z" />
+                                                <path d="m8.4 14 9.9-7.6" />
+                                            </svg>
+                                            <span class="sr-only">Telegram</span>
+                                        </a>
+                                    @endif
+
+                                    @if ($contactInstagramUrl)
+                                        <a href="{{ $contactInstagramUrl }}" target="_blank" rel="noreferrer" class="footer-social-link" aria-label="Instagram sahifasi">
+                                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                <rect x="4.5" y="4.5" width="15" height="15" rx="4.2" />
+                                                <circle cx="12" cy="12" r="3.5" />
+                                                <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+                                            </svg>
+                                            <span class="sr-only">Instagram</span>
+                                        </a>
+                                    @endif
+
+                                    @if ($contactMapLink)
+                                        <a href="{{ $contactMapLink }}" target="_blank" rel="noreferrer" class="footer-social-link" aria-label="Xaritada ochish">
+                                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M12 21s6-5.6 6-11a6 6 0 1 0-12 0c0 5.4 6 11 6 11Z" />
+                                                <circle cx="12" cy="10" r="2.2" />
+                                            </svg>
+                                            <span class="sr-only">Xarita</span>
+                                        </a>
+                                    @endif
+                                </div>
+                            @endif
+                        </div>
+
+                        <nav class="footer-menu-card" aria-labelledby="footer-site-nav">
+                            <span class="footer-card-kicker">Navigatsiya</span>
+                            <h3 id="footer-site-nav">Sahifalar</h3>
+                            <div class="footer-menu-list">
+                                <a href="#about">
+                                    <strong>Hunarmand haqida</strong>
+                                    <span>Ustaxona, hikoya va mahorat bilan tanishing</span>
+                                </a>
+                                <a href="#products">
+                                    <strong>Mashhur mahsulotlar</strong>
+                                    <span>Top kolleksiyalar va e'tiborli buyumlar</span>
+                                </a>
+                                <a href="#catalog">
+                                    <strong>Katalog</strong>
+                                    <span>Ko'proq mahsulotlarni tez ko'rib chiqing</span>
+                                </a>
+                                <a href="#portfolio">
+                                    <strong>Portfolio</strong>
+                                    <span>Oldingi ishlar va tayyor loyihalar namoyishi</span>
+                                </a>
+                            </div>
+                        </nav>
+
+                        <nav class="footer-menu-card" aria-labelledby="footer-order-nav">
+                            <span class="footer-card-kicker">Savdo</span>
+                            <h3 id="footer-order-nav">Buyurtma yo'li</h3>
+                            <div class="footer-menu-list">
+                                <a href="#cart">
+                                    <strong>Savatcha va buyurtma</strong>
+                                    <span>Tanlangan mahsulotlarni bir joyda yuboring</span>
+                                </a>
+                                <a href="#catalog">
+                                    <strong>Mahsulot tanlash</strong>
+                                    <span>Bir qatorda ko'proq mahsulot va variantlar</span>
+                                </a>
+                                <a href="#portfolio">
+                                    <strong>Individual loyiha</strong>
+                                    <span>Interyer va o'lchamga mos maxsus buyurtma</span>
+                                </a>
+                                <a href="#contact">
+                                    <strong>Hamkorlik va aloqa</strong>
+                                    <span>Admin bilan tezkor maslahat va yo'nalish</span>
+                                </a>
+                            </div>
+                        </nav>
+
+                        <div class="footer-contact-card">
+                            <span class="footer-card-kicker">Aloqa</span>
+                            <h3>Biz bilan bog'laning</h3>
+                            <div class="footer-contact-stack">
+                                @if ($contactPhone)
+                                    @if ($contactPhoneHref)
+                                        <a href="{{ $contactPhoneHref }}" class="footer-contact-row">
+                                            <span class="footer-contact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M6.6 4.8h2.8l1.4 4-1.8 1.5a15 15 0 0 0 4.6 4.6l1.5-1.8 4 1.4v2.8c0 .7-.5 1.3-1.2 1.4a14.8 14.8 0 0 1-13.4-13.4c.1-.7.7-1.2 1.4-1.2Z" />
+                                                </svg>
+                                            </span>
+                                            <span class="footer-contact-copy">
+                                                <small>{{ $contactMeta['phone_label'] }}</small>
+                                                <strong>{{ $contactPhone }}</strong>
+                                            </span>
+                                            <span class="footer-contact-action" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M8 6.5 15 12l-7 5.5" />
+                                                </svg>
+                                            </span>
+                                        </a>
+                                    @else
+                                        <div class="footer-contact-row is-static">
+                                            <span class="footer-contact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M6.6 4.8h2.8l1.4 4-1.8 1.5a15 15 0 0 0 4.6 4.6l1.5-1.8 4 1.4v2.8c0 .7-.5 1.3-1.2 1.4a14.8 14.8 0 0 1-13.4-13.4c.1-.7.7-1.2 1.4-1.2Z" />
+                                                </svg>
+                                            </span>
+                                            <span class="footer-contact-copy">
+                                                <small>{{ $contactMeta['phone_label'] }}</small>
+                                                <strong>{{ $contactPhone }}</strong>
+                                            </span>
+                                            <span class="footer-contact-action" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M8 6.5 15 12l-7 5.5" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    @endif
+                                @endif
+
+                                @if (! empty($contactMeta['telegram_value']))
+                                    @if ($contactTelegramUrl)
+                                        <a href="{{ $contactTelegramUrl }}" target="_blank" rel="noreferrer" class="footer-contact-row">
+                                            <span class="footer-contact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M21 4 3.8 10.6c-.9.4-.9 1.7.1 2l4.5 1.4 1.7 5c.3 1 1.7 1.1 2.2.2L21 4Z" />
+                                                    <path d="m8.4 14 9.9-7.6" />
+                                                </svg>
+                                            </span>
+                                            <span class="footer-contact-copy">
+                                                <small>{{ $contactMeta['telegram_label'] }}</small>
+                                                <strong>{{ $contactMeta['telegram_value'] }}</strong>
+                                            </span>
+                                            <span class="footer-contact-action" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M8 6.5 15 12l-7 5.5" />
+                                                </svg>
+                                            </span>
+                                        </a>
+                                    @else
+                                        <div class="footer-contact-row is-static">
+                                            <span class="footer-contact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M21 4 3.8 10.6c-.9.4-.9 1.7.1 2l4.5 1.4 1.7 5c.3 1 1.7 1.1 2.2.2L21 4Z" />
+                                                    <path d="m8.4 14 9.9-7.6" />
+                                                </svg>
+                                            </span>
+                                            <span class="footer-contact-copy">
+                                                <small>{{ $contactMeta['telegram_label'] }}</small>
+                                                <strong>{{ $contactMeta['telegram_value'] }}</strong>
+                                            </span>
+                                            <span class="footer-contact-action" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M8 6.5 15 12l-7 5.5" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    @endif
+                                @endif
+
+                                @if (! empty($contactMeta['instagram_value']))
+                                    @if ($contactInstagramUrl)
+                                        <a href="{{ $contactInstagramUrl }}" target="_blank" rel="noreferrer" class="footer-contact-row">
+                                            <span class="footer-contact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <rect x="4.5" y="4.5" width="15" height="15" rx="4.2" />
+                                                    <circle cx="12" cy="12" r="3.5" />
+                                                    <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+                                                </svg>
+                                            </span>
+                                            <span class="footer-contact-copy">
+                                                <small>{{ $contactMeta['instagram_label'] }}</small>
+                                                <strong>{{ $contactMeta['instagram_value'] }}</strong>
+                                            </span>
+                                            <span class="footer-contact-action" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M8 6.5 15 12l-7 5.5" />
+                                                </svg>
+                                            </span>
+                                        </a>
+                                    @else
+                                        <div class="footer-contact-row is-static">
+                                            <span class="footer-contact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <rect x="4.5" y="4.5" width="15" height="15" rx="4.2" />
+                                                    <circle cx="12" cy="12" r="3.5" />
+                                                    <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+                                                </svg>
+                                            </span>
+                                            <span class="footer-contact-copy">
+                                                <small>{{ $contactMeta['instagram_label'] }}</small>
+                                                <strong>{{ $contactMeta['instagram_value'] }}</strong>
+                                            </span>
+                                            <span class="footer-contact-action" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M8 6.5 15 12l-7 5.5" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    @endif
+                                @endif
+
+                                @if (! empty($contactMeta['hours_value']))
+                                    <div class="footer-contact-row is-static">
+                                        <span class="footer-contact-icon" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24">
+                                                <circle cx="12" cy="12" r="8" />
+                                                <path d="M12 7.8v4.7l3.1 1.8" />
+                                            </svg>
+                                        </span>
+                                        <span class="footer-contact-copy">
+                                            <small>{{ $contactMeta['hours_label'] }}</small>
+                                            <strong>{{ $contactMeta['hours_value'] }}</strong>
+                                        </span>
+                                        <span class="footer-contact-action" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24">
+                                                <path d="M8 6.5 15 12l-7 5.5" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                @endif
+
+                                @if (! empty($contactMeta['address_value']))
+                                    @if ($contactMapLink)
+                                        <a href="{{ $contactMapLink }}" target="_blank" rel="noreferrer" class="footer-contact-row">
+                                            <span class="footer-contact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M12 21s6-5.6 6-11a6 6 0 1 0-12 0c0 5.4 6 11 6 11Z" />
+                                                    <circle cx="12" cy="10" r="2.2" />
+                                                </svg>
+                                            </span>
+                                            <span class="footer-contact-copy">
+                                                <small>{{ $contactMeta['address_label'] }}</small>
+                                                <strong>{{ $contactMeta['address_value'] }}</strong>
+                                            </span>
+                                            <span class="footer-contact-action" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M8 6.5 15 12l-7 5.5" />
+                                                </svg>
+                                            </span>
+                                        </a>
+                                    @else
+                                        <div class="footer-contact-row is-static">
+                                            <span class="footer-contact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M12 21s6-5.6 6-11a6 6 0 1 0-12 0c0 5.4 6 11 6 11Z" />
+                                                    <circle cx="12" cy="10" r="2.2" />
+                                                </svg>
+                                            </span>
+                                            <span class="footer-contact-copy">
+                                                <small>{{ $contactMeta['address_label'] }}</small>
+                                                <strong>{{ $contactMeta['address_value'] }}</strong>
+                                            </span>
+                                            <span class="footer-contact-action" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M8 6.5 15 12l-7 5.5" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="footer-bottom">
+                        <p>
+                            &copy; {{ now()->year }} Suzani Shop. Hunarmand mahsulotlarini premium ko'rinish, tezkor aloqa va
+                            ishonchli buyurtma oqimi bilan taqdim etamiz.
+                        </p>
+                        <div class="footer-bottom-pills">
+                            <span>Qo'lda ishlangan kolleksiya</span>
+                            <span>Landing + katalog uyg'unligi</span>
+                            <span>Tezkor admin aloqa</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </footer>
 
-        @if (!file_exists(public_path('build/manifest.json')) && !file_exists(public_path('hot')))
+        @if (! file_exists(public_path('build/manifest.json')) && ! file_exists(public_path('hot')))
             @include('partials.home-inline-scripts')
         @endif
         <script>

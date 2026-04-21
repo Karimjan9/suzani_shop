@@ -3,13 +3,27 @@ import '../css/admin.css';
 import '../scss/admin.scss';
 import Alpine from 'alpinejs';
 import { initDropdowns } from 'flowbite';
-import Swiper from 'swiper';
-import { Autoplay, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
 
 window.Alpine = Alpine;
 Alpine.start();
+
+let adminSwiperDependenciesPromise;
+
+const loadAdminSwiperDependencies = async () => {
+    if (!adminSwiperDependenciesPromise) {
+        adminSwiperDependenciesPromise = Promise.all([
+            import('swiper'),
+            import('swiper/modules'),
+            import('swiper/css'),
+            import('swiper/css/pagination'),
+        ]).then(([swiperModule, modules]) => ({
+            Swiper: swiperModule.default,
+            modules,
+        }));
+    }
+
+    return adminSwiperDependenciesPromise;
+};
 
 const initAdminTheme = () => {
     const storageKey = 'suzani-shop-theme';
@@ -59,38 +73,56 @@ const initAdminTheme = () => {
     });
 };
 
-const initAdminSwipers = () => {
-    document.querySelectorAll('[data-admin-swiper]').forEach((element) => {
-        if (element.dataset.swiperReady === 'true') {
-            return;
-        }
+const initAdminSwipers = async () => {
+    const elements = Array.from(document.querySelectorAll('[data-admin-swiper]'))
+        .filter((element) => element.dataset.swiperReady !== 'true' && element.dataset.swiperReady !== 'loading');
 
-        element.dataset.swiperReady = 'true';
+    if (!elements.length) {
+        return;
+    }
 
-        new Swiper(element, {
-            modules: [Autoplay, Pagination],
-            slidesPerView: 1.08,
-            spaceBetween: 16,
-            autoplay: {
-                delay: 5000,
-            },
-            pagination: {
-                el: element.parentElement?.querySelector('.swiper-pagination'),
-                clickable: true,
-            },
-            breakpoints: {
-                960: {
-                    slidesPerView: 2.05,
-                },
-            },
-        });
+    elements.forEach((element) => {
+        element.dataset.swiperReady = 'loading';
     });
+
+    try {
+        const {
+            Swiper,
+            modules: { Autoplay, Pagination },
+        } = await loadAdminSwiperDependencies();
+
+        elements.forEach((element) => {
+            new Swiper(element, {
+                modules: [Autoplay, Pagination],
+                slidesPerView: 1.08,
+                spaceBetween: 16,
+                autoplay: {
+                    delay: 5000,
+                },
+                pagination: {
+                    el: element.parentElement?.querySelector('.swiper-pagination'),
+                    clickable: true,
+                },
+                breakpoints: {
+                    960: {
+                        slidesPerView: 2.05,
+                    },
+                },
+            });
+
+            element.dataset.swiperReady = 'true';
+        });
+    } catch {
+        elements.forEach((element) => {
+            delete element.dataset.swiperReady;
+        });
+    }
 };
 
 const bootAdminUi = () => {
     initAdminTheme();
     initDropdowns();
-    initAdminSwipers();
+    void initAdminSwipers();
 };
 
 document.addEventListener('DOMContentLoaded', bootAdminUi);

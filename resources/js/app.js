@@ -3,9 +3,6 @@ import '../scss/app.scss';
 import Alpine from 'alpinejs';
 import { initFlowbite } from 'flowbite';
 import 'flowbite';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import { initSwipers } from './plugins/swiper';
 
 window.Alpine = Alpine;
@@ -355,6 +352,131 @@ const initProductGalleries = () => {
     });
 };
 
+const initProductDetailModal = () => {
+    const modal = document.querySelector('[data-product-detail-modal]');
+
+    if (!modal) {
+        return;
+    }
+
+    const stage = modal.querySelector('[data-product-detail-stage]');
+    const image = modal.querySelector('[data-product-detail-image]');
+    const category = modal.querySelector('[data-product-detail-category]');
+    const title = modal.querySelector('[data-product-detail-title]');
+    const price = modal.querySelector('[data-product-detail-price]');
+    const material = modal.querySelector('[data-product-detail-material]');
+    const size = modal.querySelector('[data-product-detail-size]');
+    const color = modal.querySelector('[data-product-detail-color]');
+    const availability = modal.querySelector('[data-product-detail-availability]');
+    const description = modal.querySelector('[data-product-detail-description]');
+    const story = modal.querySelector('[data-product-detail-story]');
+    const storySection = modal.querySelector('[data-product-detail-story-section]');
+    const closeButton = modal.querySelector('.product-detail-modal-close');
+    const closeTargets = Array.from(modal.querySelectorAll('[data-product-detail-close]'));
+    const toneClasses = ['product-tone-rose', 'product-tone-gold', 'product-tone-teal', 'product-tone-ink', 'product-tone-clay', 'product-tone-sky'];
+    let lastTrigger = null;
+
+    const syncText = (element, value, fallback = '') => {
+        if (!element) {
+            return;
+        }
+
+        const nextValue = String(value || fallback).trim();
+        element.textContent = nextValue;
+    };
+
+    const closeModal = () => {
+        modal.classList.add('is-hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('is-detail-open');
+
+        if (image) {
+            image.src = '';
+            image.alt = '';
+            image.hidden = false;
+        }
+
+        lastTrigger?.focus?.();
+        lastTrigger = null;
+    };
+
+    const openModal = (payload, trigger) => {
+        const detail = {
+            title: String(payload?.title || 'Mahsulot'),
+            category: String(payload?.category || 'Katalog'),
+            price: String(payload?.price || ''),
+            description: String(payload?.description || ''),
+            story: String(payload?.story || ''),
+            material: String(payload?.material || 'Kelishiladi'),
+            size: String(payload?.size || 'Kelishiladi'),
+            color: String(payload?.color || 'Kelishiladi'),
+            availability: String(payload?.availability || 'Kelishiladi'),
+            image: String(payload?.image || ''),
+            tone: String(payload?.tone || 'rose'),
+        };
+
+        lastTrigger = trigger;
+
+        stage?.classList.remove(...toneClasses);
+        stage?.classList.add(`product-tone-${detail.tone}`);
+
+        if (image) {
+            image.src = detail.image;
+            image.alt = detail.title;
+            image.hidden = detail.image === '';
+        }
+
+        syncText(category, detail.category, 'Katalog');
+        syncText(title, detail.title, 'Mahsulot');
+        syncText(price, detail.price, '');
+        syncText(material, detail.material, 'Kelishiladi');
+        syncText(size, detail.size, 'Kelishiladi');
+        syncText(color, detail.color, 'Kelishiladi');
+        syncText(availability, detail.availability, 'Kelishiladi');
+        syncText(description, detail.description, 'Mahsulot tavsifi tez orada to\'ldiriladi.');
+        syncText(story, detail.story, detail.description || 'Mahsulot hikoyasi tez orada to\'ldiriladi.');
+
+        if (storySection) {
+            storySection.hidden = String(detail.story || '').trim() === '';
+        }
+
+        modal.classList.remove('is-hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('is-detail-open');
+        closeButton?.focus();
+    };
+
+    closeTargets.forEach((target) => {
+        target.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('click', (event) => {
+        const trigger = event.target.closest('[data-product-detail-open]');
+
+        if (!trigger) {
+            return;
+        }
+
+        const payload = parseProductPayload(trigger.getAttribute('data-product-detail-payload'));
+
+        if (!payload) {
+            return;
+        }
+
+        openModal(payload, trigger);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (modal.classList.contains('is-hidden')) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+};
+
 const initProductCatalog = () => {
     const grid = document.querySelector('[data-products-grid]');
 
@@ -497,7 +619,14 @@ const initProductCatalog = () => {
         catalogMeta?.classList.add('is-loading');
         grid.classList.add('is-loading');
 
-        await new Promise((resolve) => window.setTimeout(resolve, 280));
+        await new Promise((resolve) => {
+            if ('requestAnimationFrame' in window) {
+                window.requestAnimationFrame(() => resolve());
+                return;
+            }
+
+            window.setTimeout(resolve, 16);
+        });
 
         if (nextToken !== requestToken) {
             return;
@@ -845,7 +974,7 @@ const initContactForm = () => {
 
 const initVendorStack = () => {
     initFlowbite();
-    initSwipers();
+    void initSwipers();
 };
 
 const bootstrapFrontend = () => {
@@ -853,6 +982,7 @@ const bootstrapFrontend = () => {
     initStickyHeader();
     initRevealEffects();
     initProductGalleries();
+    initProductDetailModal();
     initProductCatalog();
     initCartAndOrder();
     initContactForm();
