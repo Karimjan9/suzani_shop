@@ -329,6 +329,122 @@
             });
         };
 
+        const initPortfolioModal = () => {
+            const modal = document.querySelector('[data-portfolio-modal]');
+
+            if (!modal) {
+                return;
+            }
+
+            const stage = modal.querySelector('[data-portfolio-modal-stage]');
+            const image = modal.querySelector('[data-portfolio-modal-image]');
+            const type = modal.querySelector('[data-portfolio-modal-type]');
+            const highlight = modal.querySelector('[data-portfolio-modal-highlight]');
+            const title = modal.querySelector('[data-portfolio-modal-title]');
+            const description = modal.querySelector('[data-portfolio-modal-description]');
+            const typeChip = modal.querySelector('[data-portfolio-modal-type-chip]');
+            const highlightChip = modal.querySelector('[data-portfolio-modal-highlight-chip]');
+            const closeButton = modal.querySelector('.portfolio-spotlight-close');
+            const closeTargets = Array.from(modal.querySelectorAll('[data-portfolio-modal-close]'));
+            const toneClasses = ['product-tone-rose', 'product-tone-gold', 'product-tone-teal', 'product-tone-ink', 'product-tone-clay', 'product-tone-sky'];
+            let lastTrigger = null;
+
+            const syncText = (element, value, fallback = '') => {
+                if (!element) {
+                    return;
+                }
+
+                element.textContent = String(value || fallback).trim();
+            };
+
+            const closeModal = () => {
+                modal.classList.add('is-hidden');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('is-gallery-open');
+
+                if (image) {
+                    image.src = '';
+                    image.alt = '';
+                    image.hidden = false;
+                }
+
+                if (lastTrigger && typeof lastTrigger.focus === 'function') {
+                    lastTrigger.focus();
+                }
+
+                lastTrigger = null;
+            };
+
+            const openModal = (payload, trigger) => {
+                const detail = {
+                    title: String((payload && payload.title) || 'Portfolio namuna'),
+                    type: String((payload && payload.type) || 'Portfolio loyiha'),
+                    highlight: String((payload && payload.highlight) || (payload && payload.title) || 'To\'liq ko\'rinish'),
+                    description: String((payload && payload.description) || 'Portfolio loyihasi tavsifi tez orada to\'ldiriladi.'),
+                    image: String((payload && payload.image) || ''),
+                    tone: String((payload && payload.tone) || 'rose'),
+                };
+
+                lastTrigger = trigger;
+
+                if (stage) {
+                    stage.classList.remove(...toneClasses);
+                    stage.classList.add(`product-tone-${detail.tone}`);
+                }
+
+                if (image) {
+                    image.src = detail.image;
+                    image.alt = detail.title;
+                    image.hidden = detail.image === '';
+                }
+
+                syncText(type, detail.type, 'Portfolio loyiha');
+                syncText(highlight, detail.highlight, detail.title);
+                syncText(title, detail.title, 'Portfolio namuna');
+                syncText(description, detail.description, 'Portfolio loyihasi tavsifi tez orada to\'ldiriladi.');
+                syncText(typeChip, detail.type, 'Portfolio loyiha');
+                syncText(highlightChip, detail.highlight, detail.title);
+
+                modal.classList.remove('is-hidden');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('is-gallery-open');
+
+                if (closeButton) {
+                    closeButton.focus();
+                }
+            };
+
+            closeTargets.forEach((target) => {
+                target.addEventListener('click', closeModal);
+            });
+
+            document.addEventListener('click', (event) => {
+                const trigger = event.target.closest('[data-portfolio-modal-open]');
+
+                if (!trigger) {
+                    return;
+                }
+
+                const payload = parseProductPayload(trigger.getAttribute('data-portfolio-modal-payload'));
+
+                if (!payload) {
+                    return;
+                }
+
+                openModal(payload, trigger);
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (modal.classList.contains('is-hidden')) {
+                    return;
+                }
+
+                if (event.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        };
+
         const initProductCatalog = () => {
             const grid = document.querySelector('[data-products-grid]');
 
@@ -824,10 +940,70 @@
             });
         };
 
+        const initThemeToggle = () => {
+            const storageKey = 'suzani-shop-theme';
+            const defaultTheme = 'atelier';
+            const themeMetaColors = {
+                atelier: '#f5efe6',
+                nocturne: '#211918',
+            };
+
+            const normalizeTheme = (value) => value === 'nocturne' ? 'nocturne' : defaultTheme;
+            const toggles = Array.from(document.querySelectorAll('[data-theme-toggle]'));
+
+            if (!toggles.length) {
+                return;
+            }
+
+            const syncThemeUi = (theme) => {
+                const safeTheme = normalizeTheme(theme);
+                const metaTheme = document.querySelector('meta[name="theme-color"]');
+
+                document.documentElement.setAttribute('data-theme', safeTheme);
+                document.documentElement.style.colorScheme = safeTheme === 'nocturne' ? 'dark' : 'light';
+
+                if (metaTheme) {
+                    metaTheme.setAttribute('content', themeMetaColors[safeTheme] || themeMetaColors.atelier);
+                }
+
+                toggles.forEach((toggle) => {
+                    toggle.setAttribute('data-active-theme', safeTheme);
+                    toggle.setAttribute('aria-pressed', safeTheme === 'nocturne' ? 'true' : 'false');
+
+                    const status = toggle.querySelector('[data-theme-toggle-status]');
+
+                    if (status) {
+                        status.textContent = safeTheme === 'nocturne'
+                            ? 'Nocturne rejimi yoqilgan'
+                            : 'Atelier rejimi yoqilgan';
+                    }
+                });
+            };
+
+            syncThemeUi(document.documentElement.getAttribute('data-theme'));
+
+            toggles.forEach((toggle) => {
+                toggle.addEventListener('click', () => {
+                    const currentTheme = normalizeTheme(document.documentElement.getAttribute('data-theme'));
+                    const nextTheme = currentTheme === 'nocturne' ? defaultTheme : 'nocturne';
+
+                    syncThemeUi(nextTheme);
+
+                    try {
+                        window.localStorage.setItem(storageKey, nextTheme);
+                    } catch {
+                        // Ignore storage issues and keep theme in memory.
+                    }
+                });
+            });
+        };
+
         const bootstrapFrontend = () => {
+            initThemeToggle();
             initStickyHeader();
             initRevealEffects();
             initProductGalleries();
+            initPortfolioModal();
             initProductCatalog();
             initCartAndOrder();
             initContactForm();

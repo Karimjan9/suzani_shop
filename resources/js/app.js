@@ -3,6 +3,7 @@ import '../scss/app.scss';
 import Alpine from 'alpinejs';
 import { initFlowbite } from 'flowbite';
 import 'flowbite';
+import './home';
 import { initSwipers } from './plugins/swiper';
 
 window.Alpine = Alpine;
@@ -458,6 +459,114 @@ const initProductDetailModal = () => {
         }
 
         const payload = parseProductPayload(trigger.getAttribute('data-product-detail-payload'));
+
+        if (!payload) {
+            return;
+        }
+
+        openModal(payload, trigger);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (modal.classList.contains('is-hidden')) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+};
+
+const initPortfolioModal = () => {
+    const modal = document.querySelector('[data-portfolio-modal]');
+
+    if (!modal) {
+        return;
+    }
+
+    const stage = modal.querySelector('[data-portfolio-modal-stage]');
+    const image = modal.querySelector('[data-portfolio-modal-image]');
+    const type = modal.querySelector('[data-portfolio-modal-type]');
+    const highlight = modal.querySelector('[data-portfolio-modal-highlight]');
+    const title = modal.querySelector('[data-portfolio-modal-title]');
+    const description = modal.querySelector('[data-portfolio-modal-description]');
+    const typeChip = modal.querySelector('[data-portfolio-modal-type-chip]');
+    const highlightChip = modal.querySelector('[data-portfolio-modal-highlight-chip]');
+    const closeButton = modal.querySelector('.portfolio-spotlight-close');
+    const closeTargets = Array.from(modal.querySelectorAll('[data-portfolio-modal-close]'));
+    const toneClasses = ['product-tone-rose', 'product-tone-gold', 'product-tone-teal', 'product-tone-ink', 'product-tone-clay', 'product-tone-sky'];
+    let lastTrigger = null;
+
+    const syncText = (element, value, fallback = '') => {
+        if (!element) {
+            return;
+        }
+
+        element.textContent = String(value || fallback).trim();
+    };
+
+    const closeModal = () => {
+        modal.classList.add('is-hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('is-gallery-open');
+
+        if (image) {
+            image.src = '';
+            image.alt = '';
+            image.hidden = false;
+        }
+
+        lastTrigger?.focus?.();
+        lastTrigger = null;
+    };
+
+    const openModal = (payload, trigger) => {
+        const detail = {
+            title: String(payload?.title || 'Portfolio namuna'),
+            type: String(payload?.type || 'Portfolio loyiha'),
+            highlight: String(payload?.highlight || payload?.title || 'To\'liq ko\'rinish'),
+            description: String(payload?.description || 'Portfolio loyihasi tavsifi tez orada to\'ldiriladi.'),
+            image: String(payload?.image || ''),
+            tone: String(payload?.tone || 'rose'),
+        };
+
+        lastTrigger = trigger;
+
+        stage?.classList.remove(...toneClasses);
+        stage?.classList.add(`product-tone-${detail.tone}`);
+
+        if (image) {
+            image.src = detail.image;
+            image.alt = detail.title;
+            image.hidden = detail.image === '';
+        }
+
+        syncText(type, detail.type, 'Portfolio loyiha');
+        syncText(highlight, detail.highlight, detail.title);
+        syncText(title, detail.title, 'Portfolio namuna');
+        syncText(description, detail.description, 'Portfolio loyihasi tavsifi tez orada to\'ldiriladi.');
+        syncText(typeChip, detail.type, 'Portfolio loyiha');
+        syncText(highlightChip, detail.highlight, detail.title);
+
+        modal.classList.remove('is-hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('is-gallery-open');
+        closeButton?.focus();
+    };
+
+    closeTargets.forEach((target) => {
+        target.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('click', (event) => {
+        const trigger = event.target.closest('[data-portfolio-modal-open]');
+
+        if (!trigger) {
+            return;
+        }
+
+        const payload = parseProductPayload(trigger.getAttribute('data-portfolio-modal-payload'));
 
         if (!payload) {
             return;
@@ -983,6 +1092,7 @@ const bootstrapFrontend = () => {
     initRevealEffects();
     initProductGalleries();
     initProductDetailModal();
+    initPortfolioModal();
     initProductCatalog();
     initCartAndOrder();
     initContactForm();

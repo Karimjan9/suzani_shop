@@ -3,12 +3,11 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ResourceController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/login', [AuthController::class, 'create'])->name('login');
 Route::post('/login', [AuthController::class, 'store'])->name('login.attempt');
