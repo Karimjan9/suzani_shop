@@ -28,7 +28,7 @@ class HomeController extends Controller
         $cta = Arr::get($config, 'cta', []);
         $cart = [
             'steps' => Arr::get($config, 'steps', []),
-            'order_action' => route('orders.store'),
+            'order_action' => route('orders.store', [], false),
         ];
 
         return view('index', compact(

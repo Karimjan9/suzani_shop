@@ -42,7 +42,7 @@
                 <span class="admin-sidebar-orb admin-sidebar-orb-bottom" aria-hidden="true"></span>
 
                 <div class="flex items-center justify-between">
-                    <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
+                    <a href="{{ route('admin.dashboard', [], false) }}" class="flex items-center gap-3">
                         <span class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-2xl border border-amber-300/30 bg-amber-200/10 p-1.5 shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
                             <img
                                 src="{{ asset('images/logo/image.png') }}"
@@ -60,7 +60,7 @@
 
                 <nav class="mt-8 admin-sidebar-scroll">
                     <a
-                        href="{{ route('admin.dashboard') }}"
+                        href="{{ route('admin.dashboard', [], false) }}"
                         class="admin-nav-link admin-nav-link-dashboard {{ $activeKey === 'dashboard' ? 'is-active' : '' }}"
                     >
                         <span class="admin-nav-link-glow" aria-hidden="true"></span>
@@ -80,7 +80,7 @@
                             <div class="admin-nav-stack">
                                 @foreach ($items as $item)
                                     <a
-                                        href="{{ route('admin.resources.index', $item['key']) }}"
+                                        href="{{ route('admin.resources.index', ['resource' => $item['key']], false) }}"
                                         class="admin-nav-link {{ $activeKey === $item['key'] ? 'is-active' : '' }}"
                                     >
                                         <span class="admin-nav-link-glow" aria-hidden="true"></span>
@@ -151,7 +151,7 @@
                                 <p class="text-xs text-stone-400">{{ auth()->user()->login }}</p>
                             </div>
                             <div class="p-2">
-                                <form method="POST" action="{{ route('admin.logout') }}">
+                                <form method="POST" action="{{ route('admin.logout', [], false) }}">
                                     @csrf
                                     <button type="submit" class="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-sm text-stone-200 transition hover:bg-white/5 hover:text-amber-50">
                                         <span>Tizimdan chiqish</span>

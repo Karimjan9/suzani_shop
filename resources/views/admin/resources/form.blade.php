@@ -9,7 +9,7 @@
 @section('content')
     <section class="space-y-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
-            <a href="{{ route('admin.resources.index', $resource['key']) }}" class="btn btn-ghost rounded-full text-stone-300">Orqaga</a>
+            <a href="{{ route('admin.resources.index', ['resource' => $resource['key']], false) }}" class="btn btn-ghost rounded-full text-stone-300">Orqaga</a>
             <p class="text-sm text-stone-400">
                 {{ $record ? 'ID: '.$record->getKey() : 'Yangi yozuv' }}
             </p>
@@ -51,7 +51,9 @@
 
         <form
             method="POST"
-            action="{{ $record ? route('admin.resources.update', [$resource['key'], $record->getKey()]) : route('admin.resources.store', $resource['key']) }}"
+            action="{{ $record
+                ? route('admin.resources.update', ['resource' => $resource['key'], 'record' => $record->getKey()], false)
+                : route('admin.resources.store', ['resource' => $resource['key']], false) }}"
             class="space-y-6"
             enctype="multipart/form-data"
         >

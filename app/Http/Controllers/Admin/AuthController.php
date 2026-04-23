@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function create(): View|RedirectResponse
     {
         if (Auth::check() && Auth::user()?->hasRole('admin')) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->to(route('admin.dashboard', [], false));
         }
 
         return view('admin.auth.login');
@@ -52,7 +52,7 @@ class AuthController extends Controller
                 ->onlyInput('login');
         }
 
-        return redirect()->intended(route('admin.dashboard'));
+        return redirect()->intended(route('admin.dashboard', [], false));
     }
 
     public function destroy(Request $request): RedirectResponse
@@ -62,6 +62,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->to(route('login', [], false));
     }
 }

@@ -116,7 +116,7 @@
                         </div>
                     </div>
 
-                    <form method="POST" action="{{ route('login.attempt') }}" class="mt-8 space-y-5">
+                    <form method="POST" action="{{ route('login.attempt', [], false) }}" class="mt-8 space-y-5">
                         @csrf
 
                         <div class="admin-auth-field">

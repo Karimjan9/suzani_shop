@@ -108,7 +108,7 @@ class ResourceController extends Controller
         $record->delete();
 
         return redirect()
-            ->route('admin.resources.index', $resource['key'])
+            ->to(route('admin.resources.index', ['resource' => $resource['key']], false))
             ->with('status', $resource['singular'].' o‘chirildi.');
     }
 
@@ -129,7 +129,7 @@ class ResourceController extends Controller
         }
 
         return redirect()
-            ->route('admin.resources.edit', [$resource['key'], $record->getKey()])
+            ->to(route('admin.resources.edit', ['resource' => $resource['key'], 'record' => $record->getKey()], false))
             ->with('status', $creating ? $resource['singular'].' yaratildi.' : $resource['singular'].' saqlandi.');
     }
 

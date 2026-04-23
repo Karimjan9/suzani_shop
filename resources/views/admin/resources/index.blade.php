@@ -71,12 +71,12 @@
 
                     <div class="flex items-end gap-3">
                         <button type="submit" class="admin-button">Filtrlash</button>
-                        <a href="{{ route('admin.resources.index', $resource['key']) }}" class="btn btn-ghost rounded-full text-stone-300">Tozalash</a>
+                        <a href="{{ route('admin.resources.index', ['resource' => $resource['key']], false) }}" class="btn btn-ghost rounded-full text-stone-300">Tozalash</a>
                     </div>
                 </form>
 
                 @if ($resource['create'])
-                    <a href="{{ route('admin.resources.create', $resource['key']) }}" class="admin-button whitespace-nowrap">Yangi {{ mb_strtolower($resource['singular']) }}</a>
+                    <a href="{{ route('admin.resources.create', ['resource' => $resource['key']], false) }}" class="admin-button whitespace-nowrap">Yangi {{ mb_strtolower($resource['singular']) }}</a>
                 @endif
             </div>
         </article>
@@ -119,9 +119,9 @@
                                 @endforeach
                                 <td>
                                     <div class="flex justify-end gap-2">
-                                        <a href="{{ route('admin.resources.edit', [$resource['key'], $record->getKey()]) }}" class="btn btn-ghost btn-sm rounded-full text-amber-100">Tahrirlash</a>
+                                        <a href="{{ route('admin.resources.edit', ['resource' => $resource['key'], 'record' => $record->getKey()], false) }}" class="btn btn-ghost btn-sm rounded-full text-amber-100">Tahrirlash</a>
                                         @if ($resource['delete'])
-                                            <form method="POST" action="{{ route('admin.resources.destroy', [$resource['key'], $record->getKey()]) }}" onsubmit="return confirm('Rostdan ham o‘chirasizmi?');">
+                                            <form method="POST" action="{{ route('admin.resources.destroy', ['resource' => $resource['key'], 'record' => $record->getKey()], false) }}" onsubmit="return confirm('Rostdan ham o‘chirasizmi?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-ghost btn-sm rounded-full text-rose-200">O‘chirish</button>

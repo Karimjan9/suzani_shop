@@ -29,7 +29,7 @@
                 <span class="theme-toggle-label theme-toggle-label-dark">Nocturne</span>
                 <span class="sr-only" data-theme-toggle-status>Atelier rejimi yoqilgan</span>
             </button>
-            <a href="{{ route('login') }}" class="topbar-admin-link">
+            <a href="{{ route('login', [], false) }}" class="topbar-admin-link">
                 <span class="topbar-admin-copy">
                     <span class="topbar-admin-overline">Admin zona</span>
                     <span class="topbar-admin-title">Login</span>

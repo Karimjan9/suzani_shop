@@ -64,7 +64,7 @@
                     <p class="text-xs uppercase tracking-[0.32em] text-amber-200/60">Yangi oqim</p>
                     <h2 class="mt-2 font-serif text-3xl text-amber-50">So‘nggi buyurtmalar</h2>
                 </div>
-                <a href="{{ route('admin.resources.index', 'orders') }}" class="btn btn-ghost btn-sm rounded-full text-amber-100">Hammasi</a>
+                <a href="{{ route('admin.resources.index', ['resource' => 'orders'], false) }}" class="btn btn-ghost btn-sm rounded-full text-amber-100">Hammasi</a>
             </div>
 
             <div class="overflow-x-auto">
@@ -102,7 +102,7 @@
                         <p class="text-xs uppercase tracking-[0.32em] text-amber-200/60">Vitrina</p>
                         <h2 class="mt-2 font-serif text-3xl text-amber-50">Ko‘p ko‘rilgan mahsulotlar</h2>
                     </div>
-                    <a href="{{ route('admin.resources.index', 'products') }}" class="btn btn-ghost btn-sm rounded-full text-amber-100">Katalog</a>
+                    <a href="{{ route('admin.resources.index', ['resource' => 'products'], false) }}" class="btn btn-ghost btn-sm rounded-full text-amber-100">Katalog</a>
                 </div>
 
                 <div class="mt-6 space-y-4">
@@ -128,7 +128,7 @@
 
                 <div class="mt-6 space-y-4">
                     @foreach ($customOrders as $customOrder)
-                        <a href="{{ route('admin.resources.edit', ['custom-orders', $customOrder->id]) }}" class="block rounded-[1.5rem] border border-white/10 bg-white/5 p-4 transition hover:border-amber-200/30 hover:bg-white/10">
+                        <a href="{{ route('admin.resources.edit', ['resource' => 'custom-orders', 'record' => $customOrder->id], false) }}" class="block rounded-[1.5rem] border border-white/10 bg-white/5 p-4 transition hover:border-amber-200/30 hover:bg-white/10">
                             <div class="flex items-start justify-between gap-4">
                                 <div>
                                     <p class="font-medium text-amber-50">{{ $customOrder->order_number ?? ('#'.$customOrder->id) }}</p>
