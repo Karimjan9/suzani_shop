@@ -14,16 +14,38 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $credentials = [
+            'login' => $this->credential('login', 'admin'),
+            'email' => $this->credential('email', 'admin@suzani-shop.local'),
+            'password' => $this->credential('password', 'admin12345'),
+        ];
 
-        $user = User::updateOrCreate(
-            ['login' => env('ADMIN_LOGIN', 'admin')],
-            [
-                'name' => 'Administrator',
-                'email' => env('ADMIN_EMAIL', 'admin@suzani-shop.local'),
-                'password' => env('ADMIN_PASSWORD', 'admin12345'),
-            ],
-        );
+        $user = User::query()
+            ->where('login', $credentials['login'])
+            ->orWhere('email', $credentials['email'])
+            ->firstOrNew();
+
+        $user->fill([
+            'name' => 'Administrator',
+            'login' => $credentials['login'],
+            'email' => $credentials['email'],
+            'password' => $credentials['password'],
+        ]);
+        $user->save();
 
         $user->syncRoles([$adminRole]);
+    }
+
+    private function credential(string $key, string $default): string
+    {
+        $value = config("admin.credentials.{$key}");
+
+        if (! is_string($value)) {
+            return $default;
+        }
+
+        $value = trim($value);
+
+        return $value !== '' ? $value : $default;
     }
 }
