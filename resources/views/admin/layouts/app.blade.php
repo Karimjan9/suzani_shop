@@ -32,7 +32,7 @@
 
     <div class="admin-backdrop"></div>
 
-    <div class="relative flex min-h-screen" x-data="{ sidebarOpen: false }">
+    <div class="admin-shell relative flex min-h-screen" x-data="{ sidebarOpen: false }">
         <aside
             class="admin-sidebar fixed inset-y-0 left-0 z-40 w-80 -translate-x-full border-r border-white/10 bg-[#1f120e]/90 p-5 backdrop-blur-xl transition-transform duration-300 lg:translate-x-0"
             :class="sidebarOpen ? 'translate-x-0' : ''"
@@ -64,7 +64,9 @@
                         class="admin-nav-link admin-nav-link-dashboard {{ $activeKey === 'dashboard' ? 'is-active' : '' }}"
                     >
                         <span class="admin-nav-link-glow" aria-hidden="true"></span>
-                        <span class="admin-nav-link-knot" aria-hidden="true"></span>
+                        <span class="admin-nav-link-knot" aria-hidden="true">
+                            <x-admin.nav-icon name="dashboard" />
+                        </span>
                         <span class="admin-nav-link-copy">
                             <span class="admin-nav-link-title">Boshqaruv paneli</span>
                         </span>
@@ -72,19 +74,47 @@
                     </a>
 
                     @foreach ($navigation as $group => $items)
-                        <section class="admin-nav-group">
-                            <div class="admin-nav-group-head">
-                                <p class="admin-nav-group-label">{{ $group }}</p>
-                            </div>
+                        @php
+                            $groupSlug = \Illuminate\Support\Str::slug($group, '-');
+                            $isGroupOpen = collect($items)->contains(fn (array $item): bool => $activeKey === $item['key']);
+                        @endphp
 
-                            <div class="admin-nav-stack">
+                        <section class="admin-nav-group" x-data="{ open: @js($isGroupOpen) }">
+                            <button
+                                type="button"
+                                class="admin-nav-group-head"
+                                :class="{ 'is-open': open }"
+                                @click="open = ! open"
+                                :aria-expanded="open.toString()"
+                                aria-controls="nav-group-{{ $groupSlug }}"
+                            >
+                                <span class="admin-nav-group-title">
+                                    <span class="admin-nav-group-label">{{ $group }}</span>
+                                    <span class="admin-nav-group-count">{{ count($items) }}</span>
+                                </span>
+                                <span class="admin-nav-group-chevron" :class="{ 'is-open': open }" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="m5 7.5 5 5 5-5" />
+                                    </svg>
+                                </span>
+                            </button>
+
+                            <div
+                                id="nav-group-{{ $groupSlug }}"
+                                class="admin-nav-stack"
+                                x-show="open"
+                                x-transition.opacity.duration.180ms
+                                x-cloak
+                            >
                                 @foreach ($items as $item)
                                     <a
                                         href="{{ route('admin.resources.index', ['resource' => $item['key']], false) }}"
                                         class="admin-nav-link {{ $activeKey === $item['key'] ? 'is-active' : '' }}"
                                     >
                                         <span class="admin-nav-link-glow" aria-hidden="true"></span>
-                                        <span class="admin-nav-link-knot" aria-hidden="true"></span>
+                                        <span class="admin-nav-link-knot" aria-hidden="true">
+                                            <x-admin.nav-icon :name="$item['key']" />
+                                        </span>
                                         <span class="admin-nav-link-copy">
                                             <span class="admin-nav-link-title">{{ $item['label'] }}</span>
                                         </span>
@@ -98,7 +128,7 @@
             </div>
         </aside>
 
-        <div class="flex min-h-screen flex-1 flex-col lg:pl-80">
+        <div class="admin-shell-main flex min-h-screen flex-1 flex-col">
             <header class="admin-shell-header sticky top-0 z-30 border-b border-white/10 bg-[#2b1913]/70 px-4 py-4 backdrop-blur-xl sm:px-6 lg:px-10">
                 <div class="flex items-center justify-between gap-4">
                     <div class="flex items-center gap-3">

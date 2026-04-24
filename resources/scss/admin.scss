@@ -10,6 +10,9 @@ html[data-theme="atelier"] {
     --admin-accent-strong: #c76d42;
     --admin-ink: #2d1b15;
     --admin-success: #285b4a;
+    --admin-sidebar-width: 16rem;
+    --admin-sidebar-offset: 0.75rem;
+    --admin-content-gap: 1.5rem;
 }
 
 html[data-theme="nocturne"] {
@@ -23,6 +26,9 @@ html[data-theme="nocturne"] {
     --admin-accent-strong: #3d78d6;
     --admin-ink: #e8eefc;
     --admin-success: #2b6d7f;
+    --admin-sidebar-width: 16rem;
+    --admin-sidebar-offset: 0.75rem;
+    --admin-content-gap: 1.5rem;
 }
 
 body.admin-app,
@@ -177,6 +183,10 @@ html[data-theme="nocturne"] .admin-theme-toggle::before {
     box-shadow:
         20px 0 60px rgba(98, 62, 42, 0.12),
         inset -1px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.admin-shell-main {
+    min-width: 0;
 }
 
 html[data-theme="nocturne"] .admin-sidebar {
@@ -514,6 +524,39 @@ html[data-theme="atelier"] .admin-shell-header .text-amber-200\/60,
 html[data-theme="atelier"] .admin-user-trigger .text-amber-200\/50,
 html[data-theme="atelier"] .admin-user-menu .text-amber-200\/40 {
     color: rgba(143, 85, 53, 0.78) !important;
+}
+
+html[data-theme="atelier"] .admin-sidebar .admin-nav-group-head {
+    border-color: rgba(146, 100, 70, 0.12);
+    background: rgba(255, 250, 245, 0.42);
+}
+
+html[data-theme="atelier"] .admin-sidebar .admin-nav-group-head:hover,
+html[data-theme="atelier"] .admin-sidebar .admin-nav-group-head.is-open {
+    border-color: rgba(191, 113, 66, 0.18);
+    background: rgba(202, 126, 78, 0.08);
+}
+
+html[data-theme="atelier"] .admin-sidebar .admin-nav-group-label {
+    color: rgba(145, 96, 64, 0.82);
+}
+
+html[data-theme="atelier"] .admin-sidebar .admin-nav-group-count {
+    border-color: rgba(151, 111, 84, 0.16);
+    background: rgba(255, 251, 247, 0.8);
+    color: #a06743;
+}
+
+html[data-theme="atelier"] .admin-sidebar .admin-nav-group-chevron {
+    border-color: rgba(151, 111, 84, 0.14);
+    background: rgba(255, 251, 247, 0.68);
+    color: rgba(145, 96, 64, 0.72);
+}
+
+html[data-theme="atelier"] .admin-sidebar .admin-nav-group-chevron.is-open {
+    border-color: rgba(191, 113, 66, 0.2);
+    background: rgba(202, 126, 78, 0.12);
+    color: #9b5f38;
 }
 
 html[data-theme="nocturne"] .admin-auth-brand-pill,
@@ -968,8 +1011,10 @@ html[data-theme="nocturne"] .admin-auth-home-link:hover {
     overflow-y: auto;
     padding-right: 0.15rem;
     padding-bottom: 2.5rem;
-    display: grid;
-    gap: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.9rem;
 }
 
 .admin-sidebar-scroll::-webkit-scrollbar {
@@ -982,16 +1027,53 @@ html[data-theme="nocturne"] .admin-auth-home-link:hover {
 }
 
 .admin-nav-group {
-    display: grid;
-    gap: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
 }
 
 .admin-nav-group-head {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 0.75rem;
-    padding: 0 0.2rem;
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid rgba(255, 241, 223, 0.06);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.025);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    cursor: pointer;
+    transition:
+        border-color 180ms ease,
+        background-color 180ms ease,
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.admin-nav-group-head:hover,
+.admin-nav-group-head.is-open {
+    border-color: rgba(232, 192, 122, 0.14);
+    background: rgba(232, 192, 122, 0.05);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.04),
+        0 10px 18px rgba(0, 0, 0, 0.08);
+}
+
+.admin-nav-group-head:hover {
+    transform: translateY(-1px);
+}
+
+.admin-nav-group-head:focus-visible {
+    outline: 2px solid rgba(232, 192, 122, 0.28);
+    outline-offset: 4px;
+}
+
+.admin-nav-group-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-width: 0;
 }
 
 .admin-nav-group-label {
@@ -1002,9 +1084,55 @@ html[data-theme="nocturne"] .admin-auth-home-link:hover {
     text-transform: uppercase;
 }
 
+.admin-nav-group-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.55rem;
+    height: 1.55rem;
+    padding: 0 0.45rem;
+    border: 1px solid rgba(255, 241, 223, 0.08);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 229, 195, 0.62);
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.admin-nav-group-chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border: 1px solid rgba(255, 241, 223, 0.08);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 229, 195, 0.7);
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        background-color 180ms ease,
+        color 180ms ease;
+}
+
+.admin-nav-group-chevron svg {
+    width: 0.8rem;
+    height: 0.8rem;
+}
+
+.admin-nav-group-chevron.is-open {
+    transform: rotate(180deg);
+    border-color: rgba(232, 192, 122, 0.16);
+    background: rgba(232, 192, 122, 0.08);
+    color: rgba(255, 240, 214, 0.9);
+}
+
 .admin-nav-stack {
-    display: grid;
-    gap: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
 }
 
 .admin-nav-link {
@@ -1013,13 +1141,13 @@ html[data-theme="nocturne"] .admin-auth-home-link:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 0.8rem;
     overflow: hidden;
-    min-height: 4.35rem;
+    min-height: 3.6rem;
     border: 1px solid rgba(255, 241, 223, 0.06);
-    border-radius: 1.45rem;
+    border-radius: 1.2rem;
     color: rgba(235, 225, 216, 0.82);
-    padding: 1rem 1rem 1rem 1.1rem;
+    padding: 0.8rem 0.85rem 0.8rem 0.9rem;
     background:
         linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)),
         rgba(255, 255, 255, 0.025);
@@ -1061,7 +1189,7 @@ html[data-theme="nocturne"] .admin-auth-home-link:hover {
 }
 
 .admin-nav-link-dashboard {
-    min-height: 4.6rem;
+    min-height: 4rem;
     background:
         linear-gradient(135deg, rgba(97, 58, 43, 0.55), rgba(62, 38, 29, 0.68)),
         radial-gradient(circle at top right, rgba(232, 192, 122, 0.14), rgba(232, 192, 122, 0));
@@ -1090,16 +1218,31 @@ html[data-theme="nocturne"] .admin-auth-home-link:hover {
 
 .admin-nav-link-knot {
     flex: 0 0 auto;
-    width: 1.05rem;
-    height: 1.05rem;
-    border: 2px solid rgba(232, 192, 122, 0.56);
-    border-radius: 0.32rem;
-    transform: rotate(45deg);
-    box-shadow: 0 0 0 5px rgba(232, 192, 122, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid rgba(232, 192, 122, 0.2);
+    border-radius: 0.8rem;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.02);
+    color: rgba(255, 229, 195, 0.8);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 0 0 5px rgba(232, 192, 122, 0.05);
     transition:
         transform 220ms ease,
         box-shadow 220ms ease,
-        border-color 220ms ease;
+        border-color 220ms ease,
+        background 220ms ease,
+        color 220ms ease;
+}
+
+.admin-nav-link-knot svg {
+    width: 0.92rem;
+    height: 0.92rem;
 }
 
 .admin-nav-link-copy {
@@ -1111,7 +1254,7 @@ html[data-theme="nocturne"] .admin-auth-home-link:hover {
 
 .admin-nav-link-title {
     color: var(--admin-cream);
-    font-size: 1rem;
+    font-size: 0.94rem;
     font-weight: 700;
     line-height: 1.28;
 }
@@ -1127,14 +1270,14 @@ html[data-theme="nocturne"] .admin-auth-home-link:hover {
     flex: 0 0 auto;
     align-self: center;
     max-width: 6rem;
-    padding: 0.42rem 0.68rem;
+    padding: 0.36rem 0.6rem;
     border: 1px solid rgba(255, 241, 223, 0.06);
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.03);
     color: rgba(255, 229, 195, 0.56);
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     font-weight: 800;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.24em;
     line-height: 1.4;
     text-align: center;
     text-transform: uppercase;
@@ -1172,9 +1315,13 @@ html[data-theme="nocturne"] .admin-auth-home-link:hover {
 
 .admin-nav-link:hover .admin-nav-link-knot,
 .admin-nav-link.is-active .admin-nav-link-knot {
-    transform: rotate(45deg) scale(1.08);
+    transform: translateY(-1px) scale(1.05);
     border-color: rgba(255, 227, 169, 0.88);
-    box-shadow: 0 0 0 7px rgba(232, 192, 122, 0.12);
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03)),
+        rgba(232, 192, 122, 0.09);
+    color: rgba(255, 244, 223, 0.96);
+    box-shadow: 0 0 0 7px rgba(232, 192, 122, 0.1);
 }
 
 .admin-nav-link:hover .admin-nav-link-note,
@@ -1498,6 +1645,126 @@ html[data-theme="nocturne"] .admin-button:hover {
     margin-top: 0.6rem;
 }
 
+html[data-theme="atelier"] body.admin-app {
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 247, 238, 0.44), transparent 36%),
+        radial-gradient(circle at top left, rgba(225, 142, 79, 0.1), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(209, 180, 116, 0.08), transparent 26%),
+        linear-gradient(135deg, #f1e7dc 0%, #ebdac9 48%, #e2ccb7 100%);
+}
+
+html[data-theme="atelier"] .admin-showcase-card,
+html[data-theme="atelier"] .admin-surface,
+html[data-theme="atelier"] .admin-page-map-card {
+    border-color: rgba(139, 96, 68, 0.14);
+    background:
+        linear-gradient(180deg, rgba(255, 254, 252, 0.88), rgba(248, 239, 231, 0.96)),
+        rgba(252, 247, 242, 0.98);
+    box-shadow:
+        0 18px 42px rgba(124, 84, 61, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.84),
+        inset 0 -10px 18px rgba(255, 245, 236, 0.22);
+}
+
+html[data-theme="atelier"] .admin-app main .text-amber-50,
+html[data-theme="atelier"] .admin-app main .admin-page-map-card strong,
+html[data-theme="atelier"] .admin-app main .admin-upload-meta strong,
+html[data-theme="atelier"] .admin-app main .admin-showcase-value {
+    color: #4a2f22 !important;
+}
+
+html[data-theme="atelier"] .admin-app main .text-stone-300,
+html[data-theme="atelier"] .admin-app main .admin-guide-copy,
+html[data-theme="atelier"] .admin-app main .admin-page-map-card p,
+html[data-theme="atelier"] .admin-app main .admin-showcase-copy,
+html[data-theme="atelier"] .admin-app main .admin-upload-meta span,
+html[data-theme="atelier"] .admin-app main .admin-table tbody td {
+    color: #6d5444 !important;
+}
+
+html[data-theme="atelier"] .admin-app main .text-stone-200,
+html[data-theme="atelier"] .admin-app main .text-stone-400,
+html[data-theme="atelier"] .admin-app main .text-stone-500,
+html[data-theme="atelier"] .admin-app main .admin-label,
+html[data-theme="atelier"] .admin-app main .admin-showcase-label,
+html[data-theme="atelier"] .admin-app main .admin-table thead th {
+    color: #8a6c5a !important;
+}
+
+html[data-theme="atelier"] .admin-app main .text-amber-200\/60,
+html[data-theme="atelier"] .admin-app main .text-amber-200\/50,
+html[data-theme="atelier"] .admin-app main .text-amber-200\/40 {
+    color: rgba(146, 91, 58, 0.76) !important;
+}
+
+html[data-theme="atelier"] .admin-app main .border-white\/10 {
+    border-color: rgba(143, 104, 77, 0.12) !important;
+}
+
+html[data-theme="atelier"] .admin-app main .bg-white\/5 {
+    background-color: rgba(255, 251, 247, 0.82) !important;
+}
+
+html[data-theme="atelier"] .admin-app main .admin-page-map-pill {
+    border-color: rgba(191, 113, 66, 0.16);
+    background: rgba(202, 126, 78, 0.08);
+    color: #9d5d37;
+}
+
+html[data-theme="atelier"] .admin-app main .admin-page-map-link {
+    color: #a15f36;
+}
+
+html[data-theme="atelier"] .admin-app main .admin-input,
+html[data-theme="atelier"] .admin-app main .admin-select,
+html[data-theme="atelier"] .admin-app main .admin-textarea {
+    border-color: rgba(151, 111, 84, 0.18);
+    background: rgba(255, 252, 248, 0.96);
+    color: #33211a;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+}
+
+html[data-theme="atelier"] .admin-app main .admin-input::placeholder,
+html[data-theme="atelier"] .admin-app main .admin-textarea::placeholder {
+    color: rgba(122, 95, 79, 0.56);
+}
+
+html[data-theme="atelier"] .admin-app main .admin-file-input {
+    border-color: rgba(151, 111, 84, 0.2);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 247, 239, 0.54)),
+        rgba(255, 250, 244, 0.92);
+    color: #3b261e;
+}
+
+html[data-theme="atelier"] .admin-app main .admin-upload-clear {
+    border-color: rgba(151, 111, 84, 0.16);
+    background: rgba(255, 250, 245, 0.92);
+    color: #6b5141;
+}
+
+html[data-theme="atelier"] .admin-badge {
+    border-color: rgba(191, 113, 66, 0.18);
+    background: rgba(191, 113, 66, 0.08);
+    color: #8b5637;
+}
+
+html[data-theme="atelier"] .admin-badge.is-success {
+    background: rgba(73, 126, 93, 0.1);
+    border-color: rgba(73, 126, 93, 0.16);
+    color: #39634b;
+}
+
+html[data-theme="atelier"] .admin-badge.is-muted {
+    background: rgba(112, 81, 60, 0.08);
+    border-color: rgba(112, 81, 60, 0.12);
+    color: #6c5647;
+}
+
+html[data-theme="atelier"] .admin-error {
+    color: #b85645;
+}
+
 .pagination {
     display: flex;
     flex-wrap: wrap;
@@ -1559,6 +1826,20 @@ html[data-theme="nocturne"] .admin-button:hover {
 
     .admin-auth-stage-pattern {
         inset: 0.8rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .admin-sidebar {
+        top: var(--admin-sidebar-offset);
+        bottom: var(--admin-sidebar-offset);
+        left: var(--admin-sidebar-offset);
+        width: var(--admin-sidebar-width);
+        border-radius: 2rem;
+    }
+
+    .admin-shell-main {
+        padding-left: calc(var(--admin-sidebar-offset) + var(--admin-sidebar-width) + var(--admin-content-gap));
     }
 }
 
