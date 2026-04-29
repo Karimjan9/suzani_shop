@@ -56,30 +56,30 @@ class HomeController extends Controller
         $heroMeta = array_merge($defaultMeta, Arr::wrap($heroBanner?->meta));
 
         return [
-            'eyebrow' => filled($heroBanner?->subtitle) ? $heroBanner->subtitle : Arr::get($config, 'eyebrow', ''),
-            'title' => filled($heroBanner?->title) ? $heroBanner->title : Arr::get($config, 'title', ''),
-            'text' => filled($heroBanner?->content) ? $heroBanner->content : Arr::get($config, 'text', ''),
+            'eyebrow' => filled($heroBanner?->translated('subtitle')) ? $heroBanner->translated('subtitle') : Arr::get($config, 'eyebrow', ''),
+            'title' => filled($heroBanner?->translated('title')) ? $heroBanner->translated('title') : Arr::get($config, 'title', ''),
+            'text' => filled($heroBanner?->translated('content')) ? $heroBanner->translated('content') : Arr::get($config, 'text', ''),
             'primary_link' => filled($heroBanner?->link) ? $heroBanner->link : Arr::get($config, 'primary_link', '#catalog'),
-            'primary_label' => filled($heroBanner?->link) ? "Ko'rish" : Arr::get($config, 'primary_label', "Kolleksiyani ko'rish"),
+            'primary_label' => filled($heroBanner?->link) ? __('home.labels.view') : Arr::get($config, 'primary_label', "Kolleksiyani ko'rish"),
             'trust_note' => Arr::get($config, 'trust_note', ''),
             'stats' => Arr::get($config, 'stats', []),
             'promises' => Arr::get($config, 'promises', []),
             'main_image' => $this->resolveUploadedOrHomeImage($heroBanner?->image, Arr::get($config, 'main_image')),
-            'main_badge' => Arr::get($heroMeta, 'hero_main_badge', ''),
-            'main_title' => Arr::get($heroMeta, 'hero_main_title', ''),
-            'main_caption' => Arr::get($heroMeta, 'hero_main_caption', ''),
+            'main_badge' => $heroBanner?->translatedMeta('hero_main_badge', fallback: Arr::get($heroMeta, 'hero_main_badge', '')) ?? Arr::get($heroMeta, 'hero_main_badge', ''),
+            'main_title' => $heroBanner?->translatedMeta('hero_main_title', fallback: Arr::get($heroMeta, 'hero_main_title', '')) ?? Arr::get($heroMeta, 'hero_main_title', ''),
+            'main_caption' => $heroBanner?->translatedMeta('hero_main_caption', fallback: Arr::get($heroMeta, 'hero_main_caption', '')) ?? Arr::get($heroMeta, 'hero_main_caption', ''),
             'detail_image' => $this->resolveUploadedOrHomeImage(
                 Arr::get($heroMeta, 'hero_detail_image'),
                 Arr::get($defaultMeta, 'hero_detail_image')
             ),
-            'detail_badge' => Arr::get($heroMeta, 'hero_detail_badge', ''),
-            'detail_title' => Arr::get($heroMeta, 'hero_detail_title', ''),
+            'detail_badge' => $heroBanner?->translatedMeta('hero_detail_badge', fallback: Arr::get($heroMeta, 'hero_detail_badge', '')) ?? Arr::get($heroMeta, 'hero_detail_badge', ''),
+            'detail_title' => $heroBanner?->translatedMeta('hero_detail_title', fallback: Arr::get($heroMeta, 'hero_detail_title', '')) ?? Arr::get($heroMeta, 'hero_detail_title', ''),
             'material_image' => $this->resolveUploadedOrHomeImage(
                 Arr::get($heroMeta, 'hero_material_image'),
                 Arr::get($defaultMeta, 'hero_material_image')
             ),
-            'material_badge' => Arr::get($heroMeta, 'hero_material_badge', ''),
-            'material_title' => Arr::get($heroMeta, 'hero_material_title', ''),
+            'material_badge' => $heroBanner?->translatedMeta('hero_material_badge', fallback: Arr::get($heroMeta, 'hero_material_badge', '')) ?? Arr::get($heroMeta, 'hero_material_badge', ''),
+            'material_title' => $heroBanner?->translatedMeta('hero_material_title', fallback: Arr::get($heroMeta, 'hero_material_title', '')) ?? Arr::get($heroMeta, 'hero_material_title', ''),
         ];
     }
 
@@ -167,7 +167,7 @@ class HomeController extends Controller
             'sort_note' => Arr::get($config, 'sort_note', ''),
             'empty_state' => Arr::get($config, 'empty_state', ''),
             'filters' => array_merge(
-                [['value' => 'all', 'label' => 'Barchasi']],
+                [['value' => 'all', 'label' => __('home.labels.all')]],
                 $groupedCategories
                     ->map(static fn (Collection $items): array => [
                         'value' => $items->first()['category'],
@@ -184,7 +184,7 @@ class HomeController extends Controller
 
                     return [
                         'name' => $first['category_label'],
-                        'count' => $items->count().' mahsulot',
+                        'count' => __('home.labels.product_count', ['count' => $items->count()]),
                         'tone' => $tones[$index % count($tones)],
                         'filter' => $first['category'],
                         'copy' => $first['category_description'],
@@ -208,11 +208,11 @@ class HomeController extends Controller
                 $tones = ['clay', 'rose', 'gold', 'sky', 'ink', 'teal'];
 
                 return [
-                    'title' => $item->title,
-                    'type' => $item->project_type ?: 'Portfolio loyiha',
-                    'text' => $item->excerpt ?: $item->description ?: "Portfolio tavsifi keyinroq to'ldiriladi.",
+                    'title' => $item->translated('title'),
+                    'type' => $item->translated('project_type', fallback: __('home.labels.portfolio_project')),
+                    'text' => $item->translated('excerpt', fallback: ($item->translated('description') ?: __('home.labels.portfolio_description'))),
                     'tone' => $tones[$index % count($tones)],
-                    'highlight' => $item->highlight_value ?: ($item->is_featured ? 'Featured loyiha' : 'Portfolio karta'),
+                    'highlight' => $item->translated('highlight_value', fallback: ($item->is_featured ? 'Featured loyiha' : 'Portfolio karta')),
                     'image_src' => UploadedMedia::url($item->cover_image),
                 ];
             })
@@ -250,12 +250,12 @@ class HomeController extends Controller
             ->limit(3)
             ->get()
             ->map(fn (Feedback $item): array => [
-                'name' => $item->customer_name,
-                'role' => $item->city ?: 'Mijoz',
-                'quote' => $item->content,
+                'name' => $item->translated('customer_name'),
+                'role' => $item->translated('city', fallback: __('home.labels.client')),
+                'quote' => $item->translated('content'),
                 'rating' => max(1, min(5, (int) ($item->rating ?: 5))),
-                'headline' => $this->buildFeedbackHeadline($item->content),
-                'badge' => $item->is_featured ? 'Top sharh' : 'Tasdiqlangan xarid',
+                'headline' => $this->buildFeedbackHeadline($item->translated('content')),
+                'badge' => $item->is_featured ? __('home.labels.top_review') : __('home.labels.verified_purchase'),
             ])
             ->all();
 
@@ -280,7 +280,7 @@ class HomeController extends Controller
         }
 
         if ($firstSentence === '') {
-            return 'Mijoz sharhi';
+            return __('home.labels.client_review');
         }
 
         return Str::limit($firstSentence, 44, '...');
@@ -311,52 +311,52 @@ class HomeController extends Controller
         $mapLink = 'https://www.google.com/maps/search/?api=1&query='.rawurlencode($mapQuery);
 
         return [
-            'section_label' => filled($contactBlock?->subtitle) ? $contactBlock->subtitle : Arr::get($config, 'section_label', ''),
-            'section_title' => filled($contactBlock?->title) ? $contactBlock->title : Arr::get($config, 'section_title', ''),
-            'section_copy' => filled($contactBlock?->content) ? $contactBlock->content : Arr::get($config, 'section_copy', ''),
+            'section_label' => filled($contactBlock?->translated('subtitle')) ? $contactBlock->translated('subtitle') : Arr::get($config, 'section_label', ''),
+            'section_title' => filled($contactBlock?->translated('title')) ? $contactBlock->translated('title') : Arr::get($config, 'section_title', ''),
+            'section_copy' => filled($contactBlock?->translated('content')) ? $contactBlock->translated('content') : Arr::get($config, 'section_copy', ''),
             'phone' => [
-                'label' => Arr::get($meta, 'phone_label', 'Telefon'),
+                'label' => $contactBlock?->translatedMeta('phone_label', fallback: Arr::get($meta, 'phone_label', __('home.contact.phone'))) ?? Arr::get($meta, 'phone_label', __('home.contact.phone')),
                 'value' => $phoneValue,
                 'href' => $phoneHref,
             ],
             'telegram' => [
-                'label' => Arr::get($meta, 'telegram_label', 'Telegram'),
+                'label' => $contactBlock?->translatedMeta('telegram_label', fallback: Arr::get($meta, 'telegram_label', __('home.contact.telegram'))) ?? Arr::get($meta, 'telegram_label', __('home.contact.telegram')),
                 'value' => $telegramValue,
                 'href' => $telegramUrl,
             ],
             'instagram' => [
-                'label' => Arr::get($meta, 'instagram_label', 'Instagram'),
+                'label' => $contactBlock?->translatedMeta('instagram_label', fallback: Arr::get($meta, 'instagram_label', __('home.contact.instagram'))) ?? Arr::get($meta, 'instagram_label', __('home.contact.instagram')),
                 'value' => $instagramValue,
                 'href' => $instagramUrl,
             ],
             'address' => [
-                'label' => Arr::get($meta, 'address_label', 'Manzil'),
-                'value' => Arr::get($meta, 'address_value'),
+                'label' => $contactBlock?->translatedMeta('address_label', fallback: Arr::get($meta, 'address_label', __('home.contact.address'))) ?? Arr::get($meta, 'address_label', __('home.contact.address')),
+                'value' => $contactBlock?->translatedMeta('address_value', fallback: Arr::get($meta, 'address_value')) ?? Arr::get($meta, 'address_value'),
             ],
             'hours' => [
-                'label' => Arr::get($meta, 'hours_label', 'Ish vaqti'),
-                'value' => Arr::get($meta, 'hours_value'),
+                'label' => $contactBlock?->translatedMeta('hours_label', fallback: Arr::get($meta, 'hours_label', __('home.contact.hours'))) ?? Arr::get($meta, 'hours_label', __('home.contact.hours')),
+                'value' => $contactBlock?->translatedMeta('hours_value', fallback: Arr::get($meta, 'hours_value')) ?? Arr::get($meta, 'hours_value'),
             ],
             'map' => [
-                'label' => Arr::get($meta, 'map_label', 'Xarita'),
-                'title' => Arr::get($meta, 'map_title', 'Ustaxona joylashuvi'),
+                'label' => $contactBlock?->translatedMeta('map_label', fallback: Arr::get($meta, 'map_label', __('home.contact.map'))) ?? Arr::get($meta, 'map_label', __('home.contact.map')),
+                'title' => $contactBlock?->translatedMeta('map_title', fallback: Arr::get($meta, 'map_title', __('home.contact.map_title'))) ?? Arr::get($meta, 'map_title', __('home.contact.map_title')),
                 'embed_url' => $mapEmbedUrl,
                 'link' => $mapLink,
                 'coordinates' => $mapCoordinates,
                 'hint' => Arr::get($config, 'map_hint', ''),
             ],
             'form' => [
-                'label' => Arr::get($meta, 'form_label', 'Forma'),
-                'title' => Arr::get($meta, 'form_title', ''),
-                'name_label' => Arr::get($meta, 'form_name_label', 'Ismingiz'),
-                'name_placeholder' => Arr::get($meta, 'form_name_placeholder', ''),
-                'phone_label' => Arr::get($meta, 'form_phone_label', 'Telefon'),
-                'phone_placeholder' => Arr::get($meta, 'form_phone_placeholder', ''),
-                'social_label' => Arr::get($meta, 'form_social_label', 'Instagram yoki Telegram'),
-                'social_placeholder' => Arr::get($meta, 'form_social_placeholder', ''),
-                'message_label' => Arr::get($meta, 'form_message_label', 'Xabar'),
-                'message_placeholder' => Arr::get($meta, 'form_message_placeholder', ''),
-                'success_note' => Arr::get($meta, 'form_success_note', ''),
+                'label' => $contactBlock?->translatedMeta('form_label', fallback: Arr::get($meta, 'form_label', __('home.contact.form'))) ?? Arr::get($meta, 'form_label', __('home.contact.form')),
+                'title' => $contactBlock?->translatedMeta('form_title', fallback: Arr::get($meta, 'form_title', '')) ?? Arr::get($meta, 'form_title', ''),
+                'name_label' => $contactBlock?->translatedMeta('form_name_label', fallback: Arr::get($meta, 'form_name_label', __('home.contact.name'))) ?? Arr::get($meta, 'form_name_label', __('home.contact.name')),
+                'name_placeholder' => $contactBlock?->translatedMeta('form_name_placeholder', fallback: Arr::get($meta, 'form_name_placeholder', '')) ?? Arr::get($meta, 'form_name_placeholder', ''),
+                'phone_label' => $contactBlock?->translatedMeta('form_phone_label', fallback: Arr::get($meta, 'form_phone_label', __('home.contact.phone'))) ?? Arr::get($meta, 'form_phone_label', __('home.contact.phone')),
+                'phone_placeholder' => $contactBlock?->translatedMeta('form_phone_placeholder', fallback: Arr::get($meta, 'form_phone_placeholder', __('home.contact.phone_placeholder'))) ?? Arr::get($meta, 'form_phone_placeholder', __('home.contact.phone_placeholder')),
+                'social_label' => $contactBlock?->translatedMeta('form_social_label', fallback: Arr::get($meta, 'form_social_label', __('home.contact.social'))) ?? Arr::get($meta, 'form_social_label', __('home.contact.social')),
+                'social_placeholder' => $contactBlock?->translatedMeta('form_social_placeholder', fallback: Arr::get($meta, 'form_social_placeholder', '')) ?? Arr::get($meta, 'form_social_placeholder', ''),
+                'message_label' => $contactBlock?->translatedMeta('form_message_label', fallback: Arr::get($meta, 'form_message_label', __('home.contact.message'))) ?? Arr::get($meta, 'form_message_label', __('home.contact.message')),
+                'message_placeholder' => $contactBlock?->translatedMeta('form_message_placeholder', fallback: Arr::get($meta, 'form_message_placeholder', '')) ?? Arr::get($meta, 'form_message_placeholder', ''),
+                'success_note' => $contactBlock?->translatedMeta('form_success_note', fallback: Arr::get($meta, 'form_success_note', '')) ?? Arr::get($meta, 'form_success_note', ''),
             ],
         ];
     }
@@ -366,25 +366,25 @@ class HomeController extends Controller
         $socialLinks = collect([
             [
                 'href' => Arr::get($contact, 'phone.href'),
-                'label' => "Telefon orqali bog'lanish",
+                'label' => __('home.footer.phone'),
                 'icon' => 'phone',
                 'external' => false,
             ],
             [
                 'href' => Arr::get($contact, 'telegram.href'),
-                'label' => "Telegram orqali bog'lanish",
+                'label' => __('home.footer.telegram'),
                 'icon' => 'telegram',
                 'external' => true,
             ],
             [
                 'href' => Arr::get($contact, 'instagram.href'),
-                'label' => 'Instagram sahifasi',
+                'label' => __('home.footer.instagram'),
                 'icon' => 'instagram',
                 'external' => true,
             ],
             [
                 'href' => Arr::get($contact, 'map.link'),
-                'label' => 'Xaritada ochish',
+                'label' => __('home.footer.map'),
                 'icon' => 'location',
                 'external' => true,
             ],
@@ -437,25 +437,25 @@ class HomeController extends Controller
                 'stats' => Arr::get($config, 'banner_stats', []),
                 'primary_action' => [
                     'href' => '#cart',
-                    'label' => 'Buyurtma berish',
+                    'label' => __('home.footer.order'),
                     'icon' => 'cart',
                 ],
                 'secondary_action' => filled(Arr::get($contact, 'telegram.href'))
                     ? [
                         'href' => Arr::get($contact, 'telegram.href'),
-                        'label' => 'Telegramga yozish',
+                        'label' => __('home.footer.telegram_write'),
                         'icon' => 'telegram',
                         'external' => true,
                     ]
                     : [
                         'href' => Arr::get($contact, 'phone.href'),
-                        'label' => "Qo'ng'iroq qilish",
+                        'label' => __('home.footer.call'),
                         'icon' => 'phone',
                         'external' => false,
                     ],
                 'ghost_action' => [
                     'href' => '#catalog',
-                    'label' => "Katalogni ko'rish",
+                    'label' => __('home.footer.catalog'),
                     'icon' => 'menu',
                 ],
             ],
@@ -505,10 +505,10 @@ class HomeController extends Controller
     private function mapDatabaseProduct(Product $product, int $index, array $galleryLabels, array $galleryFallbackPool): array
     {
         $tones = ['rose', 'ink', 'teal', 'gold', 'clay', 'sky'];
-        $categoryName = $product->category?->name ?: 'Kategoriyasiz';
+        $categoryName = $product->category?->translated('name') ?: __('home.labels.uncategorized');
         $categoryFilter = $product->category?->slug ?: Str::slug($categoryName);
         $gallery = $this->buildDatabaseGallery(
-            $product->name,
+            $product->translated('name'),
             $product->main_image,
             Arr::wrap($product->gallery),
             $index,
@@ -517,36 +517,36 @@ class HomeController extends Controller
         );
 
         $availability = match ($product->availability_mode) {
-            Product::AVAILABILITY_MADE_TO_ORDER => 'Buyurtma asosida mavjud',
-            default => 'Omborda bor',
+            Product::AVAILABILITY_MADE_TO_ORDER => __('home.labels.made_to_order_available'),
+            default => __('home.labels.available'),
         };
 
         $tag = match (true) {
-            (bool) $product->is_featured => 'Tavsiya etiladi',
-            filled($product->old_price) && (int) $product->old_price > (int) $product->price => 'Chegirma',
-            $product->availability_mode === Product::AVAILABILITY_MADE_TO_ORDER => 'Buyurtma asosida',
-            $product->stock_status === Product::STOCK_LOW => 'Kam qoldi',
-            $product->stock_status === Product::STOCK_OUT => 'Tugagan',
-            default => 'Katalogda',
+            (bool) $product->is_featured => __('home.labels.recommended'),
+            filled($product->old_price) && (int) $product->old_price > (int) $product->price => __('home.labels.discount'),
+            $product->availability_mode === Product::AVAILABILITY_MADE_TO_ORDER => __('home.labels.made_to_order'),
+            $product->stock_status === Product::STOCK_LOW => __('home.labels.low_stock'),
+            $product->stock_status === Product::STOCK_OUT => __('home.labels.sold_out'),
+            default => __('home.labels.catalog'),
         };
 
         return $this->finalizeProductPayload([
             'id' => $product->slug ?: Str::slug($product->name),
-            'title' => $product->name,
+            'title' => $product->translated('name'),
             'price' => (int) $product->price,
             'formatted_price' => number_format((float) $product->price, 0, '.', ' ')." so'm",
             'tag' => $tag,
-            'short_description' => $product->short_description ?: "Mahsulot tavsifi admin paneldan to'ldiriladi.",
-            'full_description' => $product->full_description ?: ($product->short_description ?: "Mahsulot tavsifi keyinroq to'ldiriladi."),
-            'product_story' => $product->product_story ?: ($product->name." ustaxonaning qo'lda ishlangan kolleksiyasida an'anaviy naqsh va zamonaviy interyer ehtiyojlarini birlashtirish uchun yaratilgan."),
-            'material' => $product->material ?: "Admin paneldan to'ldiriladi",
-            'size' => $product->size ?: 'Kelishiladi',
-            'color' => $product->color ?: 'Individual tanlov',
+            'short_description' => $product->translated('short_description', fallback: __('home.labels.description_from_admin')),
+            'full_description' => $product->translated('full_description', fallback: ($product->translated('short_description') ?: __('home.labels.description_later'))),
+            'product_story' => $product->translated('product_story', fallback: __('home.labels.story_later', ['name' => $product->translated('name')])),
+            'material' => $product->translated('material', fallback: __('home.labels.material_from_admin')),
+            'size' => $product->translated('size', fallback: __('home.labels.agreed')),
+            'color' => $product->translated('color', fallback: __('home.labels.custom_color')),
             'availability' => $availability,
-            'lead_time' => $product->production_time ?: 'Kelishiladi',
+            'lead_time' => $product->translated('production_time', fallback: __('home.labels.agreed')),
             'category' => $categoryFilter,
             'category_label' => $categoryName,
-            'category_description' => $product->category?->description ?: ($categoryName.' mahsulotlari admin paneldan boshqariladi.'),
+            'category_description' => $product->category?->translated('description') ?: __('home.labels.category_managed', ['category' => $categoryName]),
             'popularity' => max((int) $product->view_count, 0),
             'new_rank' => $product->updated_at?->getTimestamp() ?? (time() - $index),
             'tone' => $tones[$index % count($tones)],
@@ -635,7 +635,7 @@ class HomeController extends Controller
                     return null;
                 }
 
-                $label = $labels[$imageIndex] ?? ('Rasm '.($imageIndex + 1));
+                $label = $labels[$imageIndex] ?? __('home.labels.image', ['number' => $imageIndex + 1]);
 
                 return [
                     'src' => $src,
@@ -655,8 +655,8 @@ class HomeController extends Controller
 
         return [[
             'src' => $fallbackSrc,
-            'label' => $labels[0] ?? "Asosiy ko'rinish",
-            'alt' => $title.' - '.($labels[0] ?? "Asosiy ko'rinish"),
+            'label' => $labels[0] ?? __('home.labels.main_view'),
+            'alt' => $title.' - '.($labels[0] ?? __('home.labels.main_view')),
         ]];
     }
 

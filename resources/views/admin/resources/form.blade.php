@@ -197,6 +197,75 @@
                                     </div>
                                 @elseif ($type === 'datetime-local')
                                     <input id="{{ $name }}" name="{{ $name }}" type="datetime-local" value="{{ $value }}" class="admin-input">
+                                @elseif ($type === 'translations')
+                                    @php
+                                        $translationLocales = ['ru' => 'Русский', 'en' => 'English'];
+                                        $translationFields = $field['fields'] ?? [];
+                                        $translationMetaFields = $field['meta_fields'] ?? [];
+                                    @endphp
+
+                                    <div class="admin-translation-panel">
+                                        @foreach ($translationLocales as $localeCode => $localeLabel)
+                                            <section class="admin-translation-locale">
+                                                <div class="admin-translation-head">
+                                                    <span>{{ strtoupper($localeCode) }}</span>
+                                                    <strong>{{ $localeLabel }}</strong>
+                                                </div>
+
+                                                <div class="grid gap-4">
+                                                    @foreach ($translationFields as $translationField)
+                                                        @php
+                                                            $translationName = $translationField['name'];
+                                                            $translationType = $translationField['type'] ?? 'text';
+                                                            $translationValue = old($name.'.'.$localeCode.'.'.$translationName, data_get($storedValue, $localeCode.'.'.$translationName));
+                                                        @endphp
+                                                        <label class="block">
+                                                            <span class="admin-label">{{ $translationField['label'] }}</span>
+                                                            @if ($translationType === 'textarea')
+                                                                <textarea
+                                                                    name="{{ $name }}[{{ $localeCode }}][{{ $translationName }}]"
+                                                                    rows="{{ $translationField['rows'] ?? 3 }}"
+                                                                    class="admin-textarea"
+                                                                >{{ $translationValue }}</textarea>
+                                                            @else
+                                                                <input
+                                                                    name="{{ $name }}[{{ $localeCode }}][{{ $translationName }}]"
+                                                                    type="text"
+                                                                    value="{{ $translationValue }}"
+                                                                    class="admin-input"
+                                                                >
+                                                            @endif
+                                                        </label>
+                                                    @endforeach
+
+                                                    @foreach ($translationMetaFields as $translationField)
+                                                        @php
+                                                            $translationName = $translationField['name'];
+                                                            $translationType = $translationField['type'] ?? 'text';
+                                                            $translationValue = old($name.'.'.$localeCode.'.meta.'.$translationName, data_get($storedValue, $localeCode.'.meta.'.$translationName));
+                                                        @endphp
+                                                        <label class="block">
+                                                            <span class="admin-label">{{ $translationField['label'] }}</span>
+                                                            @if ($translationType === 'textarea')
+                                                                <textarea
+                                                                    name="{{ $name }}[{{ $localeCode }}][meta][{{ $translationName }}]"
+                                                                    rows="{{ $translationField['rows'] ?? 3 }}"
+                                                                    class="admin-textarea"
+                                                                >{{ $translationValue }}</textarea>
+                                                            @else
+                                                                <input
+                                                                    name="{{ $name }}[{{ $localeCode }}][meta][{{ $translationName }}]"
+                                                                    type="text"
+                                                                    value="{{ $translationValue }}"
+                                                                    class="admin-input"
+                                                                >
+                                                            @endif
+                                                        </label>
+                                                    @endforeach
+                                                </div>
+                                            </section>
+                                        @endforeach
+                                    </div>
                                 @endif
 
                                 @if (!empty($field['help']))

@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasTranslations;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use HasTranslations;
+
     public const STOCK_IN = 'in_stock';
 
     public const STOCK_LOW = 'low_stock';
@@ -44,12 +47,14 @@ class Product extends Model
         'view_count',
         'main_image',
         'gallery',
+        'translations',
     ];
 
     protected function casts(): array
     {
         return [
             'gallery' => 'array',
+            'translations' => 'array',
             'is_made_to_order' => 'boolean',
             'custom_order_available' => 'boolean',
             'delivery_available' => 'boolean',

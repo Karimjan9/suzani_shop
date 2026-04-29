@@ -7,7 +7,7 @@
         <title>{{ config('app.name', 'Suzani Shop') }}</title>
         <meta
             name="description"
-            content="Suzani Shop uchun milliy ruhdagi zamonaviy bosh sahifa: banner, mahsulotlar, kategoriyalar, mijoz fikrlari va aloqa bo'limlari bilan."
+            content="{{ __('home.meta_description') }}"
         >
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="theme-color" content="#f5efe6">
@@ -51,6 +51,7 @@
             @include('partials.home.testimonials', ['testimonials' => $testimonials])
             @include('partials.home.cta', ['cta' => $cta, 'contact' => $contact])
             @include('partials.home.contact', ['contact' => $contact])
+            @include('partials.home.delivery')
         </main>
 
         @include('partials.home.modals')

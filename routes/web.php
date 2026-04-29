@@ -5,9 +5,21 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ResourceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
+use App\Support\Locales;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/language/{locale}', function (Request $request, string $locale): RedirectResponse {
+    abort_unless(Locales::isSupported($locale), 404);
+
+    $request->session()->put('locale', $locale);
+    app()->setLocale($locale);
+
+    return redirect()->back();
+})->name('language.switch');
 
 Route::get('/login', [AuthController::class, 'create'])->name('login');
 Route::post('/login', [AuthController::class, 'store'])->name('login.attempt');

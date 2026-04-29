@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 
 class ContentBlock extends Model
 {
+    use HasTranslations;
+
     public const TYPE_BANNER = 'banner';
 
     public const TYPE_HOME_TEXT = 'home_text';
@@ -31,6 +34,7 @@ class ContentBlock extends Model
         'image',
         'link',
         'meta',
+        'translations',
         'is_active',
         'sort_order',
     ];
@@ -39,6 +43,7 @@ class ContentBlock extends Model
     {
         return [
             'meta' => 'array',
+            'translations' => 'array',
             'is_active' => 'boolean',
         ];
     }

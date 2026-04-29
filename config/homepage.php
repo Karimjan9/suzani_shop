@@ -3,8 +3,8 @@
 return [
     'hero' => [
         'eyebrow' => 'Hunarmand ustaxonasidan',
-        'title' => "Qo'lda yasalgan noyob buyumlar",
-        'text' => "Suzani Shop interyer uchun nafis, sokin va qadrli buyumlar yaratadi. Har bir mahsulotda qo'l mehnati, iliq ranglar va sifatli materiallar orqali uyga hissiyot olib kiradigan ruh bor.",
+        'title' => "Qo'lda yasalgan noyob mahsulotlar",
+        'text' => "Suzani Shop interyer uchun nafis, sokin va qadrli mahsulotlar yaratadi. Har bir mahsulotda qo'l mehnati, iliq ranglar va sifatli materiallar orqali uyga hissiyot olib kiradigan ruh bor.",
         'primary_link' => '#catalog',
         'primary_label' => "Kolleksiyani ko'rish",
         'trust_note' => "Minimalistik ko'rinish, premium ishlov va hunarmand ruhini saqlagan maxsus kolleksiyalar.",
@@ -16,7 +16,7 @@ return [
         'promises' => [
             [
                 'title' => 'Buyurtma asosida',
-                'text' => "Har bir buyum interyer, rang va istakka moslab tayyorlanadi.",
+                'text' => "Har bir mahsulot interyer, rang va istakka moslab tayyorlanadi.",
             ],
             [
                 'title' => 'Sifatli material',
@@ -43,7 +43,7 @@ return [
     'about' => [
         'label' => 'Biz haqimizda',
         'title' => "Hunarmand tarixi, ustaxona ruhi va qo'lda yaratilgan har bir naqsh ortidagi mehnat",
-        'lead' => "Suzani Shop faqat mahsulot sotmaydi. Biz har bir buyum orqali ustaning tajribasi, oilaviy hunarmandchilik yo'li va qo'lda ishlashga bo'lgan hurmatni yetkazamiz.",
+        'lead' => "Suzani Shop faqat mahsulot sotmaydi. Biz har bir mahsulot orqali ustaning tajribasi, oilaviy hunarmandchilik yo'li va qo'lda ishlashga bo'lgan hurmatni yetkazamiz.",
         'gallery' => [
             [
                 'src' => 'about/photo_2026-03-18_16-32-23.jpg',
@@ -57,7 +57,7 @@ return [
             ],
             [
                 'src' => 'items/photo_2026-03-18_16-32-08.jpg',
-                'label' => 'Tayyor buyum',
+                'label' => 'Tayyor mahsulot',
                 'alt' => 'Suzani Shop tayyor mahsuloti',
             ],
             [
@@ -72,9 +72,9 @@ return [
             ],
         ],
         'gallery_label' => 'Ustaxona galereyasi',
-        'gallery_title' => "Jarayon, material va tayyor buyumlarning haqiqiy kadrlari",
+        'gallery_title' => "Jarayon, material va tayyor mahsulotlarning haqiqiy kadrlari",
         'gallery_caption' => 'Yuklangan rasmlar asosida',
-        'gallery_description' => "Bu galereyada ustaxona ruhi, mato tanlovi va tayyor buyumlarning haqiqiy kadrlari jamlangan.",
+        'gallery_description' => "Bu galereyada ustaxona ruhi, mato tanlovi va tayyor mahsulotlarning haqiqiy kadrlari jamlangan.",
         'note_label' => 'Mazmunli tanlov',
         'note_title' => "Mahsulot kartalariga ham shu yuklangan rasmlarning mos qismi biriktirildi",
         'note_text' => "Har bir kartochkada mahsulot turiga yaqin ko'rinishlar ko'rsatildi: devor suzanisi, stol bezagi, tekstil va sovg'a to'plamlari alohida guruhlandi.",
@@ -108,7 +108,7 @@ return [
             ],
             [
                 'title' => 'Ustaxona',
-                'text' => "Mahsulotlar kichik, lekin puxta tashkil etilgan ustaxonada tayyorlanadi. Har bir buyum kesish, tikish, kashta va yakuniy tekshiruv bosqichidan o'tadi.",
+                'text' => "Mahsulotlar kichik, lekin puxta tashkil etilgan ustaxonada tayyorlanadi. Har bir mahsulot kesish, tikish, kashta va yakuniy tekshiruv bosqichidan o'tadi.",
             ],
         ],
         'process_label' => "Qo'lda ishlash jarayoni",
@@ -274,7 +274,7 @@ return [
                 'price' => 690000,
                 'tag' => "Sovg'a",
                 'short_description' => "Suzani detal va tekstil mahsulotlari jamlangan chiroyli sovg'a to'plami.",
-                'full_description' => "Ipak Sovg'a Box ichida mini tekstil buyumlar, bezak elementlari va maxsus qadoq mavjud. To'y, mehmondorchilik yoki korporativ sovg'alar uchun mos variant.",
+                'full_description' => "Ipak Sovg'a Box ichida mini tekstil mahsulotlar, bezak elementlari va maxsus qadoq mavjud. To'y, mehmondorchilik yoki korporativ sovg'alar uchun mos variant.",
                 'product_story' => "Ipak Sovg'a Box maxsus kunlar uchun estetik va milliy ruhdagi tayyor sovg'a formatidir.",
                 'material' => "Ipak detal, paxta tekstil, qattiq qadoq",
                 'size' => '35 x 28 sm quti',
@@ -343,7 +343,7 @@ return [
                 'price' => 880000,
                 'tag' => 'Yangi',
                 'short_description' => "Maxsus tadbir va mehmonlar uchun tayyorlangan milliy sovg'a to'plami.",
-                'full_description' => "Navro'z Gift Set tantanali kunlar, mehmonlar va yaqinlarga sovg'a qilish uchun tayyorlangan premium to'plam. Ichida dekor buyum, tekstil element va maxsus tabrik kartasi mavjud.",
+                'full_description' => "Navro'z Gift Set tantanali kunlar, mehmonlar va yaqinlarga sovg'a qilish uchun tayyorlangan premium to'plam. Ichida dekor mahsulot, tekstil element va maxsus tabrik kartasi mavjud.",
                 'product_story' => "Navro'z Gift Set milliy ruhdagi maxsus kunlar va ko'rgazmali taqdimotlar uchun yaratilgan.",
                 'material' => "Aralash tekstil, ipak detal, premium qadoq",
                 'size' => '40 x 30 sm quti',
@@ -512,7 +512,7 @@ return [
     ],
     'footer' => [
         'banner_kicker' => 'Hunarmand va online bozor',
-        'banner_title' => "Qo'lda ishlangan buyumlarni iliq, premium va ishonchli usulda buyurtma qiling",
+        'banner_title' => "Qo'lda ishlangan mahsulotlarni iliq, premium va ishonchli usulda buyurtma qiling",
         'banner_copy' => "Suzani Shop landing page qulayligi, ustaxona ruhi va online bozor tezligini bitta joyga jamlaydi. Telegram, telefon yoki katalog orqali o'zingizga mos buyurtmani tez boshlashingiz mumkin.",
         'banner_points' => [
             "Qo'lda ishlangan kolleksiyalar",
@@ -524,7 +524,7 @@ return [
             ['value' => '800+', 'label' => "Qo'lda yaratilgan ish"],
         ],
         'brand_kicker' => 'Suzani Shop',
-        'brand_copy' => "Qo'lda ishlangan suzani, tekstil va sovg'abop buyumlarni zamonaviy ko'rinishda namoyish qilib, xaridor uchun iliq taassurot va qulay buyurtma yo'lini birlashtiramiz.",
+        'brand_copy' => "Qo'lda ishlangan suzani, tekstil va sovg'abop mahsulotlarni zamonaviy ko'rinishda namoyish qilib, xaridor uchun iliq taassurot va qulay buyurtma yo'lini birlashtiramiz.",
         'brand_subtitle' => 'Hunarmand ruhi bilan yaratilgan online bozor',
         'brand_pills' => [
             "Qo'lda ishlangan",
@@ -545,7 +545,7 @@ return [
                     [
                         'href' => '#products',
                         'title' => "Mashhur mahsulotlar",
-                        'text' => "Top kolleksiyalar va e'tiborli buyumlar",
+                        'text' => "Top kolleksiyalar va e'tiborli mahsulotlar",
                     ],
                     [
                         'href' => '#catalog',

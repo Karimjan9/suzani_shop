@@ -1,38 +1,66 @@
+@php
+    $currentLocale = \App\Support\Locales::current();
+    $localeLabels = \App\Support\Locales::labels();
+    $localeShortLabels = \App\Support\Locales::shortLabels();
+@endphp
+
 <header class="hero-section">
     <div class="hero-noise"></div>
     <nav class="topbar container" data-site-header>
         <a href="{{ url('/') }}" class="brand-mark">
-            <span class="brand-knot"></span>
+            <span class="brand-logo-wrap" aria-hidden="true">
+                <img
+                    src="{{ asset('images/logo/main_logo.jpg') }}"
+                    alt=""
+                    class="brand-logo"
+                    decoding="async"
+                >
+            </span>
             <span>Suzani Shop</span>
         </a>
 
         <div class="topbar-links">
-            <a href="#about">Biz haqimizda</a>
-            <a href="#catalog">Mahsulotlar</a>
+            <a href="#about">{{ __('home.nav.about') }}</a>
+            <a href="#catalog">{{ __('home.nav.products') }}</a>
             <a href="#cart" class="cart-link">
-                Savatcha
+                {{ __('home.nav.cart') }}
                 <span class="cart-badge" data-cart-count>0</span>
             </a>
-            <a href="#contact">Aloqa</a>
+            <a href="#contact">{{ __('home.nav.contact') }}</a>
         </div>
 
         <div class="topbar-actions">
+            <div class="language-switcher" aria-label="{{ __('home.language.label') }}">
+                @foreach ($localeShortLabels as $locale => $shortLabel)
+                    <a
+                        href="{{ route('language.switch', ['locale' => $locale], false) }}"
+                        class="language-option {{ $currentLocale === $locale ? 'is-active' : '' }}"
+                        aria-label="{{ __('home.language.switch_to', ['language' => $localeLabels[$locale]]) }}"
+                        aria-current="{{ $currentLocale === $locale ? 'true' : 'false' }}"
+                    >
+                        <span>{{ $shortLabel }}</span>
+                    </a>
+                @endforeach
+            </div>
+
             <button
                 type="button"
                 class="theme-toggle"
                 data-theme-toggle
                 data-active-theme="atelier"
-                aria-label="Rang rejimini almashtirish"
+                data-theme-light-status="{{ __('home.theme.atelier_status') }}"
+                data-theme-dark-status="{{ __('home.theme.nocturne_status') }}"
+                aria-label="{{ __('home.theme.toggle') }}"
                 aria-pressed="false"
             >
                 <span class="theme-toggle-label theme-toggle-label-light">Atelier</span>
                 <span class="theme-toggle-label theme-toggle-label-dark">Nocturne</span>
-                <span class="sr-only" data-theme-toggle-status>Atelier rejimi yoqilgan</span>
+                <span class="sr-only" data-theme-toggle-status>{{ __('home.theme.atelier_status') }}</span>
             </button>
             <a href="{{ route('login', [], false) }}" class="topbar-admin-link">
                 <span class="topbar-admin-copy">
-                    <span class="topbar-admin-overline">Admin zona</span>
-                    <span class="topbar-admin-title">Login</span>
+                    <span class="topbar-admin-overline">{{ __('home.nav.admin_overline') }}</span>
+                    <span class="topbar-admin-title">{{ __('home.nav.admin_title') }}</span>
                 </span>
                 <span class="topbar-admin-knot" aria-hidden="true"></span>
             </a>
@@ -47,7 +75,7 @@
 
             <div class="hero-actions">
                 <a href="{{ $hero['primary_link'] }}" class="button button-primary">{{ $hero['primary_label'] }}</a>
-                <a href="#contact" class="button button-secondary">Buyurtma berish</a>
+                <a href="#contact" class="button button-secondary">{{ __('home.nav.order') }}</a>
             </div>
 
             <p class="hero-trust-note">{{ $hero['trust_note'] }}</p>

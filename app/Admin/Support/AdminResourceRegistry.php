@@ -190,6 +190,16 @@ class AdminResourceRegistry
                             ['name' => 'short_description', 'label' => 'Qisqa tavsif', 'type' => 'textarea', 'rules' => ['nullable', 'string'], 'rows' => 3, 'column_span' => 2],
                             ['name' => 'full_description', 'label' => 'Toʻliq tavsif', 'type' => 'textarea', 'rules' => ['nullable', 'string'], 'rows' => 5, 'column_span' => 2],
                             ['name' => 'product_story', 'label' => 'Mahsulot hikoyasi', 'type' => 'textarea', 'rules' => ['nullable', 'string'], 'rows' => 5, 'column_span' => 2],
+                            self::translationField([
+                                ['name' => 'name', 'label' => 'Nomi'],
+                                ['name' => 'short_description', 'label' => 'Qisqa tavsif', 'type' => 'textarea', 'rows' => 3],
+                                ['name' => 'full_description', 'label' => 'To‘liq tavsif', 'type' => 'textarea', 'rows' => 4],
+                                ['name' => 'product_story', 'label' => 'Mahsulot hikoyasi', 'type' => 'textarea', 'rows' => 4],
+                                ['name' => 'material', 'label' => 'Material'],
+                                ['name' => 'size', 'label' => 'O‘lcham'],
+                                ['name' => 'color', 'label' => 'Rang'],
+                                ['name' => 'production_time', 'label' => 'Tayyorlash vaqti'],
+                            ]),
                         ],
                     ],
                     [
@@ -242,6 +252,10 @@ class AdminResourceRegistry
                             ['name' => 'sort_order', 'label' => 'Tartib', 'type' => 'number', 'rules' => ['nullable', 'integer', 'min:0']],
                             ['name' => 'is_active', 'label' => 'Faol', 'type' => 'checkbox', 'rules' => ['nullable', 'boolean']],
                             ['name' => 'description', 'label' => 'Tavsif', 'type' => 'textarea', 'rules' => ['nullable', 'string'], 'rows' => 5, 'column_span' => 2],
+                            self::translationField([
+                                ['name' => 'name', 'label' => 'Nomi'],
+                                ['name' => 'description', 'label' => 'Tavsif', 'type' => 'textarea', 'rows' => 4],
+                            ]),
                         ],
                     ],
                 ],
@@ -295,6 +309,36 @@ class AdminResourceRegistry
                             ['name' => 'subtitle', 'label' => 'Kichik izoh', 'type' => 'text', 'rules' => ['nullable', 'string', 'max:255'], 'help' => 'Sarlavha ustida yoki tagida chiqadigan qisqa yozuv.'],
                             ['name' => 'content', 'label' => 'Asosiy matn', 'type' => 'textarea', 'rules' => ['nullable', 'string'], 'rows' => 5, 'column_span' => 2, 'help' => 'Bo‘limning asosiy matni yoki tavsifi.'],
                             ['name' => 'link', 'label' => 'Tugma yoki yo‘naltirish linki', 'type' => 'text', 'rules' => ['nullable', 'string', 'max:2048'], 'column_span' => 2, 'help' => 'Kerak bo‘lsa `/#contact` yoki tashqi URL yozing.'],
+                            self::translationField([
+                                ['name' => 'title', 'label' => 'Sarlavha'],
+                                ['name' => 'subtitle', 'label' => 'Kichik izoh'],
+                                ['name' => 'content', 'label' => 'Asosiy matn', 'type' => 'textarea', 'rows' => 4],
+                            ], [
+                                ['name' => 'hero_main_badge', 'label' => 'Hero asosiy badge'],
+                                ['name' => 'hero_main_title', 'label' => 'Hero asosiy nom'],
+                                ['name' => 'hero_main_caption', 'label' => 'Hero asosiy izoh', 'type' => 'textarea', 'rows' => 2],
+                                ['name' => 'hero_detail_badge', 'label' => 'Hero detal badge'],
+                                ['name' => 'hero_detail_title', 'label' => 'Hero detal nom'],
+                                ['name' => 'hero_material_badge', 'label' => 'Hero material badge'],
+                                ['name' => 'hero_material_title', 'label' => 'Hero material nom'],
+                                ['name' => 'phone_label', 'label' => 'Telefon label'],
+                                ['name' => 'address_label', 'label' => 'Manzil label'],
+                                ['name' => 'address_value', 'label' => 'Manzil qiymati'],
+                                ['name' => 'hours_label', 'label' => 'Ish vaqti label'],
+                                ['name' => 'hours_value', 'label' => 'Ish vaqti qiymati'],
+                                ['name' => 'map_label', 'label' => 'Xarita label'],
+                                ['name' => 'map_title', 'label' => 'Xarita sarlavhasi'],
+                                ['name' => 'form_label', 'label' => 'Forma label'],
+                                ['name' => 'form_title', 'label' => 'Forma sarlavhasi'],
+                                ['name' => 'form_name_label', 'label' => 'Ism label'],
+                                ['name' => 'form_name_placeholder', 'label' => 'Ism placeholder'],
+                                ['name' => 'form_phone_label', 'label' => 'Telefon form label'],
+                                ['name' => 'form_social_label', 'label' => 'Social label'],
+                                ['name' => 'form_social_placeholder', 'label' => 'Social placeholder'],
+                                ['name' => 'form_message_label', 'label' => 'Xabar label'],
+                                ['name' => 'form_message_placeholder', 'label' => 'Xabar placeholder'],
+                                ['name' => 'form_success_note', 'label' => 'Success matni', 'type' => 'textarea', 'rows' => 2],
+                            ]),
                         ],
                     ],
                     [
@@ -411,6 +455,35 @@ class AdminResourceRegistry
                             ['name' => 'form_message_label', 'label' => 'Xabar maydoni label', 'type' => 'text', 'rules' => ['nullable', 'string', 'max:255']],
                             ['name' => 'form_message_placeholder', 'label' => 'Xabar placeholder', 'type' => 'textarea', 'rules' => ['nullable', 'string'], 'rows' => 3, 'column_span' => 2],
                             ['name' => 'form_success_note', 'label' => 'Muvaffaqiyat xabari', 'type' => 'textarea', 'rules' => ['nullable', 'string'], 'rows' => 3, 'column_span' => 2],
+                        ],
+                    ],
+                    [
+                        'title' => '6. Tarjimalar',
+                        'description' => 'Rus va ingliz tillari uchun aloqa bo‘limi matnlari.',
+                        'fields' => [
+                            self::translationField([
+                                ['name' => 'title', 'label' => 'Katta sarlavha'],
+                                ['name' => 'subtitle', 'label' => 'Kichik label'],
+                                ['name' => 'content', 'label' => 'Kirish matni', 'type' => 'textarea', 'rows' => 4],
+                            ], [
+                                ['name' => 'phone_label', 'label' => 'Telefon label'],
+                                ['name' => 'address_label', 'label' => 'Manzil label'],
+                                ['name' => 'address_value', 'label' => 'Manzil qiymati'],
+                                ['name' => 'hours_label', 'label' => 'Ish vaqti label'],
+                                ['name' => 'hours_value', 'label' => 'Ish vaqti qiymati'],
+                                ['name' => 'map_label', 'label' => 'Xarita label'],
+                                ['name' => 'map_title', 'label' => 'Xarita sarlavhasi'],
+                                ['name' => 'form_label', 'label' => 'Forma label'],
+                                ['name' => 'form_title', 'label' => 'Forma sarlavhasi'],
+                                ['name' => 'form_name_label', 'label' => 'Ism label'],
+                                ['name' => 'form_name_placeholder', 'label' => 'Ism placeholder'],
+                                ['name' => 'form_phone_label', 'label' => 'Telefon form label'],
+                                ['name' => 'form_social_label', 'label' => 'Social label'],
+                                ['name' => 'form_social_placeholder', 'label' => 'Social placeholder'],
+                                ['name' => 'form_message_label', 'label' => 'Xabar label'],
+                                ['name' => 'form_message_placeholder', 'label' => 'Xabar placeholder'],
+                                ['name' => 'form_success_note', 'label' => 'Success matni', 'type' => 'textarea', 'rows' => 2],
+                            ]),
                         ],
                     ],
                 ],
@@ -538,6 +611,13 @@ class AdminResourceRegistry
                             ['name' => 'is_featured', 'label' => 'Muhim karta', 'type' => 'checkbox', 'rules' => ['nullable', 'boolean']],
                             ['name' => 'is_active', 'label' => 'Asosiy pageda ko‘rinsin', 'type' => 'checkbox', 'rules' => ['nullable', 'boolean']],
                             ['name' => 'excerpt', 'label' => 'Qisqa tavsif', 'type' => 'textarea', 'rules' => ['nullable', 'string'], 'rows' => 3, 'column_span' => 2],
+                            self::translationField([
+                                ['name' => 'title', 'label' => 'Karta sarlavhasi'],
+                                ['name' => 'project_type', 'label' => 'Kichik tur yozuvi'],
+                                ['name' => 'highlight_value', 'label' => 'Karta ustidagi katta yozuv'],
+                                ['name' => 'excerpt', 'label' => 'Qisqa tavsif', 'type' => 'textarea', 'rows' => 3],
+                                ['name' => 'description', 'label' => 'To‘liq tavsif', 'type' => 'textarea', 'rows' => 4],
+                            ]),
                             ['name' => 'description', 'label' => 'Toʻliq tavsif', 'type' => 'textarea', 'rules' => ['nullable', 'string'], 'rows' => 6, 'column_span' => 2],
                             ['name' => 'gallery', 'label' => 'Galereya', 'type' => 'images', 'rules' => ['nullable', 'array'], 'file_rules' => ['image', 'max:5120'], 'column_span' => 2, 'help' => 'Bir nechta rasm tanlashingiz mumkin. Yangi fayllar tanlansa, eski galereya yangilanadi.'],
                         ],
@@ -590,6 +670,11 @@ class AdminResourceRegistry
                             ['name' => 'is_approved', 'label' => 'Asosiy pageda ko‘rinsin', 'type' => 'checkbox', 'rules' => ['nullable', 'boolean']],
                             ['name' => 'is_featured', 'label' => 'Muhim fikr sifatida belgilash', 'type' => 'checkbox', 'rules' => ['nullable', 'boolean']],
                             ['name' => 'content', 'label' => 'Fikr matni', 'type' => 'textarea', 'rules' => ['required', 'string'], 'rows' => 5, 'column_span' => 2],
+                            self::translationField([
+                                ['name' => 'customer_name', 'label' => 'Mijoz'],
+                                ['name' => 'city', 'label' => 'Shahar'],
+                                ['name' => 'content', 'label' => 'Fikr matni', 'type' => 'textarea', 'rows' => 4],
+                            ]),
                             ['name' => 'admin_notes', 'label' => 'Admin qaydi', 'type' => 'textarea', 'rules' => ['nullable', 'string'], 'rows' => 4, 'column_span' => 2],
                         ],
                     ],
@@ -748,6 +833,20 @@ class AdminResourceRegistry
         ];
     }
 
+    private static function translationField(array $fields, array $metaFields = []): array
+    {
+        return [
+            'name' => 'translations',
+            'label' => 'Tarjimalar',
+            'type' => 'translations',
+            'rules' => ['nullable', 'array'],
+            'fields' => $fields,
+            'meta_fields' => $metaFields,
+            'column_span' => 2,
+            'help' => 'O‘zbek matn asosiy maydonlarda turadi. Rus va ingliz matnlar bo‘sh qolsa, sayt o‘zbek variantini ko‘rsatadi.',
+        ];
+    }
+
     private static function bannerMetaDefaults(array $meta = []): array
     {
         return array_merge([
@@ -775,8 +874,8 @@ class AdminResourceRegistry
         $data['key'] = $record?->key ?? ($data['key'] ?? 'home-hero');
         $data['sort_order'] = $record?->sort_order ?? ($data['sort_order'] ?? 1);
         $data['subtitle'] = $record?->subtitle ?? ($data['subtitle'] ?? 'Hunarmand ustaxonasidan');
-        $data['title'] = $record?->title ?? ($data['title'] ?? 'Qo\'lda yasalgan noyob buyumlar');
-        $data['content'] = $record?->content ?? ($data['content'] ?? 'Suzani Shop interyer uchun nafis, sokin va qadrli buyumlar yaratadi. Har bir mahsulotda qo\'l mehnati, iliq ranglar va sifatli materiallar orqali uyga hissiyot olib kiradigan ruh bor.');
+        $data['title'] = $record?->title ?? ($data['title'] ?? 'Qo\'lda yasalgan noyob mahsulotlar');
+        $data['content'] = $record?->content ?? ($data['content'] ?? 'Suzani Shop interyer uchun nafis, sokin va qadrli mahsulotlar yaratadi. Har bir mahsulotda qo\'l mehnati, iliq ranglar va sifatli materiallar orqali uyga hissiyot olib kiradigan ruh bor.');
         $data['image'] = $record?->image ?? ($data['image'] ?? '/images/home/hero/hero-main.jpg');
 
         return $data;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uz" data-theme="atelier">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="atelier">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

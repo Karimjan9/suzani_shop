@@ -19,6 +19,10 @@ class ProductSeeder extends Seeder
                 [
                     'name' => 'Yostiq',
                     'description' => "Suzani uslubidagi dekor yostiqlar va premium cushion to'plamlari.",
+                    'translations' => [
+                        'ru' => ['name' => 'Подушки', 'description' => 'Декоративные подушки в стиле сузани и премиальные cushion-наборы.'],
+                        'en' => ['name' => 'Cushions', 'description' => 'Suzani-style decorative cushions and premium cushion sets.'],
+                    ],
                     'is_active' => true,
                     'sort_order' => 1,
                 ],
@@ -28,6 +32,10 @@ class ProductSeeder extends Seeder
                 [
                     'name' => 'Suzani Sumka',
                     'description' => "Suzani naqshi bilan ishlangan kundalik va sovg'abop sumkalar.",
+                    'translations' => [
+                        'ru' => ['name' => 'Сумки сузани', 'description' => 'Повседневные и подарочные сумки с узором сузани.'],
+                        'en' => ['name' => 'Suzani Bags', 'description' => 'Everyday and gift-ready bags made with Suzani patterns.'],
+                    ],
                     'is_active' => true,
                     'sort_order' => 4,
                 ],
@@ -37,6 +45,10 @@ class ProductSeeder extends Seeder
                 [
                     'name' => 'Suzani',
                     'description' => "Suzani, kichik suzani va katta suzani kolleksiyalarini birlashtirgan asosiy devor tekstili kategoriyasi.",
+                    'translations' => [
+                        'ru' => ['name' => 'Сузани', 'description' => 'Основная категория настенного текстиля: малые, большие и классические сузани.'],
+                        'en' => ['name' => 'Suzani', 'description' => 'The main wall textile category combining small, large, and classic Suzani pieces.'],
+                    ],
                     'is_active' => true,
                     'sort_order' => 2,
                 ],
@@ -46,6 +58,10 @@ class ProductSeeder extends Seeder
                 [
                     'name' => 'Naqsh Panel',
                     'description' => "Pattern va ornament markaziga qurilgan badiiy suzani panellar.",
+                    'translations' => [
+                        'ru' => ['name' => 'Панели с орнаментом', 'description' => 'Художественные панели сузани, построенные вокруг узора и орнамента.'],
+                        'en' => ['name' => 'Pattern Panels', 'description' => 'Artistic Suzani panels centered on pattern and ornament.'],
+                    ],
                     'is_active' => true,
                     'sort_order' => 3,
                 ],

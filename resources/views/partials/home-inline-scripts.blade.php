@@ -974,8 +974,8 @@
 
                     if (status) {
                         status.textContent = safeTheme === 'nocturne'
-                            ? 'Nocturne rejimi yoqilgan'
-                            : 'Atelier rejimi yoqilgan';
+                            ? (toggle.dataset.themeDarkStatus || 'Nocturne mode is active')
+                            : (toggle.dataset.themeLightStatus || 'Atelier mode is active');
                     }
                 });
             };

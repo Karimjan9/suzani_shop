@@ -210,6 +210,11 @@ class ResourceController extends Controller
             if (($field['type'] ?? 'text') === 'images') {
                 $rules[$name.'.*'] = $field['file_rules'] ?? ['image', 'max:5120'];
             }
+
+            if (($field['type'] ?? 'text') === 'translations') {
+                $rules[$name.'.*'] = ['nullable', 'array'];
+                $rules[$name.'.*.meta'] = ['nullable', 'array'];
+            }
         }
 
         $data = $request->validate($rules);
@@ -226,6 +231,7 @@ class ResourceController extends Controller
                 'image' => $this->storeUploadedImage($request, $record, $name),
                 'images' => $this->storeUploadedImages($request, $record, $name),
                 'json' => blank($data[$name] ?? null) ? [] : json_decode($data[$name], true, 512, JSON_THROW_ON_ERROR),
+                'translations' => $this->cleanTranslations($data[$name] ?? [], $field),
                 'array_lines' => collect(preg_split('/\r\n|\r|\n/', (string) ($data[$name] ?? '')))
                     ->map(fn (string $item): string => trim($item))
                     ->filter()
@@ -269,6 +275,38 @@ class ResourceController extends Controller
                 $builder->orWhere($column, 'like', '%'.$search.'%');
             }
         });
+    }
+
+    private function cleanTranslations(mixed $translations, array $field): array
+    {
+        $allowedFields = collect($field['fields'] ?? [])->pluck('name')->filter()->all();
+        $allowedMetaFields = collect($field['meta_fields'] ?? [])->pluck('name')->filter()->all();
+
+        return collect(Arr::wrap($translations))
+            ->map(function (mixed $localeValues) use ($allowedFields, $allowedMetaFields): array {
+                $localeValues = Arr::wrap($localeValues);
+                $clean = [];
+
+                foreach ($allowedFields as $name) {
+                    $value = trim((string) ($localeValues[$name] ?? ''));
+
+                    if ($value !== '') {
+                        $clean[$name] = $value;
+                    }
+                }
+
+                foreach ($allowedMetaFields as $name) {
+                    $value = trim((string) Arr::get($localeValues, 'meta.'.$name, ''));
+
+                    if ($value !== '') {
+                        $clean['meta'][$name] = $value;
+                    }
+                }
+
+                return $clean;
+            })
+            ->filter()
+            ->all();
     }
 
     private function applyFilters(Builder $query, array $resource, Request $request): void

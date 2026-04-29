@@ -157,6 +157,47 @@ html[data-theme="nocturne"] .admin-backdrop {
     min-width: 10.8rem;
 }
 
+.admin-translation-panel {
+    display: grid;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.admin-translation-locale {
+    border: 1px solid var(--admin-border);
+    border-radius: 1.25rem;
+    padding: 1rem;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
+        radial-gradient(circle at top right, rgba(216, 161, 77, 0.14), transparent 34%);
+}
+
+.admin-translation-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--admin-cream);
+}
+
+.admin-translation-head span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--admin-accent), var(--admin-accent-strong));
+    color: #17100e;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.admin-translation-head strong {
+    font-size: 1rem;
+}
+
 html[data-theme="atelier"] .admin-theme-toggle-label-light,
 html[data-theme="nocturne"] .admin-theme-toggle-label-dark {
     color: #fff8ef;
