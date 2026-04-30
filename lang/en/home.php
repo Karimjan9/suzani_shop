@@ -199,10 +199,10 @@ return [
         ],
         'local' => [
             'title' => 'Local orders',
-            'scope' => 'Within Uzbekistan',
+            'scope' => 'Worldwide',
             'description' => 'Fast and reliable delivery',
             'duration' => 'Within 1-5 days',
-            'coverage' => 'Across Uzbekistan',
+            'coverage' => 'Worldwide',
         ],
         'foreign' => [
             'title' => 'International orders',

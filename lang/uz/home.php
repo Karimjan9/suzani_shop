@@ -199,10 +199,10 @@ return [
         ],
         'local' => [
             'title' => 'Mahalliy buyurtmalar',
-            'scope' => "O'zbekiston ichida",
+            'scope' => "Butun dunyo bo'ylab",
             'description' => 'Tezkor va ishonchli yetkazib berish',
             'duration' => '1-5 kun ichida',
-            'coverage' => "O'zbekiston bo'ylab",
+            'coverage' => "Butun dunyo bo'ylab",
         ],
         'foreign' => [
             'title' => 'Xorijiy buyurtmalar',

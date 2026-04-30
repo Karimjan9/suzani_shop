@@ -3,14 +3,14 @@
 return [
     'hero' => [
         'eyebrow' => 'Hunarmand ustaxonasidan',
-        'title' => "Qo'lda yasalgan noyob mahsulotlar",
+        'title' => "Qo'l mehnatida yaralgan san'at asarlari",
         'text' => "Suzani Shop interyer uchun nafis, sokin va qadrli mahsulotlar yaratadi. Har bir mahsulotda qo'l mehnati, iliq ranglar va sifatli materiallar orqali uyga hissiyot olib kiradigan ruh bor.",
         'primary_link' => '#catalog',
         'primary_label' => "Kolleksiyani ko'rish",
         'trust_note' => "Minimalistik ko'rinish, premium ishlov va hunarmand ruhini saqlagan maxsus kolleksiyalar.",
         'stats' => [
             ['label' => 'Amaliy tajriba', 'value' => '12 yil'],
-            ['label' => "Qo'lda yaratilgan ish", 'value' => '800+'],
+            ['label' => "Qo'lda yaratilgan ish", 'value' => '5000+'],
             ['label' => 'Issiq va nafis kolleksiya', 'value' => 'Premium'],
         ],
         'promises' => [
@@ -23,8 +23,8 @@ return [
                 'text' => "Tabiiy mato, puxta ishlov va uzoq xizmat qiladigan detallarga e'tibor beriladi.",
             ],
             [
-                'title' => "Butun O'zbekiston bo'ylab yuborish",
-                'text' => "Toshkentdan viloyatlarga ehtiyotkor qadoq va ishonchli yetkazib berish bilan jo'natiladi.",
+                'title' => "Butun dunyo bo'ylab yuborish",
+                'text' => "Buyurtmalar ehtiyotkor qadoqlanib, ishonchli yetkazib berish bilan butun dunyoga jo'natiladi.",
             ],
         ],
         'main_image' => 'hero/hero-main.jpg',
@@ -94,7 +94,7 @@ return [
         ],
         'stats' => [
             ['label' => 'Tajriba', 'value' => '12 yil'],
-            ['label' => "Qo'lda yaratilgan ishlar", 'value' => '800+'],
+            ['label' => "Qo'lda yaratilgan ishlar", 'value' => '5000+'],
             ['label' => 'Ustaxona jamoasi', 'value' => '6 nafar usta'],
         ],
         'highlights' => [
@@ -423,7 +423,7 @@ return [
         ['number' => '01', 'title' => 'Mahsulotni tanlang', 'text' => "Sizga yoqqan suzani yoki tekstil mahsulotini katalogdan tanlaysiz."],
         ['number' => '02', 'title' => "Buyurtma qoldiring", 'text' => "Telefon, Telegram yoki sayt formasi orqali bog'lanib buyurtmani tasdiqlaysiz."],
         ['number' => '03', 'title' => 'Tayyorlash va qadoqlash', 'text' => "Mahsulot tekshiriladi, ehtiyotkor qadoqlanadi va jo'natishga tayyorlanadi."],
-        ['number' => '04', 'title' => 'Yetkazib berish', 'text' => "Buyurtmangiz O'zbekiston bo'ylab ishonchli yetkazib berish xizmati bilan yuboriladi."],
+        ['number' => '04', 'title' => 'Yetkazib berish', 'text' => "Buyurtmangiz butun dunyo bo'ylab ishonchli yetkazib berish xizmati bilan yuboriladi."],
     ],
     'testimonials' => [
         'label' => 'Mijoz fikrlari',
@@ -469,8 +469,8 @@ return [
                 'text' => "So'rov yuborilgach, admin telefon yoki Telegram orqali bog'lanadi.",
             ],
             [
-                'title' => "Butun O'zbekiston bo'ylab",
-                'text' => "Tayyor mahsulot va custom buyurtmalar ehtiyotkor jo'natiladi.",
+                'title' => "Butun dunyo bo'ylab",
+                'text' => "Tayyor mahsulot va custom buyurtmalar butun dunyoga ehtiyotkor jo'natiladi.",
             ],
         ],
     ],
@@ -521,7 +521,7 @@ return [
         ],
         'banner_stats' => [
             ['value' => '12 yil', 'label' => 'Amaliy tajriba'],
-            ['value' => '800+', 'label' => "Qo'lda yaratilgan ish"],
+            ['value' => '5000+', 'label' => "Qo'lda yaratilgan ish"],
         ],
         'brand_kicker' => 'Suzani Shop',
         'brand_copy' => "Qo'lda ishlangan suzani, tekstil va sovg'abop mahsulotlarni zamonaviy ko'rinishda namoyish qilib, xaridor uchun iliq taassurot va qulay buyurtma yo'lini birlashtiramiz.",

@@ -3,19 +3,19 @@
 return [
     'hero' => [
         'eyebrow' => 'From the artisan workshop',
-        'title' => 'Unique handmade pieces',
+        'title' => 'Works of Art Created by Hand',
         'text' => 'Suzani Shop creates refined, calm, and meaningful pieces for interiors. Every product carries handwork, warm color, and quality material.',
         'primary_label' => 'View the collection',
         'trust_note' => 'Special collections with a minimal look, premium finish, and true artisan spirit.',
         'stats' => [
             ['label' => 'Hands-on experience', 'value' => '12 years'],
-            ['label' => 'Handmade works', 'value' => '800+'],
+            ['label' => 'Handmade works', 'value' => '5000+'],
             ['label' => 'Warm premium collection', 'value' => 'Premium'],
         ],
         'promises' => [
             ['title' => 'Made to order', 'text' => 'Each piece is prepared to match the interior, colors, and request.'],
             ['title' => 'Quality material', 'text' => 'Natural fabric, careful finishing, and long-lasting details are prioritized.'],
-            ['title' => 'Delivery across Uzbekistan', 'text' => 'Orders are sent with careful packaging and reliable delivery.'],
+            ['title' => 'Worldwide delivery', 'text' => 'Orders are carefully packed and shipped worldwide with reliable delivery.'],
         ],
         'meta' => [
             'hero_main_badge' => 'Main collection',
@@ -40,7 +40,7 @@ return [
         'note_text' => 'Each card shows visuals close to the product type: wall suzani, table decor, textiles, and gift sets are grouped separately.',
         'stats' => [
             ['label' => 'Experience', 'value' => '12 years'],
-            ['label' => 'Handmade works', 'value' => '800+'],
+            ['label' => 'Handmade works', 'value' => '5000+'],
             ['label' => 'Workshop team', 'value' => '6 artisans'],
         ],
         'process_label' => 'Handmade process',
@@ -133,7 +133,7 @@ return [
         ['number' => '01', 'title' => 'Choose a product', 'text' => 'Select the suzani or textile piece you like from the catalog.'],
         ['number' => '02', 'title' => 'Leave an order', 'text' => 'Contact us by phone, Telegram, or the site form to confirm the order.'],
         ['number' => '03', 'title' => 'Preparation and packaging', 'text' => 'The product is checked, carefully packed, and prepared for shipping.'],
-        ['number' => '04', 'title' => 'Delivery', 'text' => 'Your order is sent through a reliable delivery service across Uzbekistan.'],
+        ['number' => '04', 'title' => 'Delivery', 'text' => 'Your order is sent worldwide through a reliable delivery service.'],
     ],
     'cta' => [
         'label' => 'Ready to order?',
@@ -142,7 +142,7 @@ return [
         'points' => [
             ['title' => 'Individual approach', 'text' => 'Get artisan advice on color, size, and composition.'],
             ['title' => 'Fast contact', 'text' => 'After your request, the admin contacts you by phone or Telegram.'],
-            ['title' => 'Across Uzbekistan', 'text' => 'Ready products and custom orders are shipped with careful packaging.'],
+            ['title' => 'Worldwide', 'text' => 'Ready products and custom orders are carefully shipped worldwide.'],
         ],
     ],
     'contact' => [
@@ -162,7 +162,7 @@ return [
         ],
         'banner_stats' => [
             ['value' => '12 years', 'label' => 'Hands-on experience'],
-            ['value' => '800+', 'label' => 'Handmade works'],
+            ['value' => '5000+', 'label' => 'Handmade works'],
         ],
         'brand_kicker' => 'Suzani Shop',
         'brand_subtitle' => 'Handmade interior pieces with national character.',

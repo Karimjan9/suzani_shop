@@ -16,7 +16,7 @@ class ContentBlockSeeder extends Seeder
             [
                 'key' => 'home-hero',
                 'type' => ContentBlock::TYPE_BANNER,
-                'title' => 'Qo\'lda yasalgan noyob mahsulotlar',
+                'title' => 'Qo\'l mehnatida yaralgan san\'at asarlari',
                 'subtitle' => 'Hunarmand ustaxonasidan',
                 'content' => 'Suzani Shop interyer uchun nafis, sokin va qadrli mahsulotlar yaratadi. Har bir mahsulotda qo\'l mehnati, iliq ranglar va sifatli materiallar orqali uyga hissiyot olib kiradigan ruh bor.',
                 'image' => '/images/home/hero/hero-main.jpg',
@@ -34,7 +34,7 @@ class ContentBlockSeeder extends Seeder
                 ],
                 'translations' => [
                     'ru' => [
-                        'title' => 'Уникальные изделия ручной работы',
+                        'title' => 'Произведения искусства, созданные вручную',
                         'subtitle' => 'Из ремесленной мастерской',
                         'content' => 'Suzani Shop создает изящные и ценные предметы для интерьера. В каждом изделии соединены ручной труд, теплые оттенки и качественные материалы.',
                         'meta' => [
@@ -48,7 +48,7 @@ class ContentBlockSeeder extends Seeder
                         ],
                     ],
                     'en' => [
-                        'title' => 'Unique Handmade Pieces',
+                        'title' => 'Works of Art Created by Hand',
                         'subtitle' => 'From the artisan workshop',
                         'content' => 'Suzani Shop creates refined, calm, and meaningful interior pieces. Every product carries handwork, warm color, and quality material.',
                         'meta' => [

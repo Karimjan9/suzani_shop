@@ -888,7 +888,7 @@ class AdminResourceRegistry
         $data['key'] = $record?->key ?? ($data['key'] ?? 'home-hero');
         $data['sort_order'] = $record?->sort_order ?? ($data['sort_order'] ?? 1);
         $data['subtitle'] = $record?->subtitle ?? ($data['subtitle'] ?? 'Hunarmand ustaxonasidan');
-        $data['title'] = $record?->title ?? ($data['title'] ?? 'Qo\'lda yasalgan noyob mahsulotlar');
+        $data['title'] = $record?->title ?? ($data['title'] ?? 'Qo\'l mehnatida yaralgan san\'at asarlari');
         $data['content'] = $record?->content ?? ($data['content'] ?? 'Suzani Shop interyer uchun nafis, sokin va qadrli mahsulotlar yaratadi. Har bir mahsulotda qo\'l mehnati, iliq ranglar va sifatli materiallar orqali uyga hissiyot olib kiradigan ruh bor.');
         $data['image'] = $record?->image ?? ($data['image'] ?? '/images/home/hero/hero-main.jpg');
 
