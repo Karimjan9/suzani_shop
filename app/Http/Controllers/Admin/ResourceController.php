@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Admin\Support\AdminResourceRegistry;
+use App\Support\Locales;
 use App\Support\UploadedMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -283,6 +284,7 @@ class ResourceController extends Controller
         $allowedMetaFields = collect($field['meta_fields'] ?? [])->pluck('name')->filter()->all();
 
         return collect(Arr::wrap($translations))
+            ->only(array_values(array_diff(Locales::SUPPORTED, [Locales::DEFAULT])))
             ->map(function (mixed $localeValues) use ($allowedFields, $allowedMetaFields): array {
                 $localeValues = Arr::wrap($localeValues);
                 $clean = [];

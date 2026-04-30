@@ -116,8 +116,8 @@
                     <div class="footer-card-ornament footer-card-ornament-contact" aria-hidden="true">
                         <x-home.footer-ornament variant="seal" />
                     </div>
-                    <span class="footer-card-kicker">Aloqa</span>
-                    <h3>Biz bilan bog'laning</h3>
+                    <span class="footer-card-kicker">{{ __('home.ui.footer_ui.contact') }}</span>
+                    <h3>{{ __('home.ui.footer_ui.contact_title') }}</h3>
                     <div class="footer-contact-stack">
                         @foreach ($footer['contact_rows'] as $row)
                             <x-home.footer-contact-row

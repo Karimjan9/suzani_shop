@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 300" role="img" aria-labelledby="title">
+  <title id="title">UZPOST parcel box</title>
+  <defs>
+    <linearGradient id="front" x1="130" x2="350" y1="70" y2="250" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff"/>
+      <stop offset=".58" stop-color="#edf5ff"/>
+      <stop offset="1" stop-color="#cfe2f4"/>
+    </linearGradient>
+    <linearGradient id="side" x1="296" x2="382" y1="92" y2="254" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e8f4ff"/>
+      <stop offset="1" stop-color="#aacce8"/>
+    </linearGradient>
+    <linearGradient id="top" x1="104" x2="356" y1="42" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/>
+      <stop offset="1" stop-color="#deefff"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#1b2834" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <ellipse cx="218" cy="266" rx="150" ry="20" fill="#2f2216" opacity=".12"/>
+  <g filter="url(#shadow)">
+    <path fill="url(#top)" stroke="#b4d0ea" stroke-width="3" d="m88 88 177-38 96 48-177 42Z"/>
+    <path fill="url(#front)" stroke="#b4d0ea" stroke-width="3" d="m88 88 96 52v122L88 207Z"/>
+    <path fill="url(#side)" stroke="#9fc4e3" stroke-width="3" d="m184 140 177-42v118l-177 46Z"/>
+    <path fill="#cfe3f4" d="m232 128 48-12v119l-48 13Z" opacity=".8"/>
+    <path fill="#ffffff" d="m109 117 53 28v76l-53-31Z" opacity=".58"/>
+    <path fill="#1f73b7" d="M206 157h92l-13 18h-93z"/>
+    <path fill="#1f73b7" d="m208 151 39-23h56l-36 23z"/>
+    <text x="197" y="204" fill="#1b74bb" font-family="Arial Black, Arial, sans-serif" font-size="34" font-weight="900">UZPOST</text>
+    <text x="205" y="229" fill="#5e8bb0" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="2">EXPRESS</text>
+  </g>
+</svg>

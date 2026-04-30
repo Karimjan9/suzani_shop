@@ -37,14 +37,14 @@
                     class="product-showcase-gallery about-showcase-gallery"
                     data-gallery
                     data-gallery-tone="clay"
-                    data-gallery-title="Suzani Shop ustaxonasi"
+                    data-gallery-title="{{ $about['gallery_title'] }}"
                     data-gallery-description="{{ $about['gallery_description'] }}"
                 >
                     <div class="product-gallery-stage product-tone-clay about-gallery-stage">
-                        <span class="product-gallery-badge">Galereya</span>
+                        <span class="product-gallery-badge">{{ __('home.ui.gallery.badge') }}</span>
                         <div class="product-gallery-nav-wrap">
-                            <button type="button" class="product-gallery-nav" data-gallery-prev aria-label="Oldingi rasm">&#8249;</button>
-                            <button type="button" class="product-gallery-visual" data-gallery-open aria-label="Rasmni kattalashtirib ko'rish">
+                            <button type="button" class="product-gallery-nav" data-gallery-prev aria-label="{{ __('home.ui.gallery.previous') }}">&#8249;</button>
+                            <button type="button" class="product-gallery-visual" data-gallery-open aria-label="{{ __('home.ui.gallery.open_image') }}">
                                 <span class="product-gallery-visual-art" aria-hidden="true">
                                     <img
                                         src="{{ $about['gallery'][0]['src'] }}"
@@ -60,10 +60,10 @@
                                     <span class="product-gallery-visual-subtitle">Suzani Shop</span>
                                 </span>
                             </button>
-                            <button type="button" class="product-gallery-nav" data-gallery-next aria-label="Keyingi rasm">&#8250;</button>
+                            <button type="button" class="product-gallery-nav" data-gallery-next aria-label="{{ __('home.ui.gallery.next') }}">&#8250;</button>
                         </div>
                         <div class="product-gallery-meta">
-                            <span class="product-gallery-hint">Kattalashtirib ko'rish</span>
+                            <span class="product-gallery-hint">{{ __('home.ui.gallery.enlarge') }}</span>
                             <div class="product-gallery-counter" data-gallery-counter>1 / {{ count($about['gallery']) }}</div>
                         </div>
                     </div>

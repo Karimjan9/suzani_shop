@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 
 @php
     $pageMap = $resource['page_map'] ?? [];
@@ -35,7 +35,7 @@
                                 class="admin-page-map-card {{ ($mapItem['state'] ?? 'draft') === 'live' ? 'is-live' : 'is-draft' }}"
                             >
                                 <span class="admin-page-map-pill">
-                                    {{ ($mapItem['state'] ?? 'draft') === 'live' ? 'Live bo‘lim' : 'Draft bo‘lim' }}
+                                    {{ ($mapItem['state'] ?? 'draft') === 'live' ? 'Live boвЂlim' : 'Draft boвЂlim' }}
                                 </span>
                                 <strong>{{ $mapItem['title'] }}</strong>
                                 <p>{{ $mapItem['description'] }}</p>
@@ -199,7 +199,7 @@
                                     <input id="{{ $name }}" name="{{ $name }}" type="datetime-local" value="{{ $value }}" class="admin-input">
                                 @elseif ($type === 'translations')
                                     @php
-                                        $translationLocales = ['ru' => 'Русский', 'en' => 'English'];
+                                        $translationLocales = ['ru' => 'Р СѓСЃСЃРєРёР№', 'en' => 'English'];
                                         $translationFields = $field['fields'] ?? [];
                                         $translationMetaFields = $field['meta_fields'] ?? [];
                                     @endphp
@@ -217,22 +217,30 @@
                                                         @php
                                                             $translationName = $translationField['name'];
                                                             $translationType = $translationField['type'] ?? 'text';
-                                                            $translationValue = old($name.'.'.$localeCode.'.'.$translationName, data_get($storedValue, $localeCode.'.'.$translationName));
+                                                            $isDefaultTranslationLocale = $localeCode === \App\Support\Locales::DEFAULT;
+                                                            $translationInputName = $isDefaultTranslationLocale
+                                                                ? null
+                                                                : $name.'['.$localeCode.']['.$translationName.']';
+                                                            $translationValue = $localeCode === \App\Support\Locales::DEFAULT
+                                                                ? old($translationName, $formData[$translationName] ?? null)
+                                                                : old($name.'.'.$localeCode.'.'.$translationName, data_get($storedValue, $localeCode.'.'.$translationName));
                                                         @endphp
                                                         <label class="block">
                                                             <span class="admin-label">{{ $translationField['label'] }}</span>
                                                             @if ($translationType === 'textarea')
                                                                 <textarea
-                                                                    name="{{ $name }}[{{ $localeCode }}][{{ $translationName }}]"
+                                                                    @if($translationInputName) name="{{ $translationInputName }}" @endif
                                                                     rows="{{ $translationField['rows'] ?? 3 }}"
                                                                     class="admin-textarea"
+                                                                    @disabled($isDefaultTranslationLocale)
                                                                 >{{ $translationValue }}</textarea>
                                                             @else
                                                                 <input
-                                                                    name="{{ $name }}[{{ $localeCode }}][{{ $translationName }}]"
+                                                                    @if($translationInputName) name="{{ $translationInputName }}" @endif
                                                                     type="text"
                                                                     value="{{ $translationValue }}"
                                                                     class="admin-input"
+                                                                    @disabled($isDefaultTranslationLocale)
                                                                 >
                                                             @endif
                                                         </label>
@@ -242,22 +250,30 @@
                                                         @php
                                                             $translationName = $translationField['name'];
                                                             $translationType = $translationField['type'] ?? 'text';
-                                                            $translationValue = old($name.'.'.$localeCode.'.meta.'.$translationName, data_get($storedValue, $localeCode.'.meta.'.$translationName));
+                                                            $isDefaultTranslationLocale = $localeCode === \App\Support\Locales::DEFAULT;
+                                                            $translationInputName = $isDefaultTranslationLocale
+                                                                ? null
+                                                                : $name.'['.$localeCode.'][meta]['.$translationName.']';
+                                                            $translationValue = $localeCode === \App\Support\Locales::DEFAULT
+                                                                ? old($translationName, $formData[$translationName] ?? null)
+                                                                : old($name.'.'.$localeCode.'.meta.'.$translationName, data_get($storedValue, $localeCode.'.meta.'.$translationName));
                                                         @endphp
                                                         <label class="block">
                                                             <span class="admin-label">{{ $translationField['label'] }}</span>
                                                             @if ($translationType === 'textarea')
                                                                 <textarea
-                                                                    name="{{ $name }}[{{ $localeCode }}][meta][{{ $translationName }}]"
+                                                                    @if($translationInputName) name="{{ $translationInputName }}" @endif
                                                                     rows="{{ $translationField['rows'] ?? 3 }}"
                                                                     class="admin-textarea"
+                                                                    @disabled($isDefaultTranslationLocale)
                                                                 >{{ $translationValue }}</textarea>
                                                             @else
                                                                 <input
-                                                                    name="{{ $name }}[{{ $localeCode }}][meta][{{ $translationName }}]"
+                                                                    @if($translationInputName) name="{{ $translationInputName }}" @endif
                                                                     type="text"
                                                                     value="{{ $translationValue }}"
                                                                     class="admin-input"
+                                                                    @disabled($isDefaultTranslationLocale)
                                                                 >
                                                             @endif
                                                         </label>

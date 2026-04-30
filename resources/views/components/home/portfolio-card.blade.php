@@ -4,9 +4,9 @@
 
 @php
     $portfolioPayload = base64_encode(json_encode([
-        'title' => $item['title'] ?? 'Portfolio namuna',
-        'type' => $item['type'] ?? 'Portfolio loyiha',
-        'highlight' => $item['highlight'] ?? ($item['title'] ?? 'To\'liq ko\'rinish'),
+        'title' => $item['title'] ?? __('home.ui.portfolio.sample'),
+        'type' => $item['type'] ?? __('home.ui.portfolio.project'),
+        'highlight' => $item['highlight'] ?? ($item['title'] ?? __('home.ui.portfolio.full_view')),
         'description' => $item['text'] ?? '',
         'image' => $item['image_src'] ?? '',
         'tone' => $item['tone'] ?? 'rose',
@@ -36,10 +36,10 @@
                 class="portfolio-title-button"
                 data-portfolio-modal-open
                 data-portfolio-modal-payload="{{ $portfolioPayload }}"
-                aria-label="{{ $item['title'] }} modal oynada ochilsin"
+                aria-label="{{ __('home.ui.portfolio.open_in_modal', ['title' => $item['title']]) }}"
             >
                 <span>{{ $item['title'] }}</span>
-                <span class="portfolio-title-button-meta">To'liq ko'rish</span>
+                <span class="portfolio-title-button-meta">{{ __('home.ui.portfolio.view_full') }}</span>
             </button>
         </h3>
         <p>{{ $item['text'] }}</p>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 375" role="img" aria-labelledby="title">
+  <title id="title">DHL cargo airplane</title>
+  <defs>
+    <filter id="planeShadow" x="-8%" y="-12%" width="116%" height="124%">
+      <feDropShadow dx="0" dy="16" stdDeviation="10" flood-color="#3a2417" flood-opacity=".2"/>
+    </filter>
+  </defs>
+  <g filter="url(#planeShadow)">
+    <image href="dhl-airplane-real.png" x="0" y="0" width="820" height="375" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+</svg>

@@ -198,6 +198,7 @@ class AdminResourceRegistry
                                 ['name' => 'material', 'label' => 'Material'],
                                 ['name' => 'size', 'label' => 'O‘lcham'],
                                 ['name' => 'color', 'label' => 'Rang'],
+                                ['name' => 'craftsmanship_method', 'label' => 'Hunar usuli'],
                                 ['name' => 'production_time', 'label' => 'Tayyorlash vaqti'],
                             ]),
                         ],
@@ -544,6 +545,19 @@ class AdminResourceRegistry
                             ['name' => 'subtitle', 'label' => 'Kichik yozuv', 'type' => 'text', 'rules' => ['nullable', 'string', 'max:255'], 'column_span' => 2, 'help' => 'Sarlavha ustidagi yoki yonidagi qisqa izoh.'],
                             ['name' => 'content', 'label' => 'Kirish matni', 'type' => 'textarea', 'rules' => ['nullable', 'string'], 'rows' => 4, 'column_span' => 2],
                             ['name' => 'link', 'label' => 'Yo‘naltirish linki', 'type' => 'text', 'rules' => ['nullable', 'string', 'max:2048'], 'column_span' => 2, 'help' => 'Masalan: `/#catalog` yoki tashqi URL.'],
+                            self::translationField([
+                                ['name' => 'title', 'label' => 'Katta sarlavha'],
+                                ['name' => 'subtitle', 'label' => 'Kichik yozuv'],
+                                ['name' => 'content', 'label' => 'Kirish matni', 'type' => 'textarea', 'rows' => 4],
+                            ], [
+                                ['name' => 'hero_main_badge', 'label' => 'Asosiy badge'],
+                                ['name' => 'hero_main_title', 'label' => 'Asosiy karta sarlavhasi'],
+                                ['name' => 'hero_main_caption', 'label' => 'Asosiy karta izohi', 'type' => 'textarea', 'rows' => 3],
+                                ['name' => 'hero_detail_badge', 'label' => 'Detail badge'],
+                                ['name' => 'hero_detail_title', 'label' => 'Detail karta matni'],
+                                ['name' => 'hero_material_badge', 'label' => 'Material badge'],
+                                ['name' => 'hero_material_title', 'label' => 'Material karta matni'],
+                            ]),
                         ],
                     ],
                     [
@@ -843,7 +857,7 @@ class AdminResourceRegistry
             'fields' => $fields,
             'meta_fields' => $metaFields,
             'column_span' => 2,
-            'help' => 'O‘zbek matn asosiy maydonlarda turadi. Rus va ingliz matnlar bo‘sh qolsa, sayt o‘zbek variantini ko‘rsatadi.',
+            'help' => 'UZ matn asosiy maydonlarda saqlanadi. RU va EN matnlar shu panelda kiritiladi; bo‘sh qolsa, sayt UZ variantini ko‘rsatadi.',
         ];
     }
 

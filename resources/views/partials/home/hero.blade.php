@@ -35,6 +35,8 @@
                     <a
                         href="{{ route('language.switch', ['locale' => $locale], false) }}"
                         class="language-option {{ $currentLocale === $locale ? 'is-active' : '' }}"
+                        data-language-switch
+                        data-locale="{{ $locale }}"
                         aria-label="{{ __('home.language.switch_to', ['language' => $localeLabels[$locale]]) }}"
                         aria-current="{{ $currentLocale === $locale ? 'true' : 'false' }}"
                     >

@@ -3,13 +3,48 @@ import '../scss/app.scss';
 import Alpine from 'alpinejs';
 import { initFlowbite } from 'flowbite';
 import 'flowbite';
-import './home';
+import { initThemeToggle } from './home';
 import { initSwipers } from './plugins/swiper';
 
 window.Alpine = Alpine;
 Alpine.start();
 
-const formatMoney = (value) => `${new Intl.NumberFormat('uz-UZ').format(Number(value) || 0)} so'm`;
+const readTranslations = () => {
+    const source = document.getElementById('site-translations');
+
+    if (!source) {
+        return {};
+    }
+
+    try {
+        return JSON.parse(source.textContent || '{}');
+    } catch {
+        return {};
+    }
+};
+
+const translationValue = (key, fallback = '', replacements = {}) => {
+    const translations = readTranslations();
+    const value = key.split('.').reduce((carry, part) => (
+        carry && Object.prototype.hasOwnProperty.call(carry, part) ? carry[part] : undefined
+    ), translations);
+
+    const template = String(value ?? fallback);
+
+    return Object.entries(replacements).reduce(
+        (text, [name, replacement]) => text.replaceAll(`:${name}`, String(replacement)),
+        template,
+    );
+};
+
+const currentLocale = () => document.documentElement.lang || translationValue('money.locale', 'uz-UZ');
+
+const formatMoney = (value) => {
+    const locale = translationValue('money.locale', currentLocale());
+    const currency = translationValue('money.currency', "so'm");
+
+    return `${new Intl.NumberFormat(locale).format(Number(value) || 0)} ${currency}`;
+};
 
 const escapeHtml = (value) => String(value ?? '')
     .replaceAll('&', '&amp;')
@@ -17,6 +52,20 @@ const escapeHtml = (value) => String(value ?? '')
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
+
+const decodeBase64Utf8 = (value) => {
+    const binary = window.atob(value);
+
+    if (window.TextDecoder) {
+        const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+
+        return new window.TextDecoder('utf-8').decode(bytes);
+    }
+
+    return decodeURIComponent(Array.from(binary, (char) => (
+        `%${char.charCodeAt(0).toString(16).padStart(2, '0')}`
+    )).join(''));
+};
 
 const parseProductPayload = (rawValue) => {
     if (!rawValue) {
@@ -27,7 +76,7 @@ const parseProductPayload = (rawValue) => {
         return JSON.parse(rawValue);
     } catch {
         try {
-            return JSON.parse(window.atob(rawValue));
+            return JSON.parse(decodeBase64Utf8(rawValue));
         } catch {
             return null;
         }
@@ -49,7 +98,7 @@ const normalizeCartItem = (item) => ({
     availability: String(item.availability || ''),
     lead_time: String(item.lead_time || ''),
     image_src: String(item.image_src || ''),
-    image_label: String(item.image_label || item.images?.[0] || 'Mahsulot'),
+    image_label: String(item.image_label || item.images?.[0] || translationValue('product.default', 'Mahsulot')),
     images: Array.isArray(item.images) ? item.images.filter(Boolean).map(String) : [],
 });
 
@@ -155,7 +204,7 @@ const initProductGalleries = () => {
         items: [],
         index: 0,
         tone: 'rose',
-        title: 'Mahsulot galereyasi',
+        title: translationValue('gallery.title', 'Mahsulot galereyasi'),
         meta: null,
     };
 
@@ -179,7 +228,7 @@ const initProductGalleries = () => {
         modalStage.classList.remove(...toneClasses);
         modalStage.classList.add(`product-tone-${modalState.tone}`);
         modalTitle.textContent = modalState.title;
-        modalLabel.textContent = activeItem.label || 'Rasm';
+        modalLabel.textContent = activeItem.label || translationValue('gallery.image', 'Rasm');
         modalCount.textContent = `${modalState.index + 1} / ${modalState.items.length}`;
 
         if (modalImage) {
@@ -270,7 +319,7 @@ const initProductGalleries = () => {
         const nextButton = gallery.querySelector('[data-gallery-next]');
         const openButton = gallery.querySelector('[data-gallery-open]');
         const tone = gallery.dataset.galleryTone || 'rose';
-        const title = gallery.dataset.galleryTitle || 'Mahsulot galereyasi';
+        const title = gallery.dataset.galleryTitle || translationValue('gallery.title', 'Mahsulot galereyasi');
         const meta = {
             title,
             price: gallery.dataset.galleryPrice || '',
@@ -403,15 +452,15 @@ const initProductDetailModal = () => {
 
     const openModal = (payload, trigger) => {
         const detail = {
-            title: String(payload?.title || 'Mahsulot'),
-            category: String(payload?.category || 'Katalog'),
+            title: String(payload?.title || translationValue('product.default', 'Mahsulot')),
+            category: String(payload?.category || translationValue('product.catalog', 'Katalog')),
             price: String(payload?.price || ''),
             description: String(payload?.description || ''),
             story: String(payload?.story || ''),
-            material: String(payload?.material || 'Kelishiladi'),
-            size: String(payload?.size || 'Kelishiladi'),
-            color: String(payload?.color || 'Kelishiladi'),
-            availability: String(payload?.availability || 'Kelishiladi'),
+            material: String(payload?.material || translationValue('product.agreed', 'Kelishiladi')),
+            size: String(payload?.size || translationValue('product.agreed', 'Kelishiladi')),
+            color: String(payload?.color || translationValue('product.agreed', 'Kelishiladi')),
+            availability: String(payload?.availability || translationValue('product.agreed', 'Kelishiladi')),
             image: String(payload?.image || ''),
             tone: String(payload?.tone || 'rose'),
         };
@@ -427,15 +476,15 @@ const initProductDetailModal = () => {
             image.hidden = detail.image === '';
         }
 
-        syncText(category, detail.category, 'Katalog');
-        syncText(title, detail.title, 'Mahsulot');
+        syncText(category, detail.category, translationValue('product.catalog', 'Katalog'));
+        syncText(title, detail.title, translationValue('product.default', 'Mahsulot'));
         syncText(price, detail.price, '');
-        syncText(material, detail.material, 'Kelishiladi');
-        syncText(size, detail.size, 'Kelishiladi');
-        syncText(color, detail.color, 'Kelishiladi');
-        syncText(availability, detail.availability, 'Kelishiladi');
-        syncText(description, detail.description, 'Mahsulot tavsifi tez orada to\'ldiriladi.');
-        syncText(story, detail.story, detail.description || 'Mahsulot hikoyasi tez orada to\'ldiriladi.');
+        syncText(material, detail.material, translationValue('product.agreed', 'Kelishiladi'));
+        syncText(size, detail.size, translationValue('product.agreed', 'Kelishiladi'));
+        syncText(color, detail.color, translationValue('product.agreed', 'Kelishiladi'));
+        syncText(availability, detail.availability, translationValue('product.agreed', 'Kelishiladi'));
+        syncText(description, detail.description, translationValue('product.description_soon', 'Mahsulot tavsifi tez orada to\'ldiriladi.'));
+        syncText(story, detail.story, detail.description || translationValue('product.story_soon', 'Mahsulot hikoyasi tez orada to\'ldiriladi.'));
 
         if (storySection) {
             storySection.hidden = String(detail.story || '').trim() === '';
@@ -523,10 +572,10 @@ const initPortfolioModal = () => {
 
     const openModal = (payload, trigger) => {
         const detail = {
-            title: String(payload?.title || 'Portfolio namuna'),
-            type: String(payload?.type || 'Portfolio loyiha'),
-            highlight: String(payload?.highlight || payload?.title || 'To\'liq ko\'rinish'),
-            description: String(payload?.description || 'Portfolio loyihasi tavsifi tez orada to\'ldiriladi.'),
+            title: String(payload?.title || translationValue('portfolio.sample', 'Portfolio namuna')),
+            type: String(payload?.type || translationValue('portfolio.project', 'Portfolio loyiha')),
+            highlight: String(payload?.highlight || payload?.title || translationValue('portfolio.full_view', 'To\'liq ko\'rinish')),
+            description: String(payload?.description || translationValue('portfolio.description_soon', 'Portfolio loyihasi tavsifi tez orada to\'ldiriladi.')),
             image: String(payload?.image || ''),
             tone: String(payload?.tone || 'rose'),
         };
@@ -542,11 +591,11 @@ const initPortfolioModal = () => {
             image.hidden = detail.image === '';
         }
 
-        syncText(type, detail.type, 'Portfolio loyiha');
+        syncText(type, detail.type, translationValue('portfolio.project', 'Portfolio loyiha'));
         syncText(highlight, detail.highlight, detail.title);
-        syncText(title, detail.title, 'Portfolio namuna');
-        syncText(description, detail.description, 'Portfolio loyihasi tavsifi tez orada to\'ldiriladi.');
-        syncText(typeChip, detail.type, 'Portfolio loyiha');
+        syncText(title, detail.title, translationValue('portfolio.sample', 'Portfolio namuna'));
+        syncText(description, detail.description, translationValue('portfolio.description_soon', 'Portfolio loyihasi tavsifi tez orada to\'ldiriladi.'));
+        syncText(typeChip, detail.type, translationValue('portfolio.project', 'Portfolio loyiha'));
         syncText(highlightChip, detail.highlight, detail.title);
 
         modal.classList.remove('is-hidden');
@@ -616,11 +665,11 @@ const initProductCatalog = () => {
 
     const collectionMeta = {
         all: {
-            title: 'Har bir xonaga mos kolleksiyalar va qulay tanlov',
-            copy: 'Kategoriya kartasining o\'zini bosing. Sahifa yangilanmaydi, mahsulotlar shu joyning o\'zida yumshoq almashadi va siz ortiqcha qadam qilmasdan tanlovni davom ettirasiz.',
-            label: 'Barchasi',
-            count: `${cards.length} ta mahsulot`,
-            activeCopy: 'Barcha asosiy kolleksiyalar ochiq. Suzani, stol bezagi, tekstil va sovg\'alarni bir joyda ko\'ring.',
+            title: collectionTitle?.textContent?.trim() || '',
+            copy: collectionCopy?.textContent?.trim() || '',
+            label: collectionActiveLabel?.textContent?.trim() || '',
+            count: translationValue('catalog.product_count', ':count ta mahsulot', { count: cards.length }),
+            activeCopy: collectionActiveCopy?.textContent?.trim() || '',
         },
     };
 
@@ -666,7 +715,7 @@ const initProductCatalog = () => {
 
         if (collectionActiveCount) {
             collectionActiveCount.textContent = state.filter === 'all'
-                ? `${visibleCount} ta mahsulot`
+                ? translationValue('catalog.product_count', ':count ta mahsulot', { count: visibleCount })
                 : meta.count;
         }
 
@@ -803,18 +852,48 @@ const initCartAndOrder = () => {
     const orderSuccess = document.querySelector('[data-order-success]');
     const storageKey = 'suzani-shop-cart';
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+    const productPayloads = new Map();
     let isSubmitting = false;
 
     if (!addToCartButtons.length && !orderForm) {
         return;
     }
 
+    addToCartButtons.forEach((button) => {
+        const product = parseProductPayload(button.getAttribute('data-add-to-cart'));
+
+        if (!product) {
+            return;
+        }
+
+        const normalized = normalizeCartItem(product);
+
+        if (normalized.id) {
+            productPayloads.set(normalized.id, normalized);
+        }
+    });
+
+    const localizeCartItem = (item) => {
+        const currentProduct = productPayloads.get(item.id);
+
+        if (!currentProduct) {
+            return item;
+        }
+
+        return {
+            ...currentProduct,
+            quantity: item.quantity,
+        };
+    };
+
     const readCart = () => {
         try {
             const stored = window.localStorage.getItem(storageKey);
             const parsed = stored ? JSON.parse(stored) : [];
 
-            return Array.isArray(parsed) ? parsed.map(normalizeCartItem).filter((item) => item.id && item.title) : [];
+            return Array.isArray(parsed)
+                ? parsed.map(normalizeCartItem).map(localizeCartItem).filter((item) => item.id && item.title)
+                : [];
         } catch {
             return [];
         }
@@ -829,6 +908,7 @@ const initCartAndOrder = () => {
     };
 
     let cart = readCart();
+    writeCart(cart);
 
     const syncTotals = () => {
         const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -839,7 +919,7 @@ const initCartAndOrder = () => {
         });
 
         if (totalQtyTarget) {
-            totalQtyTarget.textContent = `${totalQuantity} ta`;
+            totalQtyTarget.textContent = translationValue('cart.quantity_value', ':count ta', { count: totalQuantity });
         }
 
         if (totalPriceTarget) {
@@ -863,14 +943,14 @@ const initCartAndOrder = () => {
                     <div class="cart-item-body">
                         <div class="cart-item-head">
                             <h4>${escapeHtml(item.title)}</h4>
-                            <span>${escapeHtml(item.category_label || 'Maxsus buyurtma')}</span>
+                            <span>${escapeHtml(item.category_label || translationValue('product.custom_order', 'Maxsus buyurtma'))}</span>
                         </div>
                         <p>${escapeHtml(item.short_description)}</p>
                         <div class="cart-item-meta">
-                            <span>Material: ${escapeHtml(item.material || '-')}</span>
-                            <span>O'lcham: ${escapeHtml(item.size || '-')}</span>
-                            <span>Rang: ${escapeHtml(item.color || '-')}</span>
-                            <span>Tayyorlash: ${escapeHtml(item.lead_time || '-')}</span>
+                            <span>${escapeHtml(translationValue('product.material', 'Material'))}: ${escapeHtml(item.material || '-')}</span>
+                            <span>${escapeHtml(translationValue('product.size', 'O\'lcham'))}: ${escapeHtml(item.size || '-')}</span>
+                            <span>${escapeHtml(translationValue('product.color', 'Rang'))}: ${escapeHtml(item.color || '-')}</span>
+                            <span>${escapeHtml(translationValue('product.lead_time', 'Tayyorlash'))}: ${escapeHtml(item.lead_time || '-')}</span>
                         </div>
                     </div>
                     <div class="cart-item-price">
@@ -880,7 +960,7 @@ const initCartAndOrder = () => {
                             <span>${item.quantity}</span>
                             <button type="button" data-cart-action="increase">+</button>
                         </div>
-                        <button type="button" class="cart-remove" data-cart-action="remove">O'chirish</button>
+                        <button type="button" class="cart-remove" data-cart-action="remove">${escapeHtml(translationValue('cart.remove', 'O\'chirish'))}</button>
                     </div>
                 </article>
             `).join('');
@@ -928,7 +1008,7 @@ const initCartAndOrder = () => {
                 addToCart(product);
 
                 const originalLabel = button.textContent;
-                button.textContent = "Qo'shildi";
+                button.textContent = translationValue('product.added', "Qo'shildi");
 
                 pulseElement(button, 'is-success', 700);
                 pulseElement(button.closest('.product-card'), 'is-cart-selected', 950);
@@ -1036,21 +1116,21 @@ const initCartAndOrder = () => {
 
                 if (!response.ok) {
                     const firstError = data?.errors ? Object.values(data.errors).flat()[0] : null;
-                    throw new Error(firstError || data?.message || 'Buyurtmani yuborishda xatolik yuz berdi.');
+                    throw new Error(firstError || data?.message || translationValue('cart.submit_error', 'Buyurtmani yuborishda xatolik yuz berdi.'));
                 }
 
                 orderForm.reset();
                 updateCart([]);
 
                 if (orderSuccess) {
-                    orderSuccess.textContent = `${data.message} Buyurtma raqami: ${data.order_number}.`;
+                    orderSuccess.textContent = `${data.message} ${translationValue('cart.order_number', 'Buyurtma raqami: :number.', { number: data.order_number })}`;
                     orderSuccess.classList.remove('is-hidden');
                 }
             } catch (error) {
                 if (orderError) {
                     orderError.textContent = error instanceof Error
                         ? error.message
-                        : 'Buyurtmani yuborishda xatolik yuz berdi.';
+                        : translationValue('cart.submit_error', 'Buyurtmani yuborishda xatolik yuz berdi.');
                     orderError.classList.remove('is-hidden');
                 }
             } finally {
@@ -1081,6 +1161,103 @@ const initContactForm = () => {
     });
 };
 
+let isLanguageSwitching = false;
+
+const initLanguageSwitcher = () => {
+    const links = Array.from(document.querySelectorAll('[data-language-switch]'));
+
+    if (!links.length) {
+        return;
+    }
+
+    const swapPage = (nextDocument, targetUrl) => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const nextDescription = nextDocument.querySelector('meta[name="description"]')?.getAttribute('content');
+        const description = document.querySelector('meta[name="description"]');
+        const scrollX = window.scrollX;
+        const scrollY = window.scrollY;
+
+        document.title = nextDocument.title;
+        document.documentElement.lang = nextDocument.documentElement.lang || document.documentElement.lang;
+
+        if (description && nextDescription) {
+            description.setAttribute('content', nextDescription);
+        }
+
+        document.body.className = nextDocument.body.className;
+        document.body.innerHTML = nextDocument.body.innerHTML;
+
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            document.documentElement.style.colorScheme = currentTheme === 'nocturne' ? 'dark' : 'light';
+        }
+
+        bootstrapFrontend();
+        window.history.replaceState(null, document.title, targetUrl);
+        window.scrollTo(scrollX, scrollY);
+    };
+
+    links.forEach((link) => {
+        link.addEventListener('click', async (event) => {
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target) {
+                return;
+            }
+
+            event.preventDefault();
+
+            if (isLanguageSwitching || link.classList.contains('is-active')) {
+                return;
+            }
+
+            isLanguageSwitching = true;
+            document.documentElement.classList.add('is-language-switching');
+            link.setAttribute('aria-busy', 'true');
+
+            try {
+                const localeResponse = await fetch(link.href, {
+                    headers: {
+                        Accept: 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                });
+
+                if (!localeResponse.ok) {
+                    throw new Error('Language switch failed.');
+                }
+
+                const localeData = await localeResponse.json();
+                const targetUrl = localeData.url || window.location.href;
+                const pageResponse = await fetch(targetUrl, {
+                    headers: {
+                        Accept: 'text/html',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                });
+
+                if (!pageResponse.ok) {
+                    throw new Error('Page refresh failed.');
+                }
+
+                const html = await pageResponse.text();
+                const nextDocument = new DOMParser().parseFromString(html, 'text/html');
+                const applySwap = () => swapPage(nextDocument, targetUrl);
+
+                if ('startViewTransition' in document) {
+                    await document.startViewTransition(applySwap).finished;
+                } else {
+                    applySwap();
+                }
+            } catch {
+                window.location.href = link.href;
+            } finally {
+                isLanguageSwitching = false;
+                document.documentElement.classList.remove('is-language-switching');
+                link.removeAttribute('aria-busy');
+            }
+        });
+    });
+};
+
 const initVendorStack = () => {
     initFlowbite();
     void initSwipers();
@@ -1088,6 +1265,7 @@ const initVendorStack = () => {
 
 const bootstrapFrontend = () => {
     initVendorStack();
+    initThemeToggle();
     initStickyHeader();
     initRevealEffects();
     initProductGalleries();
@@ -1096,6 +1274,7 @@ const bootstrapFrontend = () => {
     initProductCatalog();
     initCartAndOrder();
     initContactForm();
+    initLanguageSwitcher();
 };
 
 if (document.readyState === 'loading') {

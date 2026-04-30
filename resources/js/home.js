@@ -32,7 +32,7 @@ const syncThemeUi = (theme) => {
     });
 };
 
-const initThemeToggle = () => {
+export const initThemeToggle = () => {
     if (!document.querySelector('[data-theme-toggle]')) {
         return;
     }
@@ -40,6 +40,12 @@ const initThemeToggle = () => {
     syncThemeUi(document.documentElement.getAttribute('data-theme'));
 
     document.querySelectorAll('[data-theme-toggle]').forEach((toggle) => {
+        if (toggle.dataset.themeToggleBound === 'true') {
+            return;
+        }
+
+        toggle.dataset.themeToggleBound = 'true';
+
         toggle.addEventListener('click', () => {
             const currentTheme = normalizeTheme(document.documentElement.getAttribute('data-theme'));
             const nextTheme = currentTheme === 'nocturne' ? defaultTheme : 'nocturne';

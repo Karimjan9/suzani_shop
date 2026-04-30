@@ -6,8 +6,8 @@
 
 @php
     $isCatalog = $variant === 'catalog';
-    $galleryBadge = $isCatalog ? 'Galereya' : "Ko'rinish";
-    $secondaryButtonLabel = $isCatalog ? 'Savatcha' : "Savatchaga o'tish";
+    $galleryBadge = $isCatalog ? __('home.ui.gallery.badge') : __('home.ui.gallery.view');
+    $secondaryButtonLabel = $isCatalog ? __('home.ui.product.cart') : __('home.ui.product.go_to_cart');
 @endphp
 
 <article
@@ -38,8 +38,8 @@
         <div class="product-gallery-stage product-tone-{{ $product['tone'] }}">
             <span class="product-gallery-badge">{{ $galleryBadge }}</span>
             <div class="product-gallery-nav-wrap">
-                <button type="button" class="product-gallery-nav" data-gallery-prev aria-label="Oldingi rasm">&#8249;</button>
-                <button type="button" class="product-gallery-visual" data-gallery-open aria-label="Rasmni kattalashtirib ko'rish">
+                <button type="button" class="product-gallery-nav" data-gallery-prev aria-label="{{ __('home.ui.gallery.previous') }}">&#8249;</button>
+                <button type="button" class="product-gallery-visual" data-gallery-open aria-label="{{ __('home.ui.gallery.open_image') }}">
                     <span class="product-gallery-visual-art" aria-hidden="true">
                         <img
                             src="{{ $product['primary_image'] }}"
@@ -56,10 +56,10 @@
                         <span class="product-gallery-visual-subtitle">{{ $product['title'] }}</span>
                     </span>
                 </button>
-                <button type="button" class="product-gallery-nav" data-gallery-next aria-label="Keyingi rasm">&#8250;</button>
+                <button type="button" class="product-gallery-nav" data-gallery-next aria-label="{{ __('home.ui.gallery.next') }}">&#8250;</button>
             </div>
             <div class="product-gallery-meta">
-                <span class="product-gallery-hint">Kattalashtirib ko'rish</span>
+                <span class="product-gallery-hint">{{ __('home.ui.gallery.enlarge') }}</span>
                 <div class="product-gallery-counter" data-gallery-counter>1 / {{ $product['gallery_count'] }}</div>
             </div>
         </div>
@@ -94,11 +94,11 @@
 
     @if ($isCatalog)
         <ul class="product-specs">
-            <li><span>Material</span><strong>{{ $product['material'] }}</strong></li>
-            <li><span>O'lcham</span><strong>{{ $product['size'] }}</strong></li>
-            <li><span>Rang</span><strong>{{ $product['color'] }}</strong></li>
-            <li><span>Mavjudligi</span><strong>{{ $product['availability'] }}</strong></li>
-            <li><span>Tayyorlash</span><strong>{{ $product['lead_time'] }}</strong></li>
+            <li><span>{{ __('home.ui.product.material') }}</span><strong>{{ $product['material'] }}</strong></li>
+            <li><span>{{ __('home.ui.product.size') }}</span><strong>{{ $product['size'] }}</strong></li>
+            <li><span>{{ __('home.ui.product.color') }}</span><strong>{{ $product['color'] }}</strong></li>
+            <li><span>{{ __('home.ui.product.availability') }}</span><strong>{{ $product['availability'] }}</strong></li>
+            <li><span>{{ __('home.ui.product.lead_time') }}</span><strong>{{ $product['lead_time'] }}</strong></li>
         </ul>
 
         <button
@@ -107,7 +107,7 @@
             data-product-detail-open
             data-product-detail-payload="{{ $product['detail_payload_encoded'] }}"
         >
-            Batafsil ko'rish
+            {{ __('home.ui.product.details') }}
         </button>
     @endif
 
@@ -119,7 +119,7 @@
                 class="button button-primary button-compact"
                 data-add-to-cart="{{ $product['cart_payload_encoded'] }}"
             >
-                Savatchaga qo'shish
+                {{ __('home.ui.product.add_to_cart') }}
             </button>
             <a href="#cart" class="button button-secondary button-compact">{{ $secondaryButtonLabel }}</a>
         </div>

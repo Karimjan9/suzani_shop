@@ -6,17 +6,20 @@ use App\Models\ContentBlock;
 use App\Models\Feedback;
 use App\Models\PortfolioItem;
 use App\Models\Product;
+use App\Support\Locales;
 use App\Support\UploadedMedia;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
     public function index(): View
     {
-        $config = config('homepage');
+        $config = $this->homepageConfig();
 
         $hero = $this->buildHero(Arr::get($config, 'hero', []));
         $about = $this->buildAbout(Arr::get($config, 'about', []));
@@ -44,6 +47,63 @@ class HomeController extends Controller
         ));
     }
 
+    private function homepageConfig(): array
+    {
+        $config = config('homepage', []);
+        $localized = Lang::get('homepage');
+
+        if (is_array($localized)) {
+            return array_replace_recursive($config, $localized);
+        }
+
+        return $config;
+    }
+
+    private function contentValue(?ContentBlock $block, string $attribute, mixed $fallback = null): mixed
+    {
+        if (! $block) {
+            return $fallback;
+        }
+
+        if (Locales::current() !== Locales::DEFAULT) {
+            $translated = Arr::get($block->translations ?? [], Locales::current().'.'.$attribute);
+
+            return filled($translated) ? $translated : $fallback;
+        }
+
+        $value = $block->getAttribute($attribute);
+
+        return filled($value) ? $value : $fallback;
+    }
+
+    private function contentMetaValue(?ContentBlock $block, string $key, mixed $fallback = null): mixed
+    {
+        if (! $block) {
+            return $fallback;
+        }
+
+        if (Locales::current() !== Locales::DEFAULT) {
+            $translated = Arr::get($block->translations ?? [], Locales::current().'.meta.'.$key);
+
+            return filled($translated) ? $translated : $fallback;
+        }
+
+        return Arr::get($block->meta ?? [], $key, $fallback);
+    }
+
+    private function modelValue(Model $model, string $attribute, mixed $fallback = null): mixed
+    {
+        if (Locales::current() !== Locales::DEFAULT) {
+            $translated = Arr::get($model->getAttribute('translations') ?? [], Locales::current().'.'.$attribute);
+
+            return filled($translated) ? $translated : $fallback;
+        }
+
+        $value = $model->getAttribute($attribute);
+
+        return filled($value) ? $value : $fallback;
+    }
+
     private function buildHero(array $config): array
     {
         $heroBanner = ContentBlock::query()
@@ -53,33 +113,33 @@ class HomeController extends Controller
             ->first();
 
         $defaultMeta = Arr::get($config, 'meta', []);
-        $heroMeta = array_merge($defaultMeta, Arr::wrap($heroBanner?->meta));
+        $heroMediaMeta = array_merge($defaultMeta, Arr::wrap($heroBanner?->meta));
 
         return [
-            'eyebrow' => filled($heroBanner?->translated('subtitle')) ? $heroBanner->translated('subtitle') : Arr::get($config, 'eyebrow', ''),
-            'title' => filled($heroBanner?->translated('title')) ? $heroBanner->translated('title') : Arr::get($config, 'title', ''),
-            'text' => filled($heroBanner?->translated('content')) ? $heroBanner->translated('content') : Arr::get($config, 'text', ''),
+            'eyebrow' => $this->contentValue($heroBanner, 'subtitle', Arr::get($config, 'eyebrow', '')),
+            'title' => $this->contentValue($heroBanner, 'title', Arr::get($config, 'title', '')),
+            'text' => $this->contentValue($heroBanner, 'content', Arr::get($config, 'text', '')),
             'primary_link' => filled($heroBanner?->link) ? $heroBanner->link : Arr::get($config, 'primary_link', '#catalog'),
-            'primary_label' => filled($heroBanner?->link) ? __('home.labels.view') : Arr::get($config, 'primary_label', "Kolleksiyani ko'rish"),
+            'primary_label' => filled($heroBanner?->link) ? __('home.labels.view') : Arr::get($config, 'primary_label', __('home.labels.view')),
             'trust_note' => Arr::get($config, 'trust_note', ''),
             'stats' => Arr::get($config, 'stats', []),
             'promises' => Arr::get($config, 'promises', []),
             'main_image' => $this->resolveUploadedOrHomeImage($heroBanner?->image, Arr::get($config, 'main_image')),
-            'main_badge' => $heroBanner?->translatedMeta('hero_main_badge', fallback: Arr::get($heroMeta, 'hero_main_badge', '')) ?? Arr::get($heroMeta, 'hero_main_badge', ''),
-            'main_title' => $heroBanner?->translatedMeta('hero_main_title', fallback: Arr::get($heroMeta, 'hero_main_title', '')) ?? Arr::get($heroMeta, 'hero_main_title', ''),
-            'main_caption' => $heroBanner?->translatedMeta('hero_main_caption', fallback: Arr::get($heroMeta, 'hero_main_caption', '')) ?? Arr::get($heroMeta, 'hero_main_caption', ''),
+            'main_badge' => $this->contentMetaValue($heroBanner, 'hero_main_badge', Arr::get($defaultMeta, 'hero_main_badge', '')),
+            'main_title' => $this->contentMetaValue($heroBanner, 'hero_main_title', Arr::get($defaultMeta, 'hero_main_title', '')),
+            'main_caption' => $this->contentMetaValue($heroBanner, 'hero_main_caption', Arr::get($defaultMeta, 'hero_main_caption', '')),
             'detail_image' => $this->resolveUploadedOrHomeImage(
-                Arr::get($heroMeta, 'hero_detail_image'),
+                Arr::get($heroMediaMeta, 'hero_detail_image'),
                 Arr::get($defaultMeta, 'hero_detail_image')
             ),
-            'detail_badge' => $heroBanner?->translatedMeta('hero_detail_badge', fallback: Arr::get($heroMeta, 'hero_detail_badge', '')) ?? Arr::get($heroMeta, 'hero_detail_badge', ''),
-            'detail_title' => $heroBanner?->translatedMeta('hero_detail_title', fallback: Arr::get($heroMeta, 'hero_detail_title', '')) ?? Arr::get($heroMeta, 'hero_detail_title', ''),
+            'detail_badge' => $this->contentMetaValue($heroBanner, 'hero_detail_badge', Arr::get($defaultMeta, 'hero_detail_badge', '')),
+            'detail_title' => $this->contentMetaValue($heroBanner, 'hero_detail_title', Arr::get($defaultMeta, 'hero_detail_title', '')),
             'material_image' => $this->resolveUploadedOrHomeImage(
-                Arr::get($heroMeta, 'hero_material_image'),
+                Arr::get($heroMediaMeta, 'hero_material_image'),
                 Arr::get($defaultMeta, 'hero_material_image')
             ),
-            'material_badge' => $heroBanner?->translatedMeta('hero_material_badge', fallback: Arr::get($heroMeta, 'hero_material_badge', '')) ?? Arr::get($heroMeta, 'hero_material_badge', ''),
-            'material_title' => $heroBanner?->translatedMeta('hero_material_title', fallback: Arr::get($heroMeta, 'hero_material_title', '')) ?? Arr::get($heroMeta, 'hero_material_title', ''),
+            'material_badge' => $this->contentMetaValue($heroBanner, 'hero_material_badge', Arr::get($defaultMeta, 'hero_material_badge', '')),
+            'material_title' => $this->contentMetaValue($heroBanner, 'hero_material_title', Arr::get($defaultMeta, 'hero_material_title', '')),
         ];
     }
 
@@ -206,13 +266,15 @@ class HomeController extends Controller
             ->values()
             ->map(function (PortfolioItem $item, int $index): array {
                 $tones = ['clay', 'rose', 'gold', 'sky', 'ink', 'teal'];
+                $title = $this->modelValue($item, 'title', __('home.labels.portfolio_project'));
+                $description = $this->modelValue($item, 'description', __('home.labels.portfolio_description'));
 
                 return [
-                    'title' => $item->translated('title'),
-                    'type' => $item->translated('project_type', fallback: __('home.labels.portfolio_project')),
-                    'text' => $item->translated('excerpt', fallback: ($item->translated('description') ?: __('home.labels.portfolio_description'))),
+                    'title' => $title,
+                    'type' => $this->modelValue($item, 'project_type', __('home.labels.portfolio_project')),
+                    'text' => $this->modelValue($item, 'excerpt', $description),
                     'tone' => $tones[$index % count($tones)],
-                    'highlight' => $item->translated('highlight_value', fallback: ($item->is_featured ? 'Featured loyiha' : 'Portfolio karta')),
+                    'highlight' => $this->modelValue($item, 'highlight_value', $item->is_featured ? __('home.ui.portfolio.full_view') : __('home.ui.portfolio.view_full')),
                     'image_src' => UploadedMedia::url($item->cover_image),
                 ];
             })
@@ -250,11 +312,11 @@ class HomeController extends Controller
             ->limit(3)
             ->get()
             ->map(fn (Feedback $item): array => [
-                'name' => $item->translated('customer_name'),
-                'role' => $item->translated('city', fallback: __('home.labels.client')),
-                'quote' => $item->translated('content'),
+                'name' => $this->modelValue($item, 'customer_name', __('home.labels.client')),
+                'role' => $this->modelValue($item, 'city', __('home.labels.client')),
+                'quote' => $this->modelValue($item, 'content', __('home.labels.client_review')),
                 'rating' => max(1, min(5, (int) ($item->rating ?: 5))),
-                'headline' => $this->buildFeedbackHeadline($item->translated('content')),
+                'headline' => $this->buildFeedbackHeadline($this->modelValue($item, 'content', null)),
                 'badge' => $item->is_featured ? __('home.labels.top_review') : __('home.labels.verified_purchase'),
             ])
             ->all();
@@ -311,52 +373,52 @@ class HomeController extends Controller
         $mapLink = 'https://www.google.com/maps/search/?api=1&query='.rawurlencode($mapQuery);
 
         return [
-            'section_label' => filled($contactBlock?->translated('subtitle')) ? $contactBlock->translated('subtitle') : Arr::get($config, 'section_label', ''),
-            'section_title' => filled($contactBlock?->translated('title')) ? $contactBlock->translated('title') : Arr::get($config, 'section_title', ''),
-            'section_copy' => filled($contactBlock?->translated('content')) ? $contactBlock->translated('content') : Arr::get($config, 'section_copy', ''),
+            'section_label' => $this->contentValue($contactBlock, 'subtitle', Arr::get($config, 'section_label', '')),
+            'section_title' => $this->contentValue($contactBlock, 'title', Arr::get($config, 'section_title', '')),
+            'section_copy' => $this->contentValue($contactBlock, 'content', Arr::get($config, 'section_copy', '')),
             'phone' => [
-                'label' => $contactBlock?->translatedMeta('phone_label', fallback: Arr::get($meta, 'phone_label', __('home.contact.phone'))) ?? Arr::get($meta, 'phone_label', __('home.contact.phone')),
+                'label' => $this->contentMetaValue($contactBlock, 'phone_label', Arr::get($meta, 'phone_label', __('home.contact.phone'))),
                 'value' => $phoneValue,
                 'href' => $phoneHref,
             ],
             'telegram' => [
-                'label' => $contactBlock?->translatedMeta('telegram_label', fallback: Arr::get($meta, 'telegram_label', __('home.contact.telegram'))) ?? Arr::get($meta, 'telegram_label', __('home.contact.telegram')),
+                'label' => $this->contentMetaValue($contactBlock, 'telegram_label', Arr::get($meta, 'telegram_label', __('home.contact.telegram'))),
                 'value' => $telegramValue,
                 'href' => $telegramUrl,
             ],
             'instagram' => [
-                'label' => $contactBlock?->translatedMeta('instagram_label', fallback: Arr::get($meta, 'instagram_label', __('home.contact.instagram'))) ?? Arr::get($meta, 'instagram_label', __('home.contact.instagram')),
+                'label' => $this->contentMetaValue($contactBlock, 'instagram_label', Arr::get($meta, 'instagram_label', __('home.contact.instagram'))),
                 'value' => $instagramValue,
                 'href' => $instagramUrl,
             ],
             'address' => [
-                'label' => $contactBlock?->translatedMeta('address_label', fallback: Arr::get($meta, 'address_label', __('home.contact.address'))) ?? Arr::get($meta, 'address_label', __('home.contact.address')),
-                'value' => $contactBlock?->translatedMeta('address_value', fallback: Arr::get($meta, 'address_value')) ?? Arr::get($meta, 'address_value'),
+                'label' => $this->contentMetaValue($contactBlock, 'address_label', Arr::get($meta, 'address_label', __('home.contact.address'))),
+                'value' => $this->contentMetaValue($contactBlock, 'address_value', Arr::get($meta, 'address_value')),
             ],
             'hours' => [
-                'label' => $contactBlock?->translatedMeta('hours_label', fallback: Arr::get($meta, 'hours_label', __('home.contact.hours'))) ?? Arr::get($meta, 'hours_label', __('home.contact.hours')),
-                'value' => $contactBlock?->translatedMeta('hours_value', fallback: Arr::get($meta, 'hours_value')) ?? Arr::get($meta, 'hours_value'),
+                'label' => $this->contentMetaValue($contactBlock, 'hours_label', Arr::get($meta, 'hours_label', __('home.contact.hours'))),
+                'value' => $this->contentMetaValue($contactBlock, 'hours_value', Arr::get($meta, 'hours_value')),
             ],
             'map' => [
-                'label' => $contactBlock?->translatedMeta('map_label', fallback: Arr::get($meta, 'map_label', __('home.contact.map'))) ?? Arr::get($meta, 'map_label', __('home.contact.map')),
-                'title' => $contactBlock?->translatedMeta('map_title', fallback: Arr::get($meta, 'map_title', __('home.contact.map_title'))) ?? Arr::get($meta, 'map_title', __('home.contact.map_title')),
+                'label' => $this->contentMetaValue($contactBlock, 'map_label', Arr::get($meta, 'map_label', __('home.contact.map'))),
+                'title' => $this->contentMetaValue($contactBlock, 'map_title', Arr::get($meta, 'map_title', __('home.contact.map_title'))),
                 'embed_url' => $mapEmbedUrl,
                 'link' => $mapLink,
                 'coordinates' => $mapCoordinates,
                 'hint' => Arr::get($config, 'map_hint', ''),
             ],
             'form' => [
-                'label' => $contactBlock?->translatedMeta('form_label', fallback: Arr::get($meta, 'form_label', __('home.contact.form'))) ?? Arr::get($meta, 'form_label', __('home.contact.form')),
-                'title' => $contactBlock?->translatedMeta('form_title', fallback: Arr::get($meta, 'form_title', '')) ?? Arr::get($meta, 'form_title', ''),
-                'name_label' => $contactBlock?->translatedMeta('form_name_label', fallback: Arr::get($meta, 'form_name_label', __('home.contact.name'))) ?? Arr::get($meta, 'form_name_label', __('home.contact.name')),
-                'name_placeholder' => $contactBlock?->translatedMeta('form_name_placeholder', fallback: Arr::get($meta, 'form_name_placeholder', '')) ?? Arr::get($meta, 'form_name_placeholder', ''),
-                'phone_label' => $contactBlock?->translatedMeta('form_phone_label', fallback: Arr::get($meta, 'form_phone_label', __('home.contact.phone'))) ?? Arr::get($meta, 'form_phone_label', __('home.contact.phone')),
-                'phone_placeholder' => $contactBlock?->translatedMeta('form_phone_placeholder', fallback: Arr::get($meta, 'form_phone_placeholder', __('home.contact.phone_placeholder'))) ?? Arr::get($meta, 'form_phone_placeholder', __('home.contact.phone_placeholder')),
-                'social_label' => $contactBlock?->translatedMeta('form_social_label', fallback: Arr::get($meta, 'form_social_label', __('home.contact.social'))) ?? Arr::get($meta, 'form_social_label', __('home.contact.social')),
-                'social_placeholder' => $contactBlock?->translatedMeta('form_social_placeholder', fallback: Arr::get($meta, 'form_social_placeholder', '')) ?? Arr::get($meta, 'form_social_placeholder', ''),
-                'message_label' => $contactBlock?->translatedMeta('form_message_label', fallback: Arr::get($meta, 'form_message_label', __('home.contact.message'))) ?? Arr::get($meta, 'form_message_label', __('home.contact.message')),
-                'message_placeholder' => $contactBlock?->translatedMeta('form_message_placeholder', fallback: Arr::get($meta, 'form_message_placeholder', '')) ?? Arr::get($meta, 'form_message_placeholder', ''),
-                'success_note' => $contactBlock?->translatedMeta('form_success_note', fallback: Arr::get($meta, 'form_success_note', '')) ?? Arr::get($meta, 'form_success_note', ''),
+                'label' => $this->contentMetaValue($contactBlock, 'form_label', Arr::get($meta, 'form_label', __('home.contact.form'))),
+                'title' => $this->contentMetaValue($contactBlock, 'form_title', Arr::get($meta, 'form_title', '')),
+                'name_label' => $this->contentMetaValue($contactBlock, 'form_name_label', Arr::get($meta, 'form_name_label', __('home.contact.name'))),
+                'name_placeholder' => $this->contentMetaValue($contactBlock, 'form_name_placeholder', Arr::get($meta, 'form_name_placeholder', '')),
+                'phone_label' => $this->contentMetaValue($contactBlock, 'form_phone_label', Arr::get($meta, 'form_phone_label', __('home.contact.phone'))),
+                'phone_placeholder' => $this->contentMetaValue($contactBlock, 'form_phone_placeholder', Arr::get($meta, 'form_phone_placeholder', __('home.contact.phone_placeholder'))),
+                'social_label' => $this->contentMetaValue($contactBlock, 'form_social_label', Arr::get($meta, 'form_social_label', __('home.contact.social'))),
+                'social_placeholder' => $this->contentMetaValue($contactBlock, 'form_social_placeholder', Arr::get($meta, 'form_social_placeholder', '')),
+                'message_label' => $this->contentMetaValue($contactBlock, 'form_message_label', Arr::get($meta, 'form_message_label', __('home.contact.message'))),
+                'message_placeholder' => $this->contentMetaValue($contactBlock, 'form_message_placeholder', Arr::get($meta, 'form_message_placeholder', '')),
+                'success_note' => $this->contentMetaValue($contactBlock, 'form_success_note', Arr::get($meta, 'form_success_note', '')),
             ],
         ];
     }
@@ -493,7 +555,7 @@ class HomeController extends Controller
 
         return $this->finalizeProductPayload(array_merge($product, [
             'id' => Arr::get($product, 'id', Str::slug(Arr::get($product, 'title', 'mahsulot'))),
-            'formatted_price' => number_format((float) Arr::get($product, 'price', 0), 0, '.', ' ')." so'm",
+            'formatted_price' => number_format((float) Arr::get($product, 'price', 0), 0, '.', ' ').' '.__('home.ui.money.currency'),
             'gallery' => $gallery,
             'images' => array_map(static fn (array $image): string => $image['label'], $gallery),
             'is_featured' => (bool) Arr::get($product, 'is_featured', false),
@@ -505,10 +567,12 @@ class HomeController extends Controller
     private function mapDatabaseProduct(Product $product, int $index, array $galleryLabels, array $galleryFallbackPool): array
     {
         $tones = ['rose', 'ink', 'teal', 'gold', 'clay', 'sky'];
-        $categoryName = $product->category?->translated('name') ?: __('home.labels.uncategorized');
+        $category = $product->category;
+        $categoryName = $category ? $this->modelValue($category, 'name', __('home.labels.uncategorized')) : __('home.labels.uncategorized');
         $categoryFilter = $product->category?->slug ?: Str::slug($categoryName);
+        $title = $this->modelValue($product, 'name', $product->name ?: __('home.ui.product.default'));
         $gallery = $this->buildDatabaseGallery(
-            $product->translated('name'),
+            $title,
             $product->main_image,
             Arr::wrap($product->gallery),
             $index,
@@ -532,21 +596,21 @@ class HomeController extends Controller
 
         return $this->finalizeProductPayload([
             'id' => $product->slug ?: Str::slug($product->name),
-            'title' => $product->translated('name'),
+            'title' => $title,
             'price' => (int) $product->price,
-            'formatted_price' => number_format((float) $product->price, 0, '.', ' ')." so'm",
+            'formatted_price' => number_format((float) $product->price, 0, '.', ' ').' '.__('home.ui.money.currency'),
             'tag' => $tag,
-            'short_description' => $product->translated('short_description', fallback: __('home.labels.description_from_admin')),
-            'full_description' => $product->translated('full_description', fallback: ($product->translated('short_description') ?: __('home.labels.description_later'))),
-            'product_story' => $product->translated('product_story', fallback: __('home.labels.story_later', ['name' => $product->translated('name')])),
-            'material' => $product->translated('material', fallback: __('home.labels.material_from_admin')),
-            'size' => $product->translated('size', fallback: __('home.labels.agreed')),
-            'color' => $product->translated('color', fallback: __('home.labels.custom_color')),
+            'short_description' => $this->modelValue($product, 'short_description', __('home.labels.description_from_admin')),
+            'full_description' => $this->modelValue($product, 'full_description', $this->modelValue($product, 'short_description', __('home.labels.description_later'))),
+            'product_story' => $this->modelValue($product, 'product_story', __('home.labels.story_later', ['name' => $title])),
+            'material' => $this->modelValue($product, 'material', __('home.labels.material_from_admin')),
+            'size' => $this->modelValue($product, 'size', __('home.labels.agreed')),
+            'color' => $this->modelValue($product, 'color', __('home.labels.custom_color')),
             'availability' => $availability,
-            'lead_time' => $product->translated('production_time', fallback: __('home.labels.agreed')),
+            'lead_time' => $this->modelValue($product, 'production_time', __('home.labels.agreed')),
             'category' => $categoryFilter,
             'category_label' => $categoryName,
-            'category_description' => $product->category?->translated('description') ?: __('home.labels.category_managed', ['category' => $categoryName]),
+            'category_description' => $category ? $this->modelValue($category, 'description', __('home.labels.category_managed', ['category' => $categoryName])) : __('home.labels.category_managed', ['category' => $categoryName]),
             'popularity' => max((int) $product->view_count, 0),
             'new_rank' => $product->updated_at?->getTimestamp() ?? (time() - $index),
             'tone' => $tones[$index % count($tones)],
@@ -559,7 +623,7 @@ class HomeController extends Controller
     private function finalizeProductPayload(array $product): array
     {
         $primaryImage = Arr::get($product, 'gallery.0.src');
-        $primaryLabel = Arr::get($product, 'images.0', Arr::get($product, 'title', 'Mahsulot'));
+        $primaryLabel = Arr::get($product, 'images.0', Arr::get($product, 'title', __('home.ui.product.default')));
         $searchText = implode(' ', array_filter([
             Arr::get($product, 'title'),
             Arr::get($product, 'short_description'),

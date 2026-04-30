@@ -4,37 +4,36 @@
             <div class="section-head cart-section-head">
                 <div class="cart-section-copy">
                     <div class="cart-section-kicker">
-                        <p class="section-label">Savatcha va buyurtma</p>
-                        <span class="cart-section-chip">Bir joyda va qulay</span>
+                        <p class="section-label">{{ __('home.ui.cart.section_label') }}</p>
+                        <span class="cart-section-chip">{{ __('home.ui.cart.section_chip') }}</span>
                     </div>
-                    <h2 class="section-title">Bir nechta mahsulotni qo'shib, bitta umumiy buyurtma yuboring</h2>
+                    <h2 class="section-title">{{ __('home.ui.cart.title') }}</h2>
                     <p class="cart-section-text">
-                        Katalogdan tanlagan mahsulotlaringiz shu yerda tartibli jamlanadi. Savatcha va aloqa formasi bir joyda
-                        bo'lgani uchun buyurtmani ortiqcha bosqichsiz yakunlaysiz.
+                        {{ __('home.ui.cart.copy') }}
                     </p>
                     <div class="cart-section-highlights">
                         <div class="cart-section-highlight">
-                            <strong>Bir joyda</strong>
-                            <span>Savatcha, summa va aloqa ma'lumotlari bitta blokda jamlanadi.</span>
+                            <strong>{{ __('home.ui.cart.highlight_one_title') }}</strong>
+                            <span>{{ __('home.ui.cart.highlight_one_text') }}</span>
                         </div>
                         <div class="cart-section-highlight">
-                            <strong>Tez buyurtma</strong>
-                            <span>Mahsulot qo'shib, darhol umumiy buyurtmaga o'tishingiz mumkin.</span>
+                            <strong>{{ __('home.ui.cart.highlight_two_title') }}</strong>
+                            <span>{{ __('home.ui.cart.highlight_two_text') }}</span>
                         </div>
                         <div class="cart-section-highlight">
-                            <strong>Admin tasdig'i</strong>
-                            <span>Buyurtma yuborilgach, telefon yoki Telegram orqali bog'laniladi.</span>
+                            <strong>{{ __('home.ui.cart.highlight_three_title') }}</strong>
+                            <span>{{ __('home.ui.cart.highlight_three_text') }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="cart-head-note">
-                    <span class="cart-note-chip">Qulay jarayon</span>
-                    <strong>Buyurtma aniq va tartibli rasmiylashadi</strong>
-                    <p>Buyurtma kelgach, admin uni ko'radi va siz bilan telefon yoki Telegram orqali aloqaga chiqadi.</p>
+                    <span class="cart-note-chip">{{ __('home.ui.cart.note_chip') }}</span>
+                    <strong>{{ __('home.ui.cart.note_title') }}</strong>
+                    <p>{{ __('home.ui.cart.note_text') }}</p>
                     <div class="cart-note-points">
-                        <span>Savatcha tayyorlanadi</span>
-                        <span>Ma'lumot yuboriladi</span>
-                        <span>Admin tasdiqlaydi</span>
+                        <span>{{ __('home.ui.cart.note_point_one') }}</span>
+                        <span>{{ __('home.ui.cart.note_point_two') }}</span>
+                        <span>{{ __('home.ui.cart.note_point_three') }}</span>
                     </div>
                 </div>
             </div>
@@ -43,26 +42,26 @@
                 <article class="cart-card">
                     <div class="cart-card-head">
                         <div>
-                            <p class="section-label">Savatcha</p>
-                            <h3>Tanlangan mahsulotlar</h3>
+                            <p class="section-label">{{ __('home.ui.cart.cart_label') }}</p>
+                            <h3>{{ __('home.ui.cart.selected_products') }}</h3>
                         </div>
-                        <a href="#catalog" class="text-link">Yana mahsulot qo'shish</a>
+                        <a href="#catalog" class="text-link">{{ __('home.ui.cart.add_more') }}</a>
                     </div>
 
                     <p class="cart-empty" data-cart-empty>
-                        Hozircha savatcha bo'sh. Katalogdan mahsulot qo'shsangiz, ular shu yerda jamlanadi.
+                        {{ __('home.ui.cart.empty') }}
                     </p>
 
                     <div class="cart-items" data-cart-items></div>
 
                     <div class="cart-summary">
                         <div>
-                            <span>Jami soni</span>
-                            <strong data-cart-total-qty>0 ta</strong>
+                            <span>{{ __('home.ui.cart.total_quantity') }}</span>
+                            <strong data-cart-total-qty>{{ __('home.ui.cart.quantity_value', ['count' => 0]) }}</strong>
                         </div>
                         <div>
-                            <span>Umumiy summa</span>
-                            <strong data-cart-total-price>0 so'm</strong>
+                            <span>{{ __('home.ui.cart.total_price') }}</span>
+                            <strong data-cart-total-price>0 {{ __('home.ui.money.currency') }}</strong>
                         </div>
                     </div>
                 </article>
@@ -76,22 +75,21 @@
                     @csrf
                     <div class="cart-card-head order-form-card-head">
                         <div>
-                            <p class="section-label">Umumiy buyurtma</p>
-                            <h3>Admin bilan bog'lanish uchun ma'lumot qoldiring</h3>
+                            <p class="section-label">{{ __('home.ui.cart.order_label') }}</p>
+                            <h3>{{ __('home.ui.cart.order_title') }}</h3>
                             <p class="order-form-intro">
-                                Mahsulotlar, rang va yetkazib berish tafsilotlarini yozing. Admin siz bilan bog'lanib, buyurtmani tez va
-                                aniq tasdiqlaydi.
+                                {{ __('home.ui.cart.order_intro') }}
                             </p>
                         </div>
                     </div>
 
                     <div class="contact-form-grid">
                         <label class="contact-field">
-                            <span>Ismingiz</span>
-                            <input type="text" name="customer_name" placeholder="Ismingizni kiriting" required>
+                            <span>{{ __('home.ui.cart.name') }}</span>
+                            <input type="text" name="customer_name" placeholder="{{ __('home.ui.cart.name_placeholder') }}" required>
                         </label>
                         <label class="contact-field">
-                            <span>Telefon</span>
+                            <span>{{ __('home.ui.cart.phone') }}</span>
                             <input type="tel" name="phone" placeholder="91 310 32 98" required>
                         </label>
                         <label class="contact-field">
@@ -103,22 +101,22 @@
                             <input type="text" name="instagram" placeholder="@profil">
                         </label>
                         <label class="contact-field contact-field-full">
-                            <span>Manzil</span>
-                            <input type="text" name="address" placeholder="Shahar yoki yetkazib berish manzili">
+                            <span>{{ __('home.ui.cart.address') }}</span>
+                            <input type="text" name="address" placeholder="{{ __('home.ui.cart.address_placeholder') }}">
                         </label>
                         <label class="contact-field contact-field-full">
-                            <span>Izoh</span>
-                            <textarea name="notes" rows="5" placeholder="Rang, o'lcham yoki qo'shimcha istaklaringizni yozing"></textarea>
+                            <span>{{ __('home.ui.cart.notes') }}</span>
+                            <textarea name="notes" rows="5" placeholder="{{ __('home.ui.cart.notes_placeholder') }}"></textarea>
                         </label>
                     </div>
 
                     <div class="order-form-actions">
                         <button type="submit" class="button button-primary" data-order-submit disabled>
-                            Umumiy buyurtma berish
+                            {{ __('home.ui.cart.submit') }}
                         </button>
 
                         <p class="form-note form-note-muted">
-                            Buyurtma yuborilgach, admin mahsulotlar bo'yicha siz bilan aloqaga chiqadi va tafsilotlarni tasdiqlaydi.
+                            {{ __('home.ui.cart.form_note') }}
                         </p>
                         <p class="form-note form-note-error is-hidden" data-order-error></p>
                         <p class="form-note form-note-success is-hidden" data-order-success></p>
@@ -133,8 +131,8 @@
     <div class="container">
         <div class="section-head split-light">
             <div>
-                <p class="section-label light">Buyurtma qanday ishlaydi</p>
-                <h2 class="section-title light">Oddiy, tushunarli va qulay jarayon</h2>
+                <p class="section-label light">{{ __('home.ui.cart.process_label') }}</p>
+                <h2 class="section-title light">{{ __('home.ui.cart.process_title') }}</h2>
             </div>
         </div>
 

@@ -8,10 +8,10 @@
             </div>
 
             <div class="cta-actions">
-                <a href="#cart" class="button button-primary">Buyurtma bering</a>
+                <a href="#cart" class="button button-primary">{{ __('home.ui.cta.order') }}</a>
                 @if (filled($contact['telegram']['href']))
                     <a href="{{ $contact['telegram']['href'] }}" target="_blank" rel="noreferrer" class="button button-secondary">
-                        Telegramda yozing
+                        {{ __('home.ui.cta.telegram') }}
                     </a>
                 @endif
             </div>

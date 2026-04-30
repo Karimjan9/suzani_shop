@@ -57,6 +57,8 @@
         @include('partials.home.modals')
         @include('partials.home.footer', ['footer' => $footer])
 
+        <script type="application/json" id="site-translations">@json(__('home.ui'))</script>
+
         @if (! file_exists(public_path('build/manifest.json')) && ! file_exists(public_path('hot')))
             @include('partials.home-inline-scripts')
         @endif

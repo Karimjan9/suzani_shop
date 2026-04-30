@@ -66,16 +66,16 @@
                     </div>
                 </div>
                 <div class="contact-map-details">
-                    <span class="contact-map-chip">Google Maps</span>
+                    <span class="contact-map-chip">{{ __('home.ui.contact_ui.map_provider') }}</span>
                     <strong>{{ $contact['address']['value'] }}</strong>
                     <p>{{ $contact['map']['hint'] }}</p>
                     <div class="contact-map-actions">
                         <div class="contact-map-meta">
-                            <span>Koordinata</span>
+                            <span>{{ __('home.ui.contact_ui.coordinates') }}</span>
                             <span>{{ $contact['map']['coordinates'] }}</span>
                         </div>
                         <a href="{{ $contact['map']['link'] }}" target="_blank" rel="noreferrer" class="contact-map-link">
-                            Katta xaritada ochish
+                            {{ __('home.ui.contact_ui.open_large_map') }}
                         </a>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                         </label>
 
                         <div class="contact-form-actions">
-                            <button type="submit" class="button button-primary">So'rov yuborish</button>
+                            <button type="submit" class="button button-primary">{{ __('home.ui.contact_ui.send_request') }}</button>
                             <p class="contact-form-note is-hidden" data-contact-note>{{ $contact['form']['success_note'] }}</p>
                         </div>
                     </div>

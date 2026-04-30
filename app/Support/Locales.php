@@ -23,7 +23,7 @@ class Locales
     public static function labels(): array
     {
         return [
-            'uz' => 'O‘zbek',
+            'uz' => "O'zbek",
             'ru' => 'Русский',
             'en' => 'English',
         ];

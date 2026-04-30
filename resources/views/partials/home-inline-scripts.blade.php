@@ -9,6 +9,20 @@
         .replaceAll('"', '&quot;')
         .replaceAll("'", '&#39;');
 
+    const decodeBase64Utf8 = (value) => {
+        const binary = window.atob(value);
+
+        if (window.TextDecoder) {
+            const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+
+            return new window.TextDecoder('utf-8').decode(bytes);
+        }
+
+        return decodeURIComponent(Array.from(binary, (char) => (
+            `%${char.charCodeAt(0).toString(16).padStart(2, '0')}`
+        )).join(''));
+    };
+
     const parseProductPayload = (rawValue) => {
         if (!rawValue) {
             return null;
@@ -18,7 +32,7 @@
             return JSON.parse(rawValue);
         } catch {
             try {
-                return JSON.parse(window.atob(rawValue));
+                return JSON.parse(decodeBase64Utf8(rawValue));
             } catch {
                 return null;
             }

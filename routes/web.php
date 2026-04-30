@@ -6,19 +6,36 @@ use App\Http\Controllers\Admin\ResourceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Support\Locales;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/language/{locale}', function (Request $request, string $locale): RedirectResponse {
+Route::get('/language/{locale}', function (Request $request, string $locale): RedirectResponse|JsonResponse {
     abort_unless(Locales::isSupported($locale), 404);
 
     $request->session()->put('locale', $locale);
     app()->setLocale($locale);
 
-    return redirect()->back();
+    $previousUrl = url()->previous();
+    $currentUrl = $request->fullUrl();
+
+    if ($previousUrl === $currentUrl || str_contains($previousUrl, '/language/')) {
+        $redirectUrl = route('home', [], false);
+    } else {
+        $redirectUrl = $previousUrl;
+    }
+
+    if ($request->expectsJson()) {
+        return response()->json([
+            'locale' => $locale,
+            'url' => $redirectUrl,
+        ]);
+    }
+
+    return redirect()->to($redirectUrl);
 })->name('language.switch');
 
 Route::get('/login', [AuthController::class, 'create'])->name('login');
