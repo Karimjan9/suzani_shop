@@ -86,6 +86,60 @@
             window.addEventListener('scroll', syncHeader, { passive: true });
         };
 
+        const initMobileMenu = () => {
+            const menus = Array.from(document.querySelectorAll('[data-mobile-menu]'));
+
+            if (!menus.length) {
+                return;
+            }
+
+            menus.forEach((menu) => {
+                if (menu.dataset.mobileMenuBound === 'true') {
+                    return;
+                }
+
+                const toggle = menu.querySelector('[data-mobile-menu-toggle]');
+                const panel = menu.querySelector('[data-mobile-menu-panel]');
+
+                if (!toggle || !panel) {
+                    return;
+                }
+
+                menu.dataset.mobileMenuBound = 'true';
+
+                const setOpen = (isOpen) => {
+                    menu.classList.toggle('is-open', isOpen);
+                    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+                };
+
+                toggle.addEventListener('click', () => {
+                    setOpen(!menu.classList.contains('is-open'));
+                });
+
+                panel.addEventListener('click', (event) => {
+                    if (event.target.closest('a')) {
+                        setOpen(false);
+                    }
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!menu.contains(event.target)) {
+                        setOpen(false);
+                    }
+                });
+
+                document.addEventListener('keydown', (event) => {
+                    if (event.key !== 'Escape' || !menu.classList.contains('is-open')) {
+                        return;
+                    }
+
+                    setOpen(false);
+                    toggle.focus();
+                });
+            });
+        };
+
         const initRevealEffects = () => {
             const targets = Array.from(document.querySelectorAll([
                 '.hero-copy',
@@ -1015,6 +1069,7 @@
         const bootstrapFrontend = () => {
             initThemeToggle();
             initStickyHeader();
+            initMobileMenu();
             initRevealEffects();
             initProductGalleries();
             initPortfolioModal();

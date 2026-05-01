@@ -45,6 +45,39 @@
                 @endforeach
             </div>
 
+            <div class="mobile-menu" data-mobile-menu>
+                <button
+                    type="button"
+                    class="mobile-menu-toggle"
+                    data-mobile-menu-toggle
+                    aria-label="Menu"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu-panel"
+                >
+                    <span>Menu</span>
+                    <span class="mobile-menu-chevron" aria-hidden="true"></span>
+                </button>
+
+                <div
+                    id="mobile-menu-panel"
+                    class="mobile-menu-panel"
+                    data-mobile-menu-panel
+                    aria-hidden="true"
+                >
+                    <a href="#about">{{ __('home.nav.about') }}</a>
+                    <a href="#catalog">{{ __('home.nav.products') }}</a>
+                    <a href="#cart" class="mobile-menu-cart">
+                        <span>{{ __('home.nav.cart') }}</span>
+                        <span class="cart-badge" data-cart-count>0</span>
+                    </a>
+                    <a href="#contact">{{ __('home.nav.contact') }}</a>
+                    <a href="#contact">{{ __('home.nav.order') }}</a>
+                    <a href="{{ route('login', [], false) }}" class="mobile-menu-admin">
+                        {{ __('home.nav.admin_title') }}
+                    </a>
+                </div>
+            </div>
+
             <button
                 type="button"
                 class="theme-toggle"
