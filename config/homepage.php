@@ -95,7 +95,7 @@ return [
         'stats' => [
             ['label' => 'Tajriba', 'value' => '12 yil'],
             ['label' => "Qo'lda yaratilgan ishlar", 'value' => '5000+'],
-            ['label' => 'Ustaxona jamoasi', 'value' => '6 nafar usta'],
+            ['label' => 'Ustalar jamoasi', 'value' => '50 dan ziyot'],
         ],
         'highlights' => [
             [
