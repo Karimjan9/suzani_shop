@@ -9770,3 +9770,115 @@ html[data-theme='nocturne'] .delivery-service-asset {
         grid-template-columns: 1fr !important;
     }
 }
+
+/* Mobile responsive corrections */
+@media (max-width: 720px) {
+    .topbar.container,
+    .topbar {
+        --topbar-content-offset: calc(var(--topbar-panel-left) + 0.72rem);
+        width: max-content;
+        max-width: calc(100% - 1rem);
+        min-height: 4.85rem;
+        margin-left: max(0.5rem, env(safe-area-inset-left));
+        margin-right: auto;
+        padding: 0.72rem 0.78rem 0.72rem var(--topbar-content-offset);
+    }
+
+    .topbar.is-scrolled {
+        --topbar-content-offset: calc(var(--topbar-panel-left) + 0.68rem);
+        padding: 0.66rem 0.72rem 0.66rem var(--topbar-content-offset);
+    }
+
+    .topbar-actions {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 100%;
+    }
+
+    .language-switcher {
+        width: max-content;
+        min-width: 0;
+        grid-template-columns: repeat(3, minmax(2.15rem, 1fr));
+    }
+
+    .language-option {
+        min-width: 2.15rem;
+        min-height: 2.05rem;
+    }
+
+    .button {
+        max-width: 100%;
+        min-height: 2.75rem;
+        text-align: center;
+        line-height: 1.2;
+    }
+
+    .hero-copy h1 {
+        max-width: min(8.8ch, 100%);
+        font-size: clamp(2.55rem, 11.5vw, 3.35rem);
+        line-height: 1.02;
+        overflow-wrap: break-word;
+        text-wrap: pretty;
+    }
+
+    .hero-text,
+    .hero-trust-note {
+        max-width: 100%;
+        overflow-wrap: break-word;
+    }
+
+    .hero-actions,
+    .cta-actions,
+    .product-actions,
+    .footer-banner-actions,
+    .footer-topbar-actions {
+        gap: 0.65rem;
+    }
+
+    .hero-actions .button {
+        flex: 1 1 calc(50% - 0.35rem);
+        min-width: min(100%, 8.4rem);
+        padding-inline: clamp(0.95rem, 4vw, 1.15rem);
+        white-space: nowrap;
+    }
+
+    .cta-actions .button,
+    .product-actions .button,
+    .footer-banner-actions .footer-action-button,
+    .footer-topbar-actions .button {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 560px) {
+    .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .hero-actions .button {
+        width: 100%;
+        white-space: normal;
+    }
+}
+
+@media (max-width: 420px) {
+    .hero-copy h1 {
+        max-width: min(8.2ch, 100%);
+        font-size: clamp(2.45rem, 11vw, 3rem);
+    }
+
+    .cta-actions,
+    .footer-banner-actions,
+    .footer-topbar-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .cta-actions .button,
+    .footer-banner-actions .footer-action-button,
+    .footer-topbar-actions .button {
+        width: 100%;
+        white-space: normal;
+    }
+}
