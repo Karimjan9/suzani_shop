@@ -39,7 +39,9 @@ Route::get('/language/{locale}', function (Request $request, string $locale): Re
 })->name('language.switch');
 
 Route::get('/login', [AuthController::class, 'create'])->name('login');
-Route::post('/login', [AuthController::class, 'store'])->name('login.attempt');
+Route::post('/login', [AuthController::class, 'store'])
+    ->middleware('throttle:login')
+    ->name('login.attempt');
 
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 

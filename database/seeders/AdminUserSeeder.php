@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use UnexpectedValueException;
 
 class AdminUserSeeder extends Seeder
 {
@@ -14,38 +15,22 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
-        $credentials = [
-            'login' => $this->credential('login', 'admin'),
-            'email' => $this->credential('email', 'admin@suzani-shop.local'),
-            'password' => $this->credential('password', 'admin12345'),
-        ];
 
-        $user = User::query()
-            ->where('login', $credentials['login'])
-            ->orWhere('email', $credentials['email'])
-            ->firstOrNew();
-
-        $user->fill([
-            'name' => 'Administrator',
-            'login' => $credentials['login'],
-            'email' => $credentials['email'],
-            'password' => $credentials['password'],
-        ]);
-        $user->save();
-
-        $user->syncRoles([$adminRole]);
-    }
-
-    private function credential(string $key, string $default): string
-    {
-        $value = config("admin.credentials.{$key}");
-
-        if (! is_string($value)) {
-            return $default;
+        if (User::role($adminRole->name)->exists()) {
+            return;
         }
 
-        $value = trim($value);
+        if (app()->isProduction()) {
+            throw new UnexpectedValueException('Admin user must already exist in the database before seeding production.');
+        }
 
-        return $value !== '' ? $value : $default;
+        $user = User::query()->create([
+            'name' => 'Administrator',
+            'login' => 'admin',
+            'email' => 'admin@suzani-shop.local',
+            'password' => 'admin12345',
+        ]);
+
+        $user->syncRoles([$adminRole]);
     }
 }
